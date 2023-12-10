@@ -167,7 +167,7 @@ dependent_variables_to_save = [
 termination_condition = propagation_setup.propagator.time_termination(simulation_end_epoch)
 
 # Create numerical integrator settings
-fixed_step_size = 10
+fixed_step_size = 0.1
 integrator_settings = propagation_setup.integrator.runge_kutta_4(fixed_step_size)
 
 
