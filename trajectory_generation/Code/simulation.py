@@ -38,7 +38,6 @@ else:
     os.makedirs(figures_path)
 
 
-
 #-----------------------------------Simulation-----------------------------------#
 
 np.set_printoptions(precision=16)
