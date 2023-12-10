@@ -33,7 +33,7 @@ else:
 #---------------------------Plotting---------------------------#
 dpi = 300
 
-states = np.genfromtxt(os.path.join(file_path,"states.txt").replace("\\.", "."), delimiter='\t',skip_header=1)
+states = np.genfromtxt(os.path.join(file_path,"states.txt").replace("\\.", "."), delimiter='\t')
 
 xyz = states[:,1:4]
 VxVyVz = states[:,4:7]
@@ -55,7 +55,7 @@ RSW = np.array(RSW_list)
 
 
 
-dep_vars = np.genfromtxt(os.path.join(file_path,"dep_vars.txt").replace("\\.", "."), delimiter='\t',skip_header=1)
+dep_vars = np.genfromtxt(os.path.join(file_path,"dep_vars.txt").replace("\\.", "."), delimiter='\t')
 print(dep_vars)
 time = dep_vars[:,0]
 longitude = dep_vars[:,1]

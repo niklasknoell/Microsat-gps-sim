@@ -195,15 +195,15 @@ dep_vars = dynamics_simulator.dependent_variable_history
 dep_vars = result2array(dep_vars)
 
 
-# Save states as a text file
+# Save states as a text file: time,x,y,z,Vx,Vy,Vz
 states_df = pd.DataFrame(states, columns=['time', 'x', 'y', 'z', 'Vx', 'Vy', 'Vz'])
 pd.set_option('colheader_justify', 'center')
 file_path_states = os.path.join(file_path, "states.txt")
-states_df.to_csv(file_path_states, sep='\t', index=False,encoding='ascii',float_format='%.16f')
+states_df.to_csv(file_path_states, sep=',', index=False,header=False,encoding='ascii',float_format='%.16f')
 
-# Save dependent variables as a text file
+# Save dependent variables as a text file: time,longitude,latitude,altitude
 dep_vars_df = pd.DataFrame(dep_vars, columns=['time', 'longitude', 'latitude', 'altitude'])
 file_path_dep_vars = os.path.join(file_path, "dep_vars.txt")
-dep_vars_df.to_csv(file_path_dep_vars, sep='\t', index=False,encoding='ascii',float_format='%.16f')
+dep_vars_df.to_csv(file_path_dep_vars, sep=',', index=False,header=False,encoding='ascii',float_format='%.16f')
 
 
