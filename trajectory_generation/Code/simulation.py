@@ -219,6 +219,11 @@ data_slice = dep_vars[:, [0, 3, 4, 5]]
 df = pd.DataFrame(data_slice)
 df.to_csv(file_path_ECEF, sep=',', index=False,header=False,encoding='ascii',float_format='%.16f')
 
+# lat, lon, alt (already ECEF)
+file_path_lla = os.path.join(file_path, "lat_lon_alt.txt")
+data_slice = dep_vars[:, [0, 2, 1, 3]]
+df = pd.DataFrame(data_slice)
+df.to_csv(file_path_lla, sep=',', index=False,header=False,encoding='ascii',float_format='%.16f')
 
 
 # save RSW, TNW
