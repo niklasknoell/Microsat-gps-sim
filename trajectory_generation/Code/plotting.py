@@ -36,34 +36,49 @@ dpi = 300
 states = np.genfromtxt(os.path.join(file_path,"states.txt").replace("\\.", "."), delimiter=',')
 print(states)
 
-xyz = states[:,1:4]
-VxVyVz = states[:,4:7]
-
-
-RSW_list = []
-
-for i in range(np.shape(xyz)[0]):
-
-    rotation_rsw_to_inertial = frame_conversion.rsw_to_inertial_rotation_matrix(states[i,1:])
-
-    pos = np.matmul(np.linalg.inv(rotation_rsw_to_inertial),xyz[i,:])
-    vel = np.matmul(np.linalg.inv(rotation_rsw_to_inertial),VxVyVz[i,:])
-    RSW = np.concatenate((pos,vel))
-
-    RSW_list.append(RSW)
-
-RSW = np.array(RSW_list)
+# xyz = states[:,1:4]
+# VxVyVz = states[:,4:7]
+#
+#
+# RSW_list = []
+# TNW_list = []
+#
+# for i in range(np.shape(xyz)[0]):
+#
+#     rotation_rsw_to_inertial = frame_conversion.rsw_to_inertial_rotation_matrix(states[i,1:])
+#
+#     pos = np.matmul(np.linalg.inv(rotation_rsw_to_inertial),xyz[i,:])
+#     vel = np.matmul(np.linalg.inv(rotation_rsw_to_inertial),VxVyVz[i,:])
+#     RSW = np.concatenate((pos,vel))
+#
+#     RSW_list.append(RSW)
+#
+#
+#     rotation_tnw_to_inertial = frame_conversion.tnw_to_inertial_rotation_matrix(states[i,1:])
+#
+#     pos = np.matmul(np.linalg.inv(rotation_tnw_to_inertial),xyz[i,:])
+#     vel = np.matmul(np.linalg.inv(rotation_tnw_to_inertial),VxVyVz[i,:])
+#     TNW = np.concatenate((pos,vel))
+#
+#     TNW_list.append(TNW)
+#
+#
+#
+#
+#
+#
+#
+# RSW = np.array(RSW_list)
+# TNW = np.array(TNW_list)
 
 
 
 dep_vars = np.genfromtxt(os.path.join(file_path,"dep_vars.txt").replace("\\.", "."), delimiter=',')
-print(dep_vars)
 time = dep_vars[:,0]
 longitude = dep_vars[:,1]
 latitude = dep_vars[:,2]
 altitude = dep_vars[:,3]
-print(min(longitude))
-print(max(longitude))
+
 
 
 # convert to degrees

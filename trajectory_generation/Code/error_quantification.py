@@ -36,18 +36,31 @@ states = np.genfromtxt(os.path.join(file_path,"states.txt").replace("\\.", "."),
 states_GPS = np.genfromtxt(os.path.join(file_path,"states_GPS.txt").replace("\\.", "."), delimiter=',')
 
 fig, ax = plt.subplots()
-ax.set_title("position components error over time")
-ax.scatter(states[:,0], states_GPS[:,1]-states[:,1], s=1,label='x')
-ax.scatter(states[:,0], states_GPS[:,2]-states[:,2], s=1,label='y')
-ax.scatter(states[:,0], states_GPS[:,3]-states[:,3], s=1,label='z')
+# ax.set_title("position components error over time")
+ax.scatter(states[:,0], states_GPS[:,1]-states[:,1], s=1,label='$\Delta$x')
+ax.scatter(states[:,0], states_GPS[:,2]-states[:,2], s=1,label='$\Delta$y')
+ax.scatter(states[:,0], states_GPS[:,3]-states[:,3], s=1,label='$\Delta$z')
 ax.set_xlabel('time [s]')
-ax.set_ylabel('position component error [m]')
+ax.set_ylabel('|position component error| [m]')
 ax.grid()
 ax.legend()
+
+
 
 output_path = os.path.join(figures_path,"states_position_error.pdf").replace("\\.", ".")
 fig.savefig(output_path, bbox_inches='tight')
 
+
+
+RMSE = np.genfromtxt(os.path.join(file_path,"RMSE.txt").replace("\\.", "."), delimiter=',')
+
+
+fig, ax = plt.subplots()
+# ax.set_title("position components error over time")
+ax.scatter(states[:,0], RMSE, s=1)
+ax.set_xlabel('time [s]')
+ax.set_ylabel('RMSE [m]')
+ax.grid()
 
 
 

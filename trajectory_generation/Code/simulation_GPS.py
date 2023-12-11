@@ -203,6 +203,7 @@ pd.set_option('colheader_justify', 'center')
 file_path_states = os.path.join(file_path, "states_GPS.txt")
 states_df.to_csv(file_path_states, sep=',', index=False,header=False,encoding='ascii',float_format='%.16f')
 
+
 # Save dependent variables as a text file: time,longitude,latitude,altitude
 dep_vars_df = pd.DataFrame(dep_vars, columns=['time', 'longitude', 'latitude', 'altitude'])
 file_path_dep_vars = os.path.join(file_path, "dep_vars_GPS.txt")
