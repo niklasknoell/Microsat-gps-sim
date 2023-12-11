@@ -126,5 +126,5 @@ output_path = os.path.join(figures_path,"RSW_velocity.pdf").replace("\\.", ".")
 fig.savefig(output_path, bbox_inches='tight')
 
 
-
+print("end")
 plt.show()
