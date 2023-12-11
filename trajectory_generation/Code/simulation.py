@@ -159,7 +159,7 @@ dependent_variables_to_save = [
     propagation_setup.dependent_variable.latitude("Delfi-PQ", "Earth"),
     propagation_setup.dependent_variable.altitude("Delfi-PQ", "Earth"),
     propagation_setup.dependent_variable.central_body_fixed_cartesian_position("Delfi-PQ","Earth"),
-    propagation_setup.dependent_variable.body_fixed_airspeed_velocity("Delfi-PQ","Earth"),
+    propagation_setup.dependent_variable.body_fixed_groundspeed_velocity("Delfi-PQ","Earth"),
 
 ]
 

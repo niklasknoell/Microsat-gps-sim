@@ -158,6 +158,8 @@ dependent_variables_to_save = [
     propagation_setup.dependent_variable.longitude("Delfi-PQ", "Earth"),
     propagation_setup.dependent_variable.latitude("Delfi-PQ", "Earth"),
     propagation_setup.dependent_variable.altitude("Delfi-PQ", "Earth"),
+    propagation_setup.dependent_variable.central_body_fixed_cartesian_position("Delfi-PQ","Earth"),
+    propagation_setup.dependent_variable.body_fixed_groundspeed_velocity("Delfi-PQ","Earth"),
 
 ]
 
@@ -207,7 +209,7 @@ states_df.to_csv(file_path_states, sep=',', index=False,header=False,encoding='a
 
 
 # Save dependent variables as a text file: time,longitude,latitude,altitude
-dep_vars_df = pd.DataFrame(dep_vars, columns=['time', 'longitude', 'latitude', 'altitude'])
+dep_vars_df = pd.DataFrame(dep_vars, columns=['time', 'longitude', 'latitude', 'altitude','x','y','z','Vx','Vy','Vz'])
 file_path_dep_vars = os.path.join(file_path, "dep_vars_GPS.txt")
 dep_vars_df.to_csv(file_path_dep_vars, sep=',', index=False,header=False,encoding='ascii',float_format='%.16f')
 
