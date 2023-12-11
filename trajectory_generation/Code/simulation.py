@@ -158,6 +158,8 @@ dependent_variables_to_save = [
     propagation_setup.dependent_variable.longitude("Delfi-PQ", "Earth"),
     propagation_setup.dependent_variable.latitude("Delfi-PQ", "Earth"),
     propagation_setup.dependent_variable.altitude("Delfi-PQ", "Earth"),
+    propagation_setup.dependent_variable.central_body_fixed_cartesian_position("Delfi-PQ","Earth"),
+    propagation_setup.dependent_variable.body_fixed_airspeed_velocity("Delfi-PQ","Earth"),
 
 ]
 
@@ -196,7 +198,6 @@ dep_vars = dynamics_simulator.dependent_variable_history
 dep_vars = result2array(dep_vars)
 dep_vars[:,1] = np.rad2deg(dep_vars[:,1]) # convert to degrees
 dep_vars[:,2] = np.rad2deg(dep_vars[:,2])  # convert to degrees
-print(dep_vars)
 dep_vars[:, 0] -= simulation_start_epoch  # make time start at 0 sec as required
 
 
@@ -207,7 +208,7 @@ file_path_states = os.path.join(file_path, "states.txt")
 states_df.to_csv(file_path_states, sep=',', index=False,header=False,encoding='ascii',float_format='%.16f')
 
 # Save dependent variables as a text file: time,longitude,latitude,altitude
-dep_vars_df = pd.DataFrame(dep_vars, columns=['time', 'longitude', 'latitude', 'altitude'])
+dep_vars_df = pd.DataFrame(dep_vars, columns=['time', 'longitude', 'latitude', 'altitude','x','y','z','Vx','Vy','Vz'])
 file_path_dep_vars = os.path.join(file_path, "dep_vars.txt")
 dep_vars_df.to_csv(file_path_dep_vars, sep=',', index=False,header=False,encoding='ascii',float_format='%.16f')
 
@@ -219,6 +220,7 @@ RSW_list = []
 TNW_list = []
 
 for i in range(np.shape(xyz)[0]):
+
     rotation_rsw_to_inertial = frame_conversion.rsw_to_inertial_rotation_matrix(states[i, 1:])
 
     pos = np.matmul(np.linalg.inv(rotation_rsw_to_inertial), xyz[i, :])
@@ -229,8 +231,13 @@ for i in range(np.shape(xyz)[0]):
 
     rotation_tnw_to_inertial = frame_conversion.tnw_to_inertial_rotation_matrix(states[i, 1:])
 
-    pos = np.matmul(np.linalg.inv(rotation_tnw_to_inertial), xyz[i, :])
-    vel = np.matmul(np.linalg.inv(rotation_tnw_to_inertial), VxVyVz[i, :])
+    rotation_inertial_to_tnw = frame_conversion.inertial_to_tnw_rotation_matrix(states[i, 1:])
+    pos = np.matmul(rotation_inertial_to_tnw, xyz[i, :])
+    vel = np.matmul(rotation_inertial_to_tnw, VxVyVz[i, :])
+
+
+    # pos = np.matmul(np.linalg.inv(rotation_tnw_to_inertial), xyz[i, :])
+    # vel = np.matmul(np.linalg.inv(rotation_tnw_to_inertial), VxVyVz[i, :])
     TNW = np.concatenate((pos, vel))
 
     TNW_list.append(TNW)
@@ -245,3 +252,4 @@ df.to_csv(file_path_RSW, sep=',', index=False,header=False,encoding='ascii',floa
 df = pd.DataFrame(TNW)
 file_path_TNW = os.path.join(file_path, "TNW.txt")
 df.to_csv(file_path_TNW, sep=',', index=False,header=False,encoding='ascii',float_format='%.16f')
+

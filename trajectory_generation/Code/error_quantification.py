@@ -64,4 +64,22 @@ ax.grid()
 
 
 
+# RSW = np.genfromtxt(os.path.join(file_path,"RSW.txt").replace("\\.", "."), delimiter=',')
+# RSW_GPS = np.genfromtxt(os.path.join(file_path,"RSW_GPS.txt").replace("\\.", "."), delimiter=',')
+#
+# fig, ax = plt.subplots()
+# # ax.set_title("position components error over time")
+# ax.scatter(states[:,0], RSW_GPS[:,0]-RSW[:,0], s=1,label='$\Delta$R')
+# ax.scatter(states[:,0], RSW_GPS[:,0]-RSW[:,0], s=1,label='$\Delta$S')
+# ax.scatter(states[:,0], RSW_GPS[:,0]-RSW[:,0], s=1,label='$\Delta$W')
+# ax.set_xlabel('time [s]')
+# ax.set_ylabel('|position component error| [m]')
+# ax.grid()
+# ax.legend()
+
+
+
+
+
+
 plt.show()
