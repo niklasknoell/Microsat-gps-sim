@@ -212,6 +212,15 @@ dep_vars_df = pd.DataFrame(dep_vars, columns=['time', 'longitude', 'latitude', '
 file_path_dep_vars = os.path.join(file_path, "dep_vars.txt")
 dep_vars_df.to_csv(file_path_dep_vars, sep=',', index=False,header=False,encoding='ascii',float_format='%.16f')
 
+
+# x, y, z coordinates in ECEF
+file_path_ECEF = os.path.join(file_path, "xyz_ECEF.txt")
+data_slice = dep_vars[:, [0, 3, 4, 5]]
+df = pd.DataFrame(data_slice)
+df.to_csv(file_path_ECEF, sep=',', index=False,header=False,encoding='ascii',float_format='%.16f')
+
+
+
 # save RSW, TNW
 xyz = states[:, 1:4]
 VxVyVz = states[:, 4:7]
