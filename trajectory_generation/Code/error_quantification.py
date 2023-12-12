@@ -40,10 +40,11 @@ fig, ax = plt.subplots()
 ax.scatter(states[:,0], states_GPS[:,1]-states[:,1], s=1,label='$\Delta$x')
 ax.scatter(states[:,0], states_GPS[:,2]-states[:,2], s=1,label='$\Delta$y')
 ax.scatter(states[:,0], states_GPS[:,3]-states[:,3], s=1,label='$\Delta$z')
-ax.set_xlabel('time [s]')
-ax.set_ylabel('|position component error| [m]')
+ax.set_xlabel('time [s]',fontsize=20)
+ax.set_ylabel('|position component error| [m]',fontsize=20)
 ax.grid()
-ax.legend()
+ax.tick_params(axis='both', which='major', labelsize=16)
+ax.legend(fontsize=20)
 
 
 
