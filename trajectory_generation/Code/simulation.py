@@ -215,7 +215,7 @@ dep_vars_df.to_csv(file_path_dep_vars, sep=',', index=False,header=False,encodin
 
 # x, y, z coordinates in ECEF
 file_path_ECEF = os.path.join(file_path, "xyz_ECEF.txt")
-data_slice = dep_vars[:, [0, 3, 4, 5]]
+data_slice = dep_vars[:, [0, 4, 5, 6]]
 df = pd.DataFrame(data_slice)
 df.to_csv(file_path_ECEF, sep=',', index=False,header=False,encoding='ascii',float_format='%.16f')
 
