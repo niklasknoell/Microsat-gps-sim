@@ -127,10 +127,10 @@ ax = fig.add_subplot(111, projection='3d')
 # ax.plot_wireframe(x, y, z, rstride=4, cstride=4, color='b', alpha=0.4, label='Earth')
 
 ax.plot(dep_vars [:,4]/1000,dep_vars [:,5]/1000,dep_vars [:,6]/1000,label='Truth')
-ax.tick_params(axis='both', which='both', labelsize=19)
-ax.set_xlabel('$x_{ECEF}$ [km]', fontsize=14)
-ax.set_ylabel('$y_{ECEF}$ [km]', fontsize=14)
-ax.set_zlabel('$z_{ECEF}$ [km]', fontsize=14)
+ax.tick_params(axis='both', which='both', labelsize=16)
+ax.set_xlabel('$x_{ECEF}$ [km]', fontsize=16)
+ax.set_ylabel('$y_{ECEF}$ [km]', fontsize=16)
+ax.set_zlabel('$z_{ECEF}$ [km]', fontsize=16)
 ax.legend()
 
 
