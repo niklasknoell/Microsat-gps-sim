@@ -160,6 +160,7 @@ dependent_variables_to_save = [
     propagation_setup.dependent_variable.altitude("Delfi-PQ", "Earth"),
     propagation_setup.dependent_variable.central_body_fixed_cartesian_position("Delfi-PQ","Earth"),
     propagation_setup.dependent_variable.body_fixed_groundspeed_velocity("Delfi-PQ","Earth"),
+    propagation_setup.dependent_variable.keplerian_state("Delfi-PQ","Earth")
 
 ]
 
@@ -199,6 +200,8 @@ dep_vars = result2array(dep_vars)
 dep_vars[:,1] = np.rad2deg(dep_vars[:,1]) # convert to degrees
 dep_vars[:,2] = np.rad2deg(dep_vars[:,2])  # convert to degrees
 dep_vars[:, 0] -= simulation_start_epoch  # make time start at 0 sec as required
+keplerian = dep_vars[:,10:]
+
 
 
 # Save states as a text file: time,x,y,z,Vx,Vy,Vz
@@ -209,9 +212,16 @@ states_df.to_csv(file_path_states, sep=',', index=False,header=False,encoding='a
 
 
 # Save dependent variables as a text file: time,longitude,latitude,altitude
-dep_vars_df = pd.DataFrame(dep_vars, columns=['time', 'longitude', 'latitude', 'altitude','x','y','z','Vx','Vy','Vz'])
+dep_vars_df = pd.DataFrame(dep_vars)
 file_path_dep_vars = os.path.join(file_path, "dep_vars_GPS.txt")
 dep_vars_df.to_csv(file_path_dep_vars, sep=',', index=False,header=False,encoding='ascii',float_format='%.16f')
+
+
+# Save Keplerian elements
+keplerian_df = pd.DataFrame(keplerian)
+file_path_keplerian = os.path.join(file_path, "keplerian_GPS.txt")
+keplerian_df.to_csv(file_path_keplerian, sep=',', index=False,header=False,encoding='ascii',float_format='%.16f')
+
 
 # save RSW, TNW
 xyz = states[:, 1:4]
