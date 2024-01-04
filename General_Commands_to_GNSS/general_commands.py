@@ -43,7 +43,24 @@ def message_output_type(serial_port):
         print("Invalid output type")
 
 
+def message_serial_port_config(serial_port):
+
+    hex_message = "0xA0 A1 00 04 05 00 01 00 05 0D 0A" # Unfinished Hex Message
+    send_receive_hex_message(serial_port, hex_message)
+
+
+
 def message_choice(serial_port):
+
+    # This part is to configure the Serial port to the desired port
+    serial_config = str(input("Please tell if you wish to change the serial port config (YES/NO): "))
+    if serial_config.upper() == "TRUE":
+        serial_port_choice = str(input("Please write the serial port name (e.g. COM1): "))
+        message_serial_port_config(serial_port_choice)
+    else:
+        print("Serial Port Config Declined")
+
+    # This part is to decide the output type between NMEA and Binary
     type_choice = str(input("Please choose if you want to choose output type (TRUE/FALSE): "))
     if type_choice.upper() == "TRUE":
         message_output_type(serial_port)

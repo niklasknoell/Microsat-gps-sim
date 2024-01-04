@@ -22,10 +22,7 @@ def send_receive_hex_message(serial_port, hex_message):
     except Exception as e:
         print(f"Error: {e}")
 
-def message_serial_port_config(serial_port):
 
-    hex_message = "0xA0 A1 00 04 05 00 01 00 05 0D 0A" # Unfinished Hex Message
-    send_receive_hex_message(serial_port, hex_message)
 
 
 def message_configure_NMEA_talker_ID():
