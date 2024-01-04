@@ -24,26 +24,9 @@ def send_receive_hex_message(serial_port, hex_message):
 
 def message_serial_port_config(serial_port):
 
-    hex_message = 0xA0 A1 00 04 05 00 01 00 05 0D 0A
+    hex_message = "0xA0 A1 00 04 05 00 01 00 05 0D 0A" # Unfinished Hex Message
     send_receive_hex_message(serial_port, hex_message)
 
-
-def message_output_type(serial_port):
-    # Structure: <0xA0,0xA1><PL><09><message body><CS><0x0D,0x0A>
-    # Example: A0 A1 00 03 09 00 00 09 0D 0A
-    # Field 1 - Message ID
-    # Field 2 - Type: 00-No Output; 01-NMEA Message; 02-Binary Message
-    # Field 3 - Attributes: 0-Update to SRAM; 1-Update to Both SRAM & FlASH
-
-    output_type = input(print("Choose the output type (NMEA/BINARY): "))
-    if output_type == "NMEA":
-        hex_message = "A0A10003090000090D0A"  # Example Hex message
-        send_receive_hex_message(serial_port, hex_message)
-    elif output_type == "BINARY":
-        hex_message = "A0A10003090200090D0A"  # Example Hex message
-        send_receive_hex_message(serial_port, hex_message)
-    else:
-        print("Invalid output type")
 
 def message_configure_NMEA_talker_ID():
 
@@ -51,11 +34,7 @@ def message_configure_NMEA_talker_ID():
     return
 
 def message_choice(serial_port):
-    type_choice = str(input("Please choose if you want to choose output type (TRUE/FALSE): "))
-    if type_choice.upper() == "TRUE":
-        message_output_type(serial_port)
-    else:
-        print("Choice of Output Type declined")
+
 
 # Configure the Serial port Property
 message_serial_port_config("COM1")
