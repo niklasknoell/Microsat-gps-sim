@@ -25,16 +25,16 @@ def send_receive_hex_message(serial_port, hex_message):
 
 
 
-def message_configure_NMEA_talker_ID():
-
-
-    return
-
-def message_choice(serial_port):
-
-
-# Configure the Serial port Property
-message_serial_port_config("COM1")
-
-# Replace 'COM1' with the appropriate serial port
-message_choice('COM1')
+# def message_configure_NMEA_talker_ID():
+#
+#
+#     return
+#
+# def message_choice(serial_port):
+#
+#
+# # Configure the Serial port Property
+# message_serial_port_config("COM1")
+#
+# # Replace 'COM1' with the appropriate serial port
+# message_choice('COM1')
