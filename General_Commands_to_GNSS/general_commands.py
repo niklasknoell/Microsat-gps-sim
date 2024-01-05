@@ -23,7 +23,7 @@ def send_receive_hex_message(serial_port, hex_message):
     except Exception as e:
         print(f"Error: {e}")
 
-def message_config_power_mode():
+def message_config_power_mode(): #page20
     mode_option = input(print("""Please make a choice in Mode:
     00 = Normal (diasble)
     01 = Power Save (enable)"""))
@@ -50,11 +50,11 @@ def message_config_power_mode():
             hex_message = "A0A10003090000090D0A"  # Example Hex message
         send_receive_hex_message(serial_port, hex_message)
 
-def message_update_rate_GNSS():
+def message_update_rate_GNSS(): #page22
     rate_option = input(print("Unfinished")) # Not Understanding the Documentation
 
 
-def message_ask_position_update_rate():
+def message_ask_position_update_rate(): #page23
     hex_message = "A0A10003090000090D0A"  # Example Hex message
     send_receive_hex_message(serial_port, hex_message)
 
