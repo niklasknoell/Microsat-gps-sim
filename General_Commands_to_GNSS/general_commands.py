@@ -23,6 +23,32 @@ def send_receive_hex_message(serial_port, hex_message):
     except Exception as e:
         print(f"Error: {e}")
 
+def message_config_power_mode():
+    mode_option = input(print("""Please make a choice in Mode:
+    00 = Normal (diasble)
+    01 = Power Save (enable)"""))
+
+    attribute_option = input(print("""Please make a choice in Attributes:
+    00 = Update to SRAM
+    01 = Update to both SRAM & FLASH
+    02 = Temporarily enabled"""))
+
+    if mode_option == 00:
+        if attribute_option == 00:
+            hex_message = "A0A10003090000090D0A"  # Example Hex message
+        if attribute_option == 01:
+            hex_message = "A0A10003090000090D0A"  # Example Hex message
+        if attribute_option == 02
+            hex_message = "A0A10003090000090D0A"  # Example Hex message
+        send_receive_hex_message(serial_port, hex_message)
+    if mode_option == 01:
+        if attribute_option == 00:
+            hex_message = "A0A10003090000090D0A"  # Example Hex message
+        if attribute_option == 01:
+            hex_message = "A0A10003090000090D0A"  # Example Hex message
+        if attribute_option == 02:
+            hex_message = "A0A10003090000090D0A"  # Example Hex message
+        send_receive_hex_message(serial_port, hex_message)
 
 
 def message_output_type(serial_port):
