@@ -50,6 +50,13 @@ def message_config_power_mode():
             hex_message = "A0A10003090000090D0A"  # Example Hex message
         send_receive_hex_message(serial_port, hex_message)
 
+def message_update_rate_GNSS():
+    rate_option = input(print("Unfinished")) # Not Understanding the Documentation
+
+
+def message_ask_position_update_rate():
+    hex_message = "A0A10003090000090D0A"  # Example Hex message
+    send_receive_hex_message(serial_port, hex_message)
 
 def message_output_type(serial_port):
     # Structure: <0xA0,0xA1><PL><09><message body><CS><0x0D,0x0A>
