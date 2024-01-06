@@ -9,8 +9,6 @@
 
 
 
-
-# Replace this function with your own translation method
 def translate_line(line):
     # This code makes the assumption that the binaty message is saved in the text file in Hex
     line = line.strip()
@@ -20,6 +18,7 @@ def translate_line(line):
 
     # Message ID
     message_id = message_body[0:1]
+    translation["Message_ID"] = message_id
 
     # Fix Mode Interpretation
     fix_mode = message_body[2:3]
@@ -258,9 +257,6 @@ def hex_to_decimal_ECEFVZ(ECEFVZ_hex):
         decimal_value -= 1 << 32
 
     return decimal_value
-
-
-
 
 
 
