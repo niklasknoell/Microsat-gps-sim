@@ -12,14 +12,75 @@ Start of Sequence   Payload Length      Message ID      Message Body            
 
 # Replace this function with your own translation method
 def translate_line(line):
-    # Example: use a hypothetical translate_method
-    # translated_text = translate_method(line, target_language)
-    # return translated_text
+    # This code makes the assumption that the binaty message is saved in the text file in Hex
     line = line.strip()
-    
+    # Sectioning the data in the message
+    message_body = line[8:-6]
+    translation = ""
+
+    # Message ID
+    message_id = message_body[0:1]
+
+    # Fix Mode Interpretation
+    fix_mode = message_body[2:3]
+    fix_mode_meaning = translate_fix_mode_section(fix_mode)
+    translation += fix_mode_meaning
+
+    # Number of SV in fix
+    SV_number = message_body[4:5]
+    sv_decimal = translate_sv_number(SV_number)
+    translation += sv_decimal
+
+    # GNSS week number
+    gnss_week = message_body[6:9]
 
     # Placeholder: return the original line if no translation method is provided
     return line
+
+def translate_fix_mode_section(fix_mode):
+    if fix_mode == "00":
+        fix_mode_meaning = "no_fix"
+    if fix_mode == "01":
+        fix_mode_meaning = "2D"
+    if fix_mode == "02":
+        fix_mode_meaning = "3D"
+    if fix_mode == "03":
+        fix_mode_meaning = "3D+DGNSS"
+    return fix_mode_meaning
+
+def translate_sv_number(sv_number):
+    decimal_value = int(str(sv_number), 16)
+    return str(decimal_value)
+
+def hex_to_decimal_latitude(hex_value):
+    # Convert hex to decimal for sint32
+    decimal_value = int(hex_value, 16)
+
+    # If the value is negative, apply two's complement to get the correct signed value
+    if decimal_value & (1 << 31):
+        decimal_value -= 1 << 32
+
+    # Determine if it is in the North or South Hemisphere
+    if decimal_value > 0:
+        latitude = str(decimal_value) + "N"
+    else:
+        latitude = str(decimal_value) + "S"
+    return latitude
+
+def hex_to_decimal_longitude(hex_value):
+    # Convert hex to decimal for sint32
+    decimal_value = int(hex_value, 16)
+
+    # If the value is negative, apply two's complement to get the correct signed value
+    if decimal_value & (1 << 31):
+        decimal_value -= 1 << 32
+
+    # Determine if it is in the East or West Hemisphere
+    if decimal_value > 0:
+        longitude = str(decimal_value) + "E"
+    else:
+        longitude = str(decimal_value) + "W"
+    return longitude
 
 def translate_and_save(input_file, output_file, save_original):
     with open(input_file, 'r', encoding='utf-8') as infile, open(output_file, 'w', encoding='utf-8') as outfile:
