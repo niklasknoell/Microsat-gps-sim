@@ -1,7 +1,6 @@
 import os
 import pynmea2
 
-
 def clear_directory(directory_path):
     # Check if the directory exists
     if os.path.exists(directory_path):
@@ -16,6 +15,11 @@ def clear_directory(directory_path):
             except Exception as e:
                 print(f"Error deleting {file_path}: {e}")
 
+def create_directory(directory_path):
+    # Check if the directory exists, if not, create it
+    if not os.path.exists(directory_path):
+        os.makedirs(directory_path)
+
 def parse_nmea(sentence):
     try:
         msg = pynmea2.parse(sentence)
@@ -25,7 +29,7 @@ def parse_nmea(sentence):
 
 def full_parsed_nmea_directory(input_directory, output_directory):
     # Ensure the output directory exists
-    os.makedirs(output_directory, exist_ok=True)
+    create_directory(output_directory)
 
     for filename in os.listdir(input_directory):
         input_file_path = os.path.join(input_directory, filename)
@@ -77,11 +81,11 @@ def convert_coordinates(latitude, longitude, lat_direction, lon_direction):
 
 def process_nmea_directory(input_directory, output_directory):
     # Ensure the output directory exists
-    os.makedirs(output_directory, exist_ok=True)
+    create_directory(output_directory)
 
     for filename in os.listdir(input_directory):
         input_file_path = os.path.join(input_directory, filename)
-        output_file_path = os.path.join(output_directory, f"parsed_{filename}")
+        output_file_path = os.path.join(output_directory, f"processed_parsed_{filename}")
 
         with open(input_file_path, 'r') as infile, open(output_file_path, 'a') as outfile:
             for line in infile:
@@ -110,9 +114,6 @@ def process_nmea_directory(input_directory, output_directory):
                     output_line = ', '.join(f"{label}: {value}" for label, value in components.items()) + '\n'
                     outfile.write(output_line)
 
-
-
-
 # Specify the path to the input directory and output directory
 input_directory = '_01_input_nmea_data'
 output_directory = 'processed_parsed_nmea'
@@ -126,4 +127,3 @@ print("Contents cleared successfully.")
 
 full_parsed_nmea_directory(input_directory, full_output_directory)
 process_nmea_directory(input_directory, output_directory)
-
