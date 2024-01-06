@@ -116,7 +116,7 @@ def translate_line(line):
     ECEFVZ_decimal = hex_to_decimal_ECEFVZ(ECEFVZ_hex)
     translation["ECEF-VZ"] = ECEFVZ_decimal
 
-    return line
+    return translation
 
 def translate_fix_mode_section(fix_mode):
     if fix_mode == "00":
@@ -265,17 +265,20 @@ def hex_to_decimal_ECEFVZ(ECEFVZ_hex):
 
 
 def translate_and_save(input_file, output_file, save_original):
+    # Assuming 'translation' is a dictionary with mapping of words
+    translation = {'word1': 'translated_word1', 'word2': 'translated_word2', 'word3': 'translated_word3'}
+
     with open(input_file, 'r', encoding='utf-8') as infile, open(output_file, 'w', encoding='utf-8') as outfile:
         for line in infile:
             # Use the translate_line function to translate each line
-            translation = translate_line(line)
+            translated_line = translate_line(line, translation)
 
             # Also save the original line in the new file
-            if save_original == True:
-                outfile.write(f"Original: {line.strip()}\nTranslated: {translation.strip()}\n\n")
-            # Only the save the translated line
-            if save_original == False:
-                outfile.write(f"{translation.strip()}\n\n")
+            if save_original:
+                outfile.write(f"Original: {line.strip()}\nTranslated: {translated_line.strip()}\n\n")
+            # Only save the translated line
+            else:
+                outfile.write(f"{translated_line.strip()}\n\n")
 
 # DDecide if you want to save the origianl line or not
 save_original = False
