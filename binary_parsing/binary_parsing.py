@@ -1,10 +1,3 @@
-#    Message Format
-
-# Start of Sequence   Payload Length      Message ID      Message Body                Checksum (CS)       End of Sequence
-# 0xA0, 0xA1          Two Bytes           1 bytes         Payload up to 65535 bytes   One bytes           0x0D, 0x0A
-
-
-# <0xA0,0xA1><PL><Message ID><Message Body><CS><0x0D,0x0A>
 import json
 
 
@@ -263,7 +256,6 @@ def hex_to_decimal_ECEFVZ(ECEFVZ_hex):
 
 def translate_and_save(input_file, output_file, save_original):
     # Assuming 'translation' is a dictionary with mapping of words
-    translation = {'word1': 'translated_word1', 'word2': 'translated_word2', 'word3': 'translated_word3'}
 
     with open(input_file, 'r', encoding='utf-8') as infile, open(output_file, 'w', encoding='utf-8') as outfile:
         for line in infile:
@@ -277,10 +269,9 @@ def translate_and_save(input_file, output_file, save_original):
             else:
                 outfile.write(f"{json.dumps(translated_line)}\n")
 
-# DDecide if you want to save the origianl line or not
+# Decide if you want to save the origianl line or not
 save_original = False
 
 
 # Replace 'input.txt' and 'output.txt' with your input and output file names
-# Optionally, specify the target language (e.g., 'es' for Spanish, 'fr' for French)
 translate_and_save('input.txt', 'output.txt', save_original)
