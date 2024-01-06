@@ -5,7 +5,7 @@
 
 
 # <0xA0,0xA1><PL><Message ID><Message Body><CS><0x0D,0x0A>
-
+import json
 
 
 
@@ -118,6 +118,7 @@ def translate_line(line):
     return translation
 
 def translate_fix_mode_section(fix_mode):
+    fix_mode_meaning = ""
     if fix_mode == "00":
         fix_mode_meaning = "no_fix"
     if fix_mode == "01":
@@ -267,14 +268,14 @@ def translate_and_save(input_file, output_file, save_original):
     with open(input_file, 'r', encoding='utf-8') as infile, open(output_file, 'w', encoding='utf-8') as outfile:
         for line in infile:
             # Use the translate_line function to translate each line
-            translated_line = translate_line(line, translation)
+            translated_line = translate_line(line)
 
             # Also save the original line in the new file
             if save_original:
-                outfile.write(f"Original: {line.strip()}\nTranslated: {translated_line.strip()}\n\n")
+                outfile.write(f"Original: {line.strip()}\nTranslated: {translated_line}\n")
             # Only save the translated line
             else:
-                outfile.write(f"{translated_line.strip()}\n\n")
+                outfile.write(f"{json.dumps(translated_line)}\n")
 
 # DDecide if you want to save the origianl line or not
 save_original = False
