@@ -1,6 +1,32 @@
 import serial
 
 
+
+# This class is used to store the Serial Port Characteristics, such as COM and Speed
+class SerialPort:
+    def __init__(self):
+        self._serial_port = None
+        self._serial_port_speed = None
+
+    @property
+    def serial_port(self):
+        return self._serial_port
+
+    @serial_port.setter
+    def serial_port(self, value):
+        # You can add validation or additional logic here if needed
+        self._serial_port = value
+
+    @property
+    def serial_port_speed(self):
+        return self._serial_port_speed
+
+    @serial_port_speed.setter
+    def serial_port_speed(self, value):
+        # You can add validation or additional logic here if needed
+        self._serial_port_speed = value
+
+
 def send_receive_hex_message(serial_port, hex_message):
     try:
         # Open the serial port
@@ -33,20 +59,20 @@ def message_config_power_mode(): #page20
     01 = Update to both SRAM & FLASH
     02 = Temporarily enabled"""))
 
-    if mode_option == 00:
-        if attribute_option == 00:
+    if mode_option == "00":
+        if attribute_option == "00":
             hex_message = "A0A10003090000090D0A"  # Example Hex message
-        if attribute_option == 01:
+        if attribute_option == "01":
             hex_message = "A0A10003090000090D0A"  # Example Hex message
-        if attribute_option == 02
+        if attribute_option == "02":
             hex_message = "A0A10003090000090D0A"  # Example Hex message
         send_receive_hex_message(serial_port, hex_message)
-    if mode_option == 01:
-        if attribute_option == 00:
+    if mode_option == "01":
+        if attribute_option == "00":
             hex_message = "A0A10003090000090D0A"  # Example Hex message
-        if attribute_option == 01:
+        if attribute_option == "01":
             hex_message = "A0A10003090000090D0A"  # Example Hex message
-        if attribute_option == 02:
+        if attribute_option == "02":
             hex_message = "A0A10003090000090D0A"  # Example Hex message
         send_receive_hex_message(serial_port, hex_message)
 
@@ -76,29 +102,29 @@ def message_output_type(serial_port):
         print("Invalid output type")
 
 
-def message_serial_port_config(serial_port):
+def message_serial_port_config(serial_port, serial_port_speed):
 
     hex_message = "0xA0 A1 00 04 05 00 01 00 05 0D 0A" # Unfinished Hex Message
     send_receive_hex_message(serial_port, hex_message)
 
 
 
-def message_choice(serial_port):
-
-    # This part is to configure the Serial port to the desired port
-    serial_config = str(input("Please tell if you wish to change the serial port config (YES/NO): "))
-    if serial_config.upper() == "TRUE":
-        serial_port_choice = str(input("Please write the serial port name (e.g. COM1): "))
-        message_serial_port_config(serial_port_choice)
-    else:
-        print("Serial Port Config Declined")
-
-    # This part is to decide the output type between NMEA and Binary
-    type_choice = str(input("Please choose if you want to choose output type (TRUE/FALSE): "))
-    if type_choice.upper() == "TRUE":
-        message_output_type(serial_port)
-    else:
-        print("Choice of Output Type declined")
-
-# Replace 'COM1' with the appropriate serial port
-message_choice('COM1')
+# def message_choice(serial_port):
+#
+#     # This part is to configure the Serial port to the desired port
+#     serial_config = str(input("Please tell if you wish to change the serial port config (YES/NO): "))
+#     if serial_config.upper() == "TRUE":
+#         serial_port_choice = str(input("Please write the serial port name (e.g. COM1): "))
+#         message_serial_port_config(serial_port_choice)
+#     else:
+#         print("Serial Port Config Declined")
+#
+#     # This part is to decide the output type between NMEA and Binary
+#     type_choice = str(input("Please choose if you want to choose output type (TRUE/FALSE): "))
+#     if type_choice.upper() == "TRUE":
+#         message_output_type(serial_port)
+#     else:
+#         print("Choice of Output Type declined")
+#
+# # Replace 'COM1' with the appropriate serial port
+# message_choice('COM1')
