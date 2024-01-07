@@ -26,6 +26,12 @@ class SerialPort:
         # You can add validation or additional logic here if needed
         self._serial_port_speed = value
 
+    def get_serial_port(self):
+        return self._serial_port
+
+    def get_serial_port_speed(self):
+        return self._serial_port_speed
+
 
 def send_receive_hex_message(serial_port, hex_message):
     try:
@@ -49,7 +55,7 @@ def send_receive_hex_message(serial_port, hex_message):
     except Exception as e:
         print(f"Error: {e}")
 
-def message_config_power_mode(): #page20
+def message_config_power_mode(serial_port_instance): #page20
     mode_option = input(print("""Please make a choice in Mode:
     00 = Normal (diasble)
     01 = Power Save (enable)"""))
@@ -66,7 +72,7 @@ def message_config_power_mode(): #page20
             hex_message = "A0A10003090000090D0A"  # Example Hex message
         if attribute_option == "02":
             hex_message = "A0A10003090000090D0A"  # Example Hex message
-        send_receive_hex_message(serial_port, hex_message)
+        send_receive_hex_message(serial_port_instance.serial_port, hex_message)
     if mode_option == "01":
         if attribute_option == "00":
             hex_message = "A0A10003090000090D0A"  # Example Hex message
@@ -74,38 +80,36 @@ def message_config_power_mode(): #page20
             hex_message = "A0A10003090000090D0A"  # Example Hex message
         if attribute_option == "02":
             hex_message = "A0A10003090000090D0A"  # Example Hex message
-        send_receive_hex_message(serial_port, hex_message)
+        send_receive_hex_message(serial_port_instance.serial_port, hex_message)
 
 def message_update_rate_GNSS(): #page22
     rate_option = input(print("Unfinished")) # Not Understanding the Documentation
 
 
-def message_ask_position_update_rate(): #page23
+def message_ask_position_update_rate(serial_port_instance): #page23
     hex_message = "A0A10003090000090D0A"  # Example Hex message
-    send_receive_hex_message(serial_port, hex_message)
+    send_receive_hex_message(serial_port_instance.serial_port, hex_message)
 
-def message_output_type(serial_port):
+def message_output_type(serial_port_instance, output_choice):
     # Structure: <0xA0,0xA1><PL><09><message body><CS><0x0D,0x0A>
     # Example: A0 A1 00 03 09 00 00 09 0D 0A
     # Field 1 - Message ID
     # Field 2 - Type: 00-No Output; 01-NMEA Message; 02-Binary Message
     # Field 3 - Attributes: 0-Update to SRAM; 1-Update to Both SRAM & FlASH
-
-    output_type = input(print("Choose the output type (NMEA/BINARY): "))
-    if output_type == "NMEA":
+    if output_choice.upper() == "NMEA":
         hex_message = "A0A10003090000090D0A"  # Example Hex message
-        send_receive_hex_message(serial_port, hex_message)
-    elif output_type == "BINARY":
+        send_receive_hex_message(serial_port_instance.get_serial_port(), hex_message)
+    elif output_choice.upper() == "BINARY":
         hex_message = "A0A10003090200090D0A"  # Example Hex message
-        send_receive_hex_message(serial_port, hex_message)
+        send_receive_hex_message(serial_port_instance.get_serial_port(), hex_message)
     else:
         print("Invalid output type")
 
 
-def message_serial_port_config(serial_port, serial_port_speed):
+def message_serial_port_config(serial_port_instance, serial_port, serial_port_speed):
 
     hex_message = "0xA0 A1 00 04 05 00 01 00 05 0D 0A" # Unfinished Hex Message
-    send_receive_hex_message(serial_port, hex_message)
+    send_receive_hex_message(serial_port_instance.get_serial_port(), hex_message)
 
 
 

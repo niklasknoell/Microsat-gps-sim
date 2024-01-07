@@ -2,6 +2,8 @@ import tkinter as tk
 from tkinter import simpledialog
 from general_commands import *
 
+# Instantiate the SerialPort class
+my_serial_port = SerialPort()
 
 # Fucntion Related to the Button for Serial Port Configuration
 def serial_port_config(root):  # Pass 'root' as a parameter
@@ -30,20 +32,34 @@ def apply_serial_config(root, serial_port, serial_port_speed):
     # Use the entered serial port configuration
     print(f"Configuring serial port: Port={serial_port}, Baud Rate={serial_port_speed}")
 
-    # Apply the inputs to be saved in the SerialPort class
-    my_serial_port = SerialPort()
-
     # Set serial port and speed
     my_serial_port.serial_port = serial_port
     my_serial_port.serial_port_speed = serial_port_speed
 
     # Here you can add the actual logic to configure the serial port using the provided parameters
-    message_serial_port_config(serial_port, serial_port_speed)
+    message_serial_port_config(my_serial_port, serial_port, serial_port_speed)
 
 
 # Function Related to the Button for .......
-def function_for_button_2():
-    print("Button 2 clicked!")
+def output_config(root):
+    # Create a new window for serial port configuration
+    config_window = tk.Toplevel(root)
+    config_window.title("Output Choice")
+
+    # Labels and Entry widgets for serial port parameters
+    output_choice = tk.Label(config_window, text="Choose between NMEA and Binary output: ")
+    output_choice.grid(row=0, column=0, padx=5, pady=5)
+    output_choice_entry = tk.Entry(config_window)
+    output_choice_entry.grid(row=0, column=1, padx=5, pady=5)
+
+    # Button to apply the serial port configuration
+    apply_button = tk.Button(config_window, text="Apply",
+                             command=lambda: apply_output_config(root, output_choice_entry.get()))
+    apply_button.grid(row=2, column=0, columnspan=2, pady=10)
+
+def apply_output_config(root, output_choice_entry):
+    message_output_type(my_serial_port, output_choice_entry)
+    return
 
 
 # Function Related to the Button for .......
@@ -92,7 +108,7 @@ def create_gui():
     # Create buttons with different names and assign distinct functions
     button_info = [
         {"name": "Serial Port Config", "function": lambda: serial_port_config(root)},
-        {"name": "N/A", "function": function_for_button_2},
+        {"name": "Output Choice", "function": lambda: output_config(root)},
         {"name": "N/A", "function": function_for_button_3},
         {"name": "N/A", "function": function_for_button_4},
         {"name": "N/A", "function": function_for_button_5},
