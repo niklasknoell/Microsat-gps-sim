@@ -17,7 +17,7 @@ def serial_port_config(root):  # Pass 'root' as a parameter
     serial_port_entry = tk.Entry(config_window)
     serial_port_entry.grid(row=0, column=1, padx=5, pady=5)
 
-    serial_port_speed = tk.Label(config_window, text="Write Down the Serial Port Speed:")
+    serial_port_speed = tk.Label(config_window, text="Write Down the Serial Port Speed (Please input 115200):")
     serial_port_speed.grid(row=1, column=0, padx=5, pady=5)
     serial_port_speed_entry = tk.Entry(config_window)
     serial_port_speed_entry.grid(row=1, column=1, padx=5, pady=5)
