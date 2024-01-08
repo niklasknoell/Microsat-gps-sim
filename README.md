@@ -8,6 +8,7 @@ Task Distribution:
 - recompile gps-sdr-sim for longer runtimes (done locally, need to check on the machine in the lab) (Niklas)
 - run the sdr to gnss receiver and record output in NMEA format (Maurits)
 - parse NMEA format (Maurits)
-- run the sdr to gnss receiver and record output in binary format (Mattias)
-- parse binary format (Mattias)
+- run the sdr to gnss receiver and record output in binary format (Maurits,Mattias?)
+- parse binary format (Maurits,Mattias?)
 - write analysis program to compare trajectory input and gnss receiver output, i.e. quantify error (Bas)
+
