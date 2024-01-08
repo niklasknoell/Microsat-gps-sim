@@ -3,6 +3,7 @@ import os
 import matplotlib
 from matplotlib import pyplot as plt
 import numpy as np
+from tudatpy.kernel.astro import two_body_dynamics
 
 
 #-----------------------Directories-----------------------#
