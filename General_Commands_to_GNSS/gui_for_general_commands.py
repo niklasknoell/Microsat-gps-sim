@@ -5,7 +5,7 @@ from general_commands import *
 # Instantiate the SerialPort class
 my_serial_port = SerialPort()
 
-# Fucntion Related to the Button for Serial Port Configuration
+# Function Related to the Button for Serial Port Configuration
 def serial_port_config(root):  # Pass 'root' as a parameter
     # Create a new window for serial port configuration
     config_window = tk.Toplevel(root)
