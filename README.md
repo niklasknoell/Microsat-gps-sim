@@ -82,17 +82,17 @@ Now the simulation will run in an infinite loop, with the transmission restartin
 
 
 
-## run the sdr to gnss receiver and record output in NMEA format
+## Run the sdr to gnss receiver and record output in NMEA format
 
 ................
 
 
-## parse NMEA format
+## Parse NMEA format
 
 ................
 
 
-## run the sdr to gnss receiver and record output in binary format
+## Run the sdr to gnss receiver and record output in binary format
 
 ................
 
