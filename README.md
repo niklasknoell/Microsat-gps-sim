@@ -93,6 +93,16 @@ These errors are commonly analyzed in astrodynamics.
 The state error in the ECEF frame has been directly calculated by taking the difference in ECEF state components between the benchmark trajectory and the GNSS receiver. The state error in the ECEF frame is shown in the following figure:
 
 
+not the actual error plots!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+<table>
+  <tr>
+    <td><img src="https://github.com/niklasknoell/Microsat-gps-sim/assets/74927648/6fe12c6a-d308-44f1-b6da-bc8a003addc5" alt="Image 1"></td>
+    <td><img src="https://github.com/niklasknoell/Microsat-gps-sim/assets/74927648/bc6c2f6e-f9ce-4dcb-b991-7eb3d6e0e44b" alt="Image 2"></td>
+  </tr>
+</table>
+
+
 ............................
 
 
@@ -101,12 +111,28 @@ To charachterize the radial, along track, cross track error in the RSW frame, fu
 The radial, along track and cross track error in the RSW frame is shown in the following figure:
 
 
+not the actual error plots!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+<table>
+  <tr>
+    <td><img src="https://github.com/niklasknoell/Microsat-gps-sim/assets/74927648/1afed979-c901-4242-bd14-cefe7c5dcee9" alt="Image 1"></td>
+    <td><img src="https://github.com/niklasknoell/Microsat-gps-sim/assets/74927648/81620b59-0f74-420f-8212-9969501c9afb" alt="Image 2"></td>
+  </tr>
+</table>
+
+
+
+
 ............................
 
 
 
 The error in the Keplerian elements is shown in the following figure:
 
+
+not the actual error plots!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+![image](https://github.com/niklasknoell/Microsat-gps-sim/assets/74927648/a6ba62e2-dc6c-41dd-8ecf-01c913ad1e08)
 
 
 ............................
