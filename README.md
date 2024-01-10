@@ -11,6 +11,7 @@ Task Distribution:
 - run the sdr to gnss receiver and record output in binary format (Maurits,Mattias?)
 - parse binary format (Maurits,Mattias?)
 - write analysis program to compare trajectory input and gnss receiver output, i.e. quantify error (Bas)
+- sensitivity to min. elevation angle, ionospheric correction, clock correction (Mattias?)
 
 
 ## Create trajectory in csv based on TLE
@@ -80,7 +81,29 @@ $ python NMEA_store.py
 Now the simulation will run in an infinite loop, with the transmission restarting once it is done. Thus, once the generated signal has been completely transmitted both programs need to be manually stopped (Ctrl+C), leaving a log file with a timestamp of all NMEA messages the receiver has generated. 
 
 
-## Write analysis program to compare trajectory input and gnss receiver output, i.e. quantify error of the GNSS receiver with respect to the benchmark trajectory. 
+
+## run the sdr to gnss receiver and record output in NMEA format
+
+................
+
+
+## parse NMEA format
+
+................
+
+
+## run the sdr to gnss receiver and record output in binary format
+
+................
+
+
+## Parse binary format
+
+
+................
+
+
+## Write analysis program to compare trajectory input and gnss receiver output, i.e. quantify error of the GNSS receiver with respect to the benchmark trajectory
 
 Based on the benchmark trajectory and the GNSS receiver output, the GNSS receiver error can be quantified. This can be done in various ways. The following errors have been analyzed:
 
