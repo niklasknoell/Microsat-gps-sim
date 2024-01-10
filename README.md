@@ -125,11 +125,13 @@ not the actual error plots!!!!!!!!!!!!!!!!!!!!!!!!!!
   </tr>
 </table>
 
+As can be observed from the figures, the order of magnitude of the error of the position components is ... m. For the velocity components, the order of magnitude of the error is ... m/s.
+
 
 ............................
 
 
-To charachterize the radial, along track, cross track error in the RSW frame, further clarification is required. Depending on the orientation and location of the satellite with respect to the earth, the RSW coordinate system which is attached to the satellite differs. Consequently, to calculate the radial, along track and cross track error, one satellite has to be taken as the reference. As the benchmark trajectory is considered to be the truth, the RSW frame to quantify the error is fixed to the satellite of the benchmark trajectory. The radial, along track and cross track components of the benchmark trajectory can be calculated by converting its inertial components to RSW components. This can be done by multipliying the [inertial to RSW transformation matrix](https://py.api.tudat.space/en/stable/frame_conversion.html#tudatpy.astro.frame_conversion.inertial_to_rsw_rotation_matrix) with the inertial position itself. The inertial to RSW transformation matrix also requires the inertial position itself to compute the orientation of the frame. The radial, along track and cross track components of the GNSS receiver with respect to this frame can be calculated by multiplying the same inertial to RSW transformation matrix, still with the inertial benchmark trajectory as input, with the inertial components of the GNSS receiver. 
+To charachterize the radial, along track, cross track error in the RSW frame, further clarification is required. Depending on the orientation and location of the satellite with respect to the earth, the RSW coordinate system which is attached to the satellite differs. Consequently, to calculate the radial, along track and cross track error, one satellite has to be taken as the reference. As the benchmark trajectory is considered to be the truth, the RSW frame to quantify the error is fixed to the satellite of the benchmark trajectory. The radial, along track and cross track components of the benchmark trajectory can be calculated by converting its inertial components to RSW components. This can be done by multipliying the [inertial to RSW transformation matrix](https://py.api.tudat.space/en/stable/frame_conversion.html#tudatpy.astro.frame_conversion.inertial_to_rsw_rotation_matrix) with the inertial position. The inertial to RSW transformation matrix also requires the inertial position itself to compute the orientation of the frame. The radial, along track and cross track components of the GNSS receiver with respect to this frame can be calculated by multiplying the same inertial to RSW transformation matrix, still with the inertial benchmark trajectory as input, with the inertial components of the GNSS receiver. 
 
 The radial, along track and cross track error in the RSW frame is shown in the following figure:
 
@@ -142,6 +144,10 @@ not the actual error plots!!!!!!!!!!!!!!!!!!!!!!!!!!
     <td><img src="https://github.com/niklasknoell/Microsat-gps-sim/assets/74927648/81620b59-0f74-420f-8212-9969501c9afb" alt="Image 2"></td>
   </tr>
 </table>
+
+For the position components in the RSW frame, it is observed that the order of magnitude of the radial error is ... m. For the along track direction, the order of magnitude of the error is ...m. Finally, the cross-track direction has the smallest error. Its order of magnitude is ...m. 
+
+For the velocity components in the RSW frame, it is observed that the order of magnitude of the radial error is ... m/s. For the along track direction, the order of magnitude of the error is ...m/s. Finally, the cross-track direction has the smallest error. Its order of magnitude is ...m/s. 
 
 
 
@@ -157,6 +163,8 @@ not the actual error plots!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 ![image](https://github.com/niklasknoell/Microsat-gps-sim/assets/74927648/a6ba62e2-dc6c-41dd-8ecf-01c913ad1e08)
 
+
+The following observations are made from the evolution of the error of the six Keplerian elements. 
 
 ............................
 
