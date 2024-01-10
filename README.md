@@ -36,7 +36,7 @@ The aerodynamic drag and the radiation pressure from the sun require the followi
 
 The drag and radiation reference area have been calculated based on the dimensions, which are 5x5x18 cm for Delfi-PQ. The drag and radiation coefficient have both been assumed to be 1.2, which is in line with values used for the slighly larger 3U Delfi-C3 on [Tudat](https://docs.tudat.space/en/latest/_src_getting_started/_src_examples/notebooks/propagation/linear_sensitivity_analysis.html). 
 
-Since the frequency of the GNSS receiver is 10 Hz, a fixed step size of 0.1 s has been used in the Tudat simulation. Contrary to the GNSS receiver, the propagation time of Tudat is not limited to the actual duration of the propagation. In fact, trajectories of days or months are generated within seconds or at most a few minutes, when using the modest step size of 0.1 s and an rk4 integrator. 
+Since the frequency of the gps-sdr-sim software is 10 Hz, a fixed step size of 0.1 s has been used in the Tudat simulation. Contrary to the GNSS receiver, the propagation time of Tudat is not limited to the actual duration of the propagation. In fact, trajectories of days or months are generated within seconds or at most a few minutes, when using the modest step size of 0.1 s and an rk4 integrator. 
 
 The propagation results of Tudat are stored in the state history, containing the inertial position and velocity components. Moreover, any dependent variables of interest can be stored. The latter is one of the main reasons why Tudat has been chosen. By saving the following dependent variables in csv format:
 
@@ -49,10 +49,35 @@ no additional computations had to be done to transform the inertial position and
 ## gps-sdr-sim 
 
 
-.......
+Once the files containing the xyz or llh position information is generated, the signals to be replayed by the SDR to the GNSS receiver can be generated. For this purpose the open-source software gps-sdr-sim is used. 
 
+At the start of the project, however a few issues were encountered. The motion data that is input when running the software is stored in a 2d-array, which has size that is defined by a value set at compile time. Thus, the precompiled executable that exists in the repository cannot be used for simulations longer than 5 minutes, as that is the default value for the size of that array. Thus, a compiler was installed, the flag changed to a value allowing the simulation of at least a few orbits and the program recompiled. 
 
+At this point another issue was discovered in the form of a bug that occurs when running the program if it has been compiled using a long maximum runtime parameter. This bug stopped the program from running at all, immediately causing a segmentation fault upon execution. After some debugging the cause was found to be a stackoverflow due to how the previously mentioned 2-d array was declared inside of the main function. With large runtimes this array consumed large amounts of memory on the stack, exceeding the available space in the stack. This has been fixed by simply moving the declaration of that array outside of the main function, such that it would not be allocated on the stack, thus making a stackoverflow due to this reason impossible. The fix was first implemented locally and tested, and once proved successful a [pull-request](https://github.com/osqzss/gps-sdr-sim/pull/389) on the public repository was created and successfully merged. 
 
+Now it was possible to generate the desired signals for two orbits and replay them to the receiver, which worked good at first. However, it was noticed that the receiver would periodically lose lock and not recover quickly. It was observed on the Receiver GUI that commanding a hot restart would quickly regain a fix. Thus a program was written that would record all the data from the receiver for later analysis, while checking at all times whether a position fix is present. If the fix is lost, it issues the hot restart command. Doing this reduced the outage time from a large fraction of the two orbit run down to below 90 seconds over the two orbits with a total duration of a bit over three hours.
+
+To summarize the workflow to make this reproducible here:
+
+- recompile gps-sdr-sim with a large USER_MOTION_SIZE parameter (desired simulation time in seconds times 10): 
+```
+$ gcc gpssim.c -lm -O3 -o gps-sdr-sim.exe -DUSER_MOTION_SIZE=98000
+```
+- generate signal file using gps-sdr-sim and brdc file (we used the default one in the repository, attention the output file is very large being about 1GB per 100s of simulation):
+```
+$ gps-sdr-sim.exe -e <brdc file> -u/-x <motion-file in either ECEF xyz (-u) or LLH (-x)> -s 2600000 -o <output file location/name>
+```
+
+- now replay the generated output file to the SDR using the python script provided in the repository (requires a few conda packages):
+```
+$ python gps-sdr-sim-uhd.py -t <output file previously generated> -s 2600000 -x 30 
+```
+- now the sdr will transmit the simulated gps signals, and the receiver will start being able to generate a fix. Thus we will (in a seperate window) run the recording and hot-restart program located in the recording folder of this repository:
+```
+$ python NMEA_store.py
+```
+
+Now the simulation will run in an infinite loop, with the transmission restarting once it is done. Thus, once the generated signal has been completely transmitted both programs need to be manually stopped (Ctrl+C), leaving a log file with a timestamp of all NMEA messages the receiver has generated. 
 
 
 ## Write analysis program to compare trajectory input and gnss receiver output, i.e. quantify error of the GNSS receiver with respect to the benchmark trajectory. 
