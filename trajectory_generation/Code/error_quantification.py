@@ -63,6 +63,9 @@ ax.set_xlabel('time [s]')
 ax.set_ylabel('RMSE [m]')
 ax.grid()
 
+output_path = os.path.join(figures_path,"RMSE.pdf").replace("\\.", ".")
+fig.savefig(output_path, bbox_inches='tight')
+
 
 
 # RSW = np.genfromtxt(os.path.join(file_path,"RSW.txt").replace("\\.", "."), delimiter=',')
