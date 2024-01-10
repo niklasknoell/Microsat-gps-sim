@@ -2,7 +2,7 @@
 Microsat engineering GNSS simulator
 
 
-Task Distribution:
+Task Distribution of the assignment for the course Microsat Engineering (AE4S10):
 - Create trajectory in csv based on TLE (Bas)
 - gps-sdr-sim (Niklas)
 - recompile gps-sdr-sim for longer runtimes (done locally, need to check on the machine in the lab) (Niklas)
@@ -11,7 +11,7 @@ Task Distribution:
 - run the sdr to gnss receiver and record output in binary format (Maurits,Mattias?)
 - parse binary format (Maurits,Mattias?)
 - write analysis program to compare trajectory input and gnss receiver output, i.e. quantify error (Bas)
-- sensitivity to min. elevation angle, ionospheric correction, clock correction (Mattias?)
+- sensitivity to min. elevation angle, ionospheric correction, clock correction, ....., others (Mattias?)
 
 
 ## Create trajectory in csv based on TLE
