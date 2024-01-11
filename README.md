@@ -112,7 +112,11 @@ Based on the benchmark trajectory and the GNSS receiver output, the GNSS receive
 - error in the Keplerian elements
 - RMS error
 
-These errors are commonly analyzed in astrodynamics. 
+These errors are commonly analyzed in astrodynamics. Before analyzing them, the theoretical accuracy of the [S1216F8-GI3 GPS receiver](https://www.skytraq.com.tw/datasheet/S1216V8_v0.9.pdf) is reported to be:
+
+- position accuracy: 2.5 m CEP (Circular Error Probability)
+- velocity accuracy: 0.1 m/s
+- time accuracy: 10 ns
 
 The state error in the ECI frame has been directly calculated by taking the difference in ECI state components between the benchmark trajectory and the GNSS receiver. The state error in the ECI frame is shown in the following figure:
 
