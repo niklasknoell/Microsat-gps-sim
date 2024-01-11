@@ -11,7 +11,7 @@ Task Distribution of the assignment for the course Microsat Engineering (AE4S10)
 - run the sdr to gnss receiver and record output in binary format (Maurits,Mattias?)
 - parse binary format (Maurits,Mattias?)
 - write analysis program to compare trajectory input and gnss receiver output, i.e. quantify error (Bas)
-- sensitivity to min. elevation angle, ionospheric correction, clock correction, ....., others (Mattias?)
+- sensitivity analysis to min. elevation angle, ionospheric correction, clock correction, ....., others (Mattias?)
 
 
 ## Create trajectory in csv based on TLE
@@ -191,6 +191,16 @@ The following observations are made from the evolution of the error of the six K
 
 ............................
 
+
+## Sensitivity analysis to min. elevation angle, ionospheric correction, clock correction, ....., others
+
+It has also been investigated which settings can be changed to get the error down further. The following variables have been played with:
+
+-
+-
+-
+
+It was found that ...... enable to get a lower error. Incorporating .... this gives the following error plots, which after comparison with the previous error plots indeed shows that the error can be reduced. 
 
 
 
