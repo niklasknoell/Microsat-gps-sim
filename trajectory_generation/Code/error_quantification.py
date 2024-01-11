@@ -35,23 +35,43 @@ else:
 
 
 #---------------------State error---------------------#
+
 states = np.genfromtxt(os.path.join(file_path,"states.txt").replace("\\.", "."), delimiter=',')
 states_GPS = np.genfromtxt(os.path.join(file_path,"states_GPS.txt").replace("\\.", "."), delimiter=',')
 
 fig, ax = plt.subplots()
 # ax.set_title("position components error over time")
-ax.scatter(states[:,0], states_GPS[:,1]-states[:,1], s=1,label='$\Delta$x')
-ax.scatter(states[:,0], states_GPS[:,2]-states[:,2], s=1,label='$\Delta$y')
-ax.scatter(states[:,0], states_GPS[:,3]-states[:,3], s=1,label='$\Delta$z')
-ax.set_xlabel('time [s]',fontsize=20)
-ax.set_ylabel('|position component error| [m]',fontsize=20)
+ax.scatter(states[:,0], states_GPS[:,1]-states[:,1], s=5)
+ax.plot(states[:,0], states_GPS[:,1]-states[:,1],label='$\Delta$x')
+ax.scatter(states[:,0], states_GPS[:,2]-states[:,2], s=5)
+ax.plot(states[:,0], states_GPS[:,2]-states[:,2],label='$\Delta$y')
+ax.scatter(states[:,0], states_GPS[:,3]-states[:,3], s=5)
+ax.plot(states[:,0], states_GPS[:,3]-states[:,3],label='$\Delta$z')
+ax.set_xlabel('time [s]',fontsize=16)
+ax.set_ylabel('position component error [m]',fontsize=16)
 ax.grid()
 ax.tick_params(axis='both', which='major', labelsize=16)
 ax.legend(fontsize=20)
 
-
-
 output_path = os.path.join(figures_path,"states_position_error.pdf").replace("\\.", ".")
+fig.savefig(output_path, bbox_inches='tight')
+
+
+fig, ax = plt.subplots()
+# ax.set_title("position components error over time")
+ax.scatter(states[:,0], states_GPS[:,4]-states[:,4], s=5)
+ax.plot(states[:,0], states_GPS[:,4]-states[:,4],label='$\Delta V_{x}$')
+ax.scatter(states[:,0], states_GPS[:,5]-states[:,5], s=5)
+ax.plot(states[:,0], states_GPS[:,5]-states[:,5],label='$\Delta V_{y}$')
+ax.scatter(states[:,0], states_GPS[:,6]-states[:,6], s=5)
+ax.plot(states[:,0], states_GPS[:,6]-states[:,6],label='$\Delta V_{z}$')
+ax.set_xlabel('time [s]',fontsize=16)
+ax.set_ylabel('velocity component error [m/s]',fontsize=16)
+ax.grid()
+ax.tick_params(axis='both', which='major', labelsize=16)
+ax.legend(fontsize=20)
+
+output_path = os.path.join(figures_path,"states_velocity_error.pdf").replace("\\.", ".")
 fig.savefig(output_path, bbox_inches='tight')
 
 
@@ -62,9 +82,10 @@ RMSE = np.genfromtxt(os.path.join(file_path,"RMSE_position.txt").replace("\\.", 
 fig, ax = plt.subplots()
 # ax.set_title("position components error over time")
 ax.scatter(states[:,0], RMSE, s=1)
-ax.set_xlabel('time [s]')
-ax.set_ylabel('RMSE [m]')
+ax.set_xlabel('time [s]',fontsize=16)
+ax.set_ylabel('RMSE [m]',fontsize=16)
 ax.grid()
+ax.tick_params(axis='both', which='major', labelsize=16)
 
 output_path = os.path.join(figures_path,"RMSE_position.pdf").replace("\\.", ".")
 fig.savefig(output_path, bbox_inches='tight')
@@ -75,9 +96,10 @@ RMSE = np.genfromtxt(os.path.join(file_path,"RMSE_velocity.txt").replace("\\.", 
 fig, ax = plt.subplots()
 # ax.set_title("position components error over time")
 ax.scatter(states[:,0], RMSE, s=1)
-ax.set_xlabel('time [s]')
-ax.set_ylabel('RMSE [m/s]')
+ax.set_xlabel('time [s]',fontsize=16)
+ax.set_ylabel('RMSE [m/s]',fontsize=16)
 ax.grid()
+ax.tick_params(axis='both', which='major', labelsize=16)
 
 output_path = os.path.join(figures_path,"RMSE_velocity.pdf").replace("\\.", ".")
 fig.savefig(output_path, bbox_inches='tight')
@@ -90,11 +112,14 @@ RSW_error = np.genfromtxt(os.path.join(file_path,"RSW_error.txt").replace("\\.",
 
 fig, ax = plt.subplots()
 # ax.set_title("position components error over time")
-ax.scatter(states[:,0], RSW_error[:,0], s=1,label='R')
-ax.scatter(states[:,0], RSW_error[:,1], s=1,label='S')
-ax.scatter(states[:,0], RSW_error[:,2], s=1,label='W')
-ax.set_xlabel('time [s]')
-ax.set_ylabel('Error in R, S, W directions [m]')
+ax.scatter(states[:,0], RSW_error[:,0], s=5)
+ax.plot(states[:,0], RSW_error[:,0],label='R')
+ax.scatter(states[:,0], RSW_error[:,1], s=5)
+ax.plot(states[:,0], RSW_error[:,1],label='S')
+ax.scatter(states[:,0], RSW_error[:,2], s=5)
+ax.plot(states[:,0], RSW_error[:,2],label='W')
+ax.set_xlabel('time [s]',fontsize=16)
+ax.set_ylabel('Error in R, S, W direction [m]',fontsize=16)
 ax.grid()
 ax.legend()
 
@@ -105,11 +130,14 @@ fig.savefig(output_path, bbox_inches='tight')
 
 fig, ax = plt.subplots()
 # ax.set_title("position components error over time")
-ax.scatter(states[:,0], RSW_error[:,3], s=1,label='R')
-ax.scatter(states[:,0], RSW_error[:,4], s=1,label='S')
-ax.scatter(states[:,0], RSW_error[:,5], s=1,label='W')
-ax.set_xlabel('time [s]')
-ax.set_ylabel('Error in R, S, W directions [m/s]')
+ax.scatter(states[:,0], RSW_error[:,3], s=5)
+ax.plot(states[:,0], RSW_error[:,3],label='R')
+ax.scatter(states[:,0], RSW_error[:,4], s=5)
+ax.plot(states[:,0], RSW_error[:,4],label='S')
+ax.scatter(states[:,0], RSW_error[:,5], s=5)
+ax.plot(states[:,0], RSW_error[:,5],label='W')
+ax.set_xlabel('time [s]',fontsize=16)
+ax.set_ylabel('Error in R, S, W direction [m/s]',fontsize=16)
 ax.grid()
 ax.legend()
 
