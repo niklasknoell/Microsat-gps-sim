@@ -32,6 +32,9 @@ else:
 
 #---------------------------Plotting---------------------------#
 
+
+
+#---------------------State error---------------------#
 states = np.genfromtxt(os.path.join(file_path,"states.txt").replace("\\.", "."), delimiter=',')
 states_GPS = np.genfromtxt(os.path.join(file_path,"states_GPS.txt").replace("\\.", "."), delimiter=',')
 
@@ -52,9 +55,9 @@ output_path = os.path.join(figures_path,"states_position_error.pdf").replace("\\
 fig.savefig(output_path, bbox_inches='tight')
 
 
+#---------------------RMSE error---------------------#
 
-RMSE = np.genfromtxt(os.path.join(file_path,"RMSE.txt").replace("\\.", "."), delimiter=',')
-
+RMSE = np.genfromtxt(os.path.join(file_path,"RMSE_position.txt").replace("\\.", "."), delimiter=',')
 
 fig, ax = plt.subplots()
 # ax.set_title("position components error over time")
@@ -63,10 +66,25 @@ ax.set_xlabel('time [s]')
 ax.set_ylabel('RMSE [m]')
 ax.grid()
 
-output_path = os.path.join(figures_path,"RMSE.pdf").replace("\\.", ".")
+output_path = os.path.join(figures_path,"RMSE_position.pdf").replace("\\.", ".")
 fig.savefig(output_path, bbox_inches='tight')
 
 
+RMSE = np.genfromtxt(os.path.join(file_path,"RMSE_velocity.txt").replace("\\.", "."), delimiter=',')
+
+fig, ax = plt.subplots()
+# ax.set_title("position components error over time")
+ax.scatter(states[:,0], RMSE, s=1)
+ax.set_xlabel('time [s]')
+ax.set_ylabel('RMSE [m/s]')
+ax.grid()
+
+output_path = os.path.join(figures_path,"RMSE_velocity.pdf").replace("\\.", ".")
+fig.savefig(output_path, bbox_inches='tight')
+
+
+
+#---------------------RSW error---------------------#
 
 RSW_error = np.genfromtxt(os.path.join(file_path,"RSW_error.txt").replace("\\.", "."), delimiter=',')
 
@@ -97,23 +115,6 @@ ax.legend()
 
 output_path = os.path.join(figures_path,"RSW_velocity_error.pdf").replace("\\.", ".")
 fig.savefig(output_path, bbox_inches='tight')
-
-
-
-# RSW = np.genfromtxt(os.path.join(file_path,"RSW.txt").replace("\\.", "."), delimiter=',')
-# RSW_GPS = np.genfromtxt(os.path.join(file_path,"RSW_GPS.txt").replace("\\.", "."), delimiter=',')
-# #
-# # fig, ax = plt.subplots()
-# # # ax.set_title("position components error over time")
-# # ax.scatter(states[:,0], RSW_GPS[:,0]-RSW[:,0], s=1,label='$\Delta$R')
-# # ax.scatter(states[:,0], RSW_GPS[:,0]-RSW[:,0], s=1,label='$\Delta$S')
-# # ax.scatter(states[:,0], RSW_GPS[:,0]-RSW[:,0], s=1,label='$\Delta$W')
-# # ax.set_xlabel('time [s]')
-# # ax.set_ylabel('|position component error| [m]')
-# # ax.grid()
-# # ax.legend()
-
-
 
 
 
