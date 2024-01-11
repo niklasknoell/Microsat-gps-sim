@@ -107,24 +107,28 @@ Now the simulation will run in an infinite loop, with the transmission restartin
 
 Based on the benchmark trajectory and the GNSS receiver output, the GNSS receiver error can be quantified. This can be done in various ways. The following errors have been analyzed:
 
-- state error in the ECEF frame
+- state error in the ECI frame
 - radial (R), along track (S), cross track (W) error in the RSW frame
 - error in the Keplerian elements
 - RMS error
 
 These errors are commonly analyzed in astrodynamics. 
 
-The state error in the ECEF frame has been directly calculated by taking the difference in ECEF state components between the benchmark trajectory and the GNSS receiver. The state error in the ECEF frame is shown in the following figure:
+The state error in the ECI frame has been directly calculated by taking the difference in ECI state components between the benchmark trajectory and the GNSS receiver. The state error in the ECI frame is shown in the following figure:
 
 
 not the actual error plots!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 <table>
   <tr>
-    <td><img src="https://github.com/niklasknoell/Microsat-gps-sim/assets/74927648/6fe12c6a-d308-44f1-b6da-bc8a003addc5" alt="Image 1"></td>
-    <td><img src="https://github.com/niklasknoell/Microsat-gps-sim/assets/74927648/bc6c2f6e-f9ce-4dcb-b991-7eb3d6e0e44b" alt="Image 2"></td>
+    <td><img src="https://github.com/niklasknoell/Microsat-gps-sim/assets/74927648/e8f3e320-96ee-437f-99db-5e4f69e7fc4e" alt="Image 1"></td>
+    <td><img src="https://github.com/niklasknoell/Microsat-gps-sim/assets/74927648/02380160-b588-4305-b391-607fa1c1890c" alt="Image 2"></td>
   </tr>
 </table>
+
+
+
+
 
 As can be observed from the figures, the order of magnitude of the error of the position components is ... m. For the velocity components, the order of magnitude of the error is ... m/s. 
 
@@ -135,10 +139,13 @@ The RMSE calculated up to any time in the propagation is shown in:
 
 <table>
   <tr>
-    <td><img src="https://github.com/niklasknoell/Microsat-gps-sim/assets/74927648/90784b7b-62f1-4764-b9dd-5759ce2cceaf" alt="Image 1"></td>
-    <td><img src="https://github.com/niklasknoell/Microsat-gps-sim/assets/74927648/90784b7b-62f1-4764-b9dd-5759ce2cceaf" alt="Image 2"></td>
+    <td><img src="https://github.com/niklasknoell/Microsat-gps-sim/assets/74927648/7f6e165a-adf7-44de-91a0-1c9b94980426" alt="Image 1"></td>
+    <td><img src="https://github.com/niklasknoell/Microsat-gps-sim/assets/74927648/2fa2d3e8-811b-40a2-8da8-05041d4b157c" alt="Image 2"></td>
   </tr>
 </table>
+
+
+
 
 
 At the final propagation time, after two full orbits, the RMSE is ... m for the position and ... m/s for the velocity. 
@@ -156,8 +163,8 @@ not the actual error plots!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 <table>
   <tr>
-    <td><img src="https://github.com/niklasknoell/Microsat-gps-sim/assets/74927648/1afed979-c901-4242-bd14-cefe7c5dcee9" alt="Image 1"></td>
-    <td><img src="https://github.com/niklasknoell/Microsat-gps-sim/assets/74927648/81620b59-0f74-420f-8212-9969501c9afb" alt="Image 2"></td>
+    <td><img src="https://github.com/niklasknoell/Microsat-gps-sim/assets/74927648/66ffd4c0-d66d-48af-9f1c-74d95c664294" alt="Image 1"></td>
+    <td><img src="https://github.com/niklasknoell/Microsat-gps-sim/assets/74927648/7f252221-aa3b-4846-b8fb-ba4fef4dedb9" alt="Image 2"></td>
   </tr>
 </table>
 
