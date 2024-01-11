@@ -110,6 +110,7 @@ Based on the benchmark trajectory and the GNSS receiver output, the GNSS receive
 - state error in the ECEF frame
 - radial (R), along track (S), cross track (W) error in the RSW frame
 - error in the Keplerian elements
+- RMS error
 
 These errors are commonly analyzed in astrodynamics. 
 
@@ -125,7 +126,22 @@ not the actual error plots!!!!!!!!!!!!!!!!!!!!!!!!!!
   </tr>
 </table>
 
-As can be observed from the figures, the order of magnitude of the error of the position components is ... m. For the velocity components, the order of magnitude of the error is ... m/s.
+As can be observed from the figures, the order of magnitude of the error of the position components is ... m. For the velocity components, the order of magnitude of the error is ... m/s. 
+
+While the error in the state components gives a rough idea of the order of magnitude of the error, a metric for the overall error would be even more useful, as the error in the x, y and z components depends largely on the inclination of the orbit. The root mean squared error (RMSE) gives a good indication of the overall error, which can be also compared with other orbits with different inclination. The RMSE can be calculated with:
+
+
+The RMSE calculated up to any time in the propagation is shown in:
+
+<table>
+  <tr>
+    <td><img src="https://github.com/niklasknoell/Microsat-gps-sim/assets/74927648/90784b7b-62f1-4764-b9dd-5759ce2cceaf" alt="Image 1"></td>
+    <td><img src="https://github.com/niklasknoell/Microsat-gps-sim/assets/74927648/90784b7b-62f1-4764-b9dd-5759ce2cceaf" alt="Image 2"></td>
+  </tr>
+</table>
+
+
+At the final propagation time, after two full orbits, the RMSE is ... m for the position and ... m/s for the velocity. 
 
 
 ............................
