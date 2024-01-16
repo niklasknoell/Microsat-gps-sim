@@ -127,7 +127,7 @@ def message_output_type(serial_port_instance, output_choice): # Output Selection
 
 def message_serial_port_config(serial_port_instance, serial_port, serial_port_speed):
 
-    hex_message = "0xA0 A1 00 04 05 00 01 00 05 0D 0A" # Unfinished Hex Message
+    hex_message = "0xA0A1000405000100050D0A" # Unfinished Hex Message
     send_receive_hex_message(serial_port_instance.get_serial_port(), hex_message)
 
 
