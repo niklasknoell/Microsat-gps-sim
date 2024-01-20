@@ -8,10 +8,10 @@ Task Distribution of the assignment for the course Microsat Engineering (AE4S10)
 - recompile gps-sdr-sim for longer runtimes (done locally, need to check on the machine in the lab) (Niklas)
 - run the sdr to gnss receiver and record output in NMEA format (Maurits)
 - parse NMEA format (Maurits)
-- run the sdr to gnss receiver and record output in binary format (Maurits,Mattias?)
-- parse binary format (Maurits,Mattias?)
+- run the sdr to gnss receiver and record output in binary format (Maurits)
+- parse binary format (Maurits)
 - write analysis program to compare trajectory input and gnss receiver output, i.e. quantify error (Bas)
-- sensitivity analysis to min. elevation angle, ionospheric correction, clock correction, ....., others (Mattias?)
+- sensitivity analysis to min. elevation angle, ionospheric correction, clock correction, ....., others (Mattias) 
 
 
 ## Create trajectory in csv based on TLE
@@ -136,8 +136,7 @@ not the actual error plots!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 As can be observed from the figures, the order of magnitude of the error of the position components is ... m. For the velocity components, the order of magnitude of the error is ... m/s. 
 
-While the error in the state components gives a rough idea of the order of magnitude of the error, a metric for the overall error would be even more useful, as the error in the x, y and z components depends largely on the inclination of the orbit. The root mean squared error (RMSE) gives a good indication of the overall error, which can be also compared with other orbits with different inclination. The RMSE can be calculated with:
-
+While the error in the state components gives a rough idea of the order of magnitude of the error, a metric for the overall error would be even more useful, as the error in the x, y and z components depends largely on the inclination of the orbit. The root mean squared error (RMSE) gives a good indication of the overall error, which can be also be readily compared with other orbits with different inclination. 
 
 The RMSE calculated up to any time in the propagation is shown in:
 
@@ -149,10 +148,7 @@ The RMSE calculated up to any time in the propagation is shown in:
 </table>
 
 
-
-
-
-At the final propagation time, after two full orbits, the RMSE is ... m for the position and ... m/s for the velocity. 
+At the final propagation time, after two full orbits, the RMSE is ... m for the position and ... m/s for the velocity. This is ......
 
 
 ............................
@@ -204,7 +200,9 @@ It has also been investigated which settings can be changed to get the error dow
 -
 -
 
-It was found that ...... enable to get a lower error. Incorporating .... this gives the following error plots, which after comparison with the previous error plots indeed shows that the error can be reduced. 
+These variables are motivated by literature.  ADD paper!!!
+
+It was found that ...... indeed enable to get a lower error. Incorporating .... this gives the following error plots, which after comparison with the previous error plots indeed shows that the error can be reduced. 
 
 
 
