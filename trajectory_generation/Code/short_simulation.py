@@ -1,5 +1,3 @@
-#----------------------------file purely for testing----------------------------#
-
 # Load standard modules
 import numpy as np
 
@@ -27,7 +25,7 @@ current_dir = os.path.dirname(__file__)
 parent_dir = os.path.dirname(current_dir)
 
 # Create folder for files if needed
-file_path = os.path.join(parent_dir, "Astrocast").replace("\\.", ".")
+file_path = os.path.join(parent_dir, "Files").replace("\\.", ".")
 if os.path.exists(file_path):
     pass
 else:
@@ -48,20 +46,16 @@ np.set_printoptions(precision=16)
 spice.load_standard_kernels()
 
 # get time, one JULIAN day is 86400.0 seconds
-years = 2024
-months = 1
-days = 21
-hours = 23
-minutes = 33
-seconds = 35
+years = 2023
+months = 12
+days = 6
+hours = 8
+minutes = 10
+seconds = 36
 
 
-# DateTime(year=2024,month=1,day=21,hour=23,minute=33,seconds=35)
-orbital_period = 95*60
-
-# Set simulation start and end epochs, corresponding to the TLE obtain from e.g. Celestrak
 simulation_start_epoch = DateTime(years, months, days, hours,minutes,seconds).epoch()
-simulation_end_epoch = simulation_start_epoch + 2*orbital_period
+simulation_end_epoch = simulation_start_epoch + 360
 
 
 # Define string names for bodies to be created from default.
@@ -147,14 +141,14 @@ acceleration_models = propagation_setup.create_acceleration_models(
     central_bodies)
 
 
+
 # Retrieve the initial state of Delfi-PQ using Two-Line-Elements (TLEs)
 delfi_tle = environment.Tle(
-    "1 43798U 18099AS  24021.70115283  .00014813  00000-0  98015-3 0  9997",
-    "2 43798  97.5592  87.1577 0012401  79.5466 280.7158 15.07383665280634"
+    "1 51074U 22002CU  23339.18052634  .00274772  00000+0  19782-2 0  9999",
+    "2 51074  97.4306  56.6161 0005199 323.2644  36.8262 15.72763456105459"
 )
 delfi_ephemeris = environment.TleEphemeris( "Earth", "J2000", delfi_tle, False )
 initial_state = delfi_ephemeris.cartesian_state( simulation_start_epoch )
-print(initial_state)
 
 
 # Define list of dependent variables to save
@@ -205,3 +199,77 @@ dep_vars[:,2] = np.rad2deg(dep_vars[:,2])  # convert to degrees
 dep_vars[:, 0] -= simulation_start_epoch  # make time start at 0 sec as required
 keplerian = dep_vars[:,10:]
 
+
+# # Save states as a text file: time,x,y,z,Vx,Vy,Vz
+# states_df = pd.DataFrame(states, columns=['time', 'x', 'y', 'z', 'Vx', 'Vy', 'Vz'])
+# pd.set_option('colheader_justify', 'center')
+# file_path_states = os.path.join(file_path, "states.txt")
+# states_df.to_csv(file_path_states, sep=',', index=False,header=False,encoding='ascii',float_format='%.16f')
+#
+# # Save dependent variables as a text file: time,longitude,latitude,altitude
+# dep_vars_df = pd.DataFrame(dep_vars)
+# file_path_dep_vars = os.path.join(file_path, "dep_vars.txt")
+# dep_vars_df.to_csv(file_path_dep_vars, sep=',', index=False,header=False,encoding='ascii',float_format='%.16f')
+#
+# # Save Keplerian elements
+# keplerian_df = pd.DataFrame(keplerian)
+# file_path_keplerian = os.path.join(file_path, "keplerian.txt")
+# keplerian_df.to_csv(file_path_keplerian, sep=',', index=False,header=False,encoding='ascii',float_format='%.16f')
+
+
+
+
+# x, y, z coordinates in ECEF
+file_path_ECEF = os.path.join(file_path, "xyz_ECEF_short.txt")
+data_slice = dep_vars[:, [0, 4, 5, 6]]
+df = pd.DataFrame(data_slice)
+df.to_csv(file_path_ECEF, sep=',', index=False,header=False,encoding='ascii',float_format='%.16f')
+
+# # lat, lon, alt (already ECEF)
+# file_path_lla = os.path.join(file_path, "lat_lon_alt.txt")
+# data_slice = dep_vars[:, [0, 2, 1, 3]]
+# df = pd.DataFrame(data_slice)
+# df.to_csv(file_path_lla, sep=',', index=False,header=False,encoding='ascii',float_format='%.16f')
+
+
+# # save RSW, TNW
+# xyz = states[:, 1:4]
+# VxVyVz = states[:, 4:7]
+#
+# RSW_list = []
+# TNW_list = []
+#
+# for i in range(np.shape(xyz)[0]):
+#
+#     rotation_rsw_to_inertial = frame_conversion.rsw_to_inertial_rotation_matrix(states[i, 1:])
+#
+#     pos = np.matmul(np.linalg.inv(rotation_rsw_to_inertial), xyz[i, :])
+#     vel = np.matmul(np.linalg.inv(rotation_rsw_to_inertial), VxVyVz[i, :])
+#     RSW = np.concatenate((pos, vel))
+#
+#     RSW_list.append(RSW)
+#
+#     rotation_tnw_to_inertial = frame_conversion.tnw_to_inertial_rotation_matrix(states[i, 1:])
+#
+#     rotation_inertial_to_tnw = frame_conversion.inertial_to_tnw_rotation_matrix(states[i, 1:])
+#     pos = np.matmul(rotation_inertial_to_tnw, xyz[i, :])
+#     vel = np.matmul(rotation_inertial_to_tnw, VxVyVz[i, :])
+#
+#
+#     # pos = np.matmul(np.linalg.inv(rotation_tnw_to_inertial), xyz[i, :])
+#     # vel = np.matmul(np.linalg.inv(rotation_tnw_to_inertial), VxVyVz[i, :])
+#     TNW = np.concatenate((pos, vel))
+#
+#     TNW_list.append(TNW)
+#
+# RSW = np.array(RSW_list)
+# TNW = np.array(TNW_list)
+#
+# df = pd.DataFrame(RSW)
+# file_path_RSW = os.path.join(file_path, "RSW.txt")
+# df.to_csv(file_path_RSW, sep=',', index=False,header=False,encoding='ascii',float_format='%.16f')
+#
+# df = pd.DataFrame(TNW)
+# file_path_TNW = os.path.join(file_path, "TNW.txt")
+# df.to_csv(file_path_TNW, sep=',', index=False,header=False,encoding='ascii',float_format='%.16f')
+#
