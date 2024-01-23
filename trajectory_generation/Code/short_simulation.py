@@ -166,7 +166,7 @@ dependent_variables_to_save = [
 termination_condition = propagation_setup.propagator.time_termination(simulation_end_epoch)
 
 # Create numerical integrator settings
-fixed_step_size = 0.1
+fixed_step_size = 0.1000000000000000
 integrator_settings = propagation_setup.integrator.runge_kutta_4(fixed_step_size)
 
 
@@ -191,6 +191,8 @@ dynamics_simulator = numerical_simulation.create_dynamics_simulator(
 # Extract the resulting state and dependent variable history and convert it to an ndarray
 states = dynamics_simulator.state_history
 states = result2array(states)
+print(simulation_start_epoch)
+print(states)
 states[:, 0] -= simulation_start_epoch  # make time start at 0 sec as required
 dep_vars = dynamics_simulator.dependent_variable_history
 dep_vars = result2array(dep_vars)
@@ -198,6 +200,7 @@ dep_vars[:,1] = np.rad2deg(dep_vars[:,1]) # convert to degrees
 dep_vars[:,2] = np.rad2deg(dep_vars[:,2])  # convert to degrees
 dep_vars[:, 0] -= simulation_start_epoch  # make time start at 0 sec as required
 keplerian = dep_vars[:,10:]
+
 
 
 # # Save states as a text file: time,x,y,z,Vx,Vy,Vz
