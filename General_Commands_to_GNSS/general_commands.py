@@ -45,7 +45,7 @@ def send_receive_hex_message(serial_port, hex_message):
         ser.write(byte_message)
 
         # Read the response from the serial port
-        response = ser.read(100)  # Adjust the number of bytes to read based on your use case
+        response = receive_variable_response  # Adjust the number of bytes to read based on your use case
 
         # Close the serial port
         ser.close()
@@ -54,6 +54,26 @@ def send_receive_hex_message(serial_port, hex_message):
         print(f"Received response (Hex): {response.hex()}")
     except Exception as e:
         print(f"Error: {e}")
+
+def receive_variable_response():
+
+    start_message = ser.read(4)
+    payload_length_hex = start_message[-2:].hex()
+    payload_length_decimal = int(payload_length_hex, 16)
+    message_payload_and_end = ser.read(payload_length_decimal + 3)
+    total_message = str(start_message) + str(message_payload_and_end)
+
+    return total_message
+
+def checksum(payload_hex):
+
+
+
+
+
+
+    return CS
+
 
 def message_config_power_mode(serial_port_instance): #page20
     mode_option = input(print("""Please make a choice in Mode:
@@ -137,7 +157,7 @@ def message_serial_port_config(serial_port, serial_port_speed):
 
 def message_output_type(serial_port, output_choice):
 
-    hex_message = "A0A10003090200090D0A" # Unfinished Hex Message
+    hex_message = "A0A100030902000B0D0A" # Hex message with correct CS for Binary output
     send_receive_hex_message(serial_port, hex_message)
 
 message_output_type("COM4", "None")
