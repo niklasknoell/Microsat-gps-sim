@@ -58,7 +58,7 @@ def send_receive_hex_message(serial_port, hex_message):
 def receive_variable_response():
 
     start_message = ser.read(4)
-    payload_length_hex = start_message[-2:]
+    payload_length_hex = start_message[-2:].hex()
     payload_length_decimal = int(payload_length_hex, 16)
     message_payload_and_end = ser.read(payload_length_decimal + 3)
     total_message = str(start_message) + str(message_payload_and_end)
