@@ -7,8 +7,12 @@ def translate_line(line):
     line = line.strip()
     # Sectioning the data in the message
     message_body = line[8:-6]
-    translation = {}
-    hex_line = {"total": line, "message_body": message_body}
+    if len(message_body) < 118:
+        hex_line ={"status": "incomplete", "total": line, "message_body": message_body}
+        translation = {"status": "incomplete"}
+    else:
+        hex_line = {"status": "complete", "total": line, "message_body": message_body}
+        translation = {"status": "complete"}
 
     # Message ID
     message_id = message_body[0:2]
