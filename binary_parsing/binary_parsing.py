@@ -1,5 +1,5 @@
+import os
 import json
-
 
 
 def translate_line(line):
@@ -123,140 +123,207 @@ def translate_fix_mode_section(fix_mode):
     return fix_mode_meaning
 
 def translate_sv_number(sv_number):
-    decimal_value = int(str(sv_number), 16)
-    return str(decimal_value)
+    if sv_number:
+        decimal_value = int(str(sv_number), 16)
+        return str(decimal_value)
+    else:
+        return 'N/A'
 
 def translate_GNSS_week(gnss_week_hex):
-    decimal_value = int(str(gnss_week_hex), 16)
-    return str(decimal_value)
+    if gnss_week_hex:
+        decimal_value = int(str(gnss_week_hex), 16)
+        return str(decimal_value)
+    return 'N/A'
 
 def translate_TOW(tow_hex):
-    decimal_value = int(str(tow_hex), 16)
-    return str(decimal_value)
+    if tow_hex:
+        decimal_value = int(str(tow_hex), 16)
+        return str(decimal_value)
+    else:
+        # Handle the case where tow_hex is empty (return a default value or raise an exception)
+        return "N/A"  # Replace with your desired default value or appropriate handling
+
 
 def hex_to_decimal_latitude(hex_value):
-    # Convert hex to decimal for sint32
-    decimal_value = int(hex_value, 16)
+    if hex_value:
+        # Convert hex to decimal for sint32
+        decimal_value = int(hex_value, 16)
 
-    # If the value is negative, apply two's complement to get the correct signed value
-    if decimal_value & (1 << 31):
-        decimal_value -= 1 << 32
+        # If the value is negative, apply two's complement to get the correct signed value
+        if decimal_value & (1 << 31):
+            decimal_value -= 1 << 32
 
-    # Determine if it is in the North or South Hemisphere
-    if decimal_value > 0:
-        latitude = str(decimal_value) + "N"
+        # Determine if it is in the North or South Hemisphere
+        if decimal_value > 0:
+            latitude = str(decimal_value) + "N"
+        else:
+            latitude = str(decimal_value) + "S"
+        return latitude
     else:
-        latitude = str(decimal_value) + "S"
-    return latitude
+        # Handle the case where latitude_hex is empty (return a default value or raise an exception)
+        return "N/A"  # Replace with your desired default value or appropriate handling
+
 
 def hex_to_decimal_longitude(hex_value):
+    if hex_value:
     # Convert hex to decimal for sint32
-    decimal_value = int(hex_value, 16)
+        decimal_value = int(hex_value, 16)
 
-    # If the value is negative, apply two's complement to get the correct signed value
-    if decimal_value & (1 << 31):
-        decimal_value -= 1 << 32
+        # If the value is negative, apply two's complement to get the correct signed value
+        if decimal_value & (1 << 31):
+            decimal_value -= 1 << 32
 
-    # Determine if it is in the East or West Hemisphere
-    if decimal_value > 0:
-        longitude = str(decimal_value) + "E"
+        # Determine if it is in the East or West Hemisphere
+        if decimal_value > 0:
+            longitude = str(decimal_value) + "E"
+        else:
+            longitude = str(decimal_value) + "W"
+        return longitude
     else:
-        longitude = str(decimal_value) + "W"
-    return longitude
+        # Handle the case where longitude_hex is empty (return a default value or raise an exception)
+        return "N/A"  # Replace with your desired default value or appropriate handling
 
 def hex_to_decimal_ellipsoid(hex_value):
-    decimal_value = int(hex_value, 16)
-    return str(decimal_value)
+    if hex_value:
+        # Convert hex to decimal
+        decimal_value = int(hex_value, 16)
+        return str(decimal_value)
+    else:
+        # Handle the case where hex_value is empty (return a default value or raise an exception)
+        return "N/A"  # Replace with your desired default value or appropriate handling
+
 
 def hex_to_decimal_sea_level_altitude(sea_altitude_hex):
-    decimal_value = int(sea_altitude_hex, 16)
-    return str(decimal_value)
+    if sea_altitude_hex:
+        # Convert hex to decimal
+        decimal_value = int(sea_altitude_hex, 16)
+        return str(decimal_value)
+    else:
+        # Handle the case where sea_altitude_hex is empty (return a default value or raise an exception)
+        return "N/A"  # Replace with your desired default value or appropriate handling
+
 
 def hex_to_decimal_GDOP(GDOP_hex):
-    decimal_value = int(GDOP_hex, 16)
-    return str(decimal_value)
+    if GDOP_hex:
+        decimal_value = int(GDOP_hex, 16)
+        return str(decimal_value)
+    else:
+        return "N/A"
 
 def hex_to_decimal_PDOP(PDOP_hex):
-    decimal_value = int(PDOP_hex, 16)
-    return str(decimal_value)
+    if PDOP_hex:
+        decimal_value = int(PDOP_hex, 16)
+        return str(decimal_value)
+    else:
+        return "N/A"
 
 def hex_todecimal_HDOP(HDOP_hex):
-    decimal_value = int(HDOP_hex, 16)
-    return str(decimal_value)
+    if HDOP_hex:
+        decimal_value = int(HDOP_hex, 16)
+        return str(decimal_value)
+    else:
+        return "N/A"
 
 def hex_to_decimal_VDOP(VDOP_hex):
-    decimal_value = int(VDOP_hex, 16)
-    return str(decimal_value)
+    if VDOP_hex:
+        decimal_value = int(VDOP_hex, 16)
+        return str(decimal_value)
+    else:
+        return "N/A"
 
 def hex_to_decimal_TDOP(TDOP_hex):
-    decimal_value = int(TDOP_hex, 16)
-    return str(decimal_value)
+    if TDOP_hex:
+        decimal_value = int(TDOP_hex, 16)
+        return str(decimal_value)
+    return 'N/A'
 
 def hex_to_decimal_ECEFX(ECEFX_hex):
-    # Convert hex to decimal for sint32
-    decimal_value = int(ECEFX_hex, 16)
+    if ECEFX_hex:
+        # Convert hex to decimal for sint32
+        decimal_value = int(ECEFX_hex, 16)
 
-    # If the value is negative, apply two's complement to get the correct signed value
-    if decimal_value & (1 << 31):
-        decimal_value -= 1 << 32
+        # If the value is negative, apply two's complement to get the correct signed value
+        if decimal_value & (1 << 31):
+            decimal_value -= 1 << 32
 
-    return decimal_value
+        return decimal_value
+    else:
+        return 'N/A'
 
 def hex_to_decimal_ECEFY(ECEFY_hex):
-    # Convert hex to decimal for sint32
-    decimal_value = int(ECEFY_hex, 16)
+    if ECEFY_hex:
+        # Convert hex to decimal for sint32
+        decimal_value = int(ECEFY_hex, 16)
 
-    # If the value is negative, apply two's complement to get the correct signed value
-    if decimal_value & (1 << 31):
-        decimal_value -= 1 << 32
+        # If the value is negative, apply two's complement to get the correct signed value
+        if decimal_value & (1 << 31):
+            decimal_value -= 1 << 32
 
-    return decimal_value
+        return decimal_value
+    else:
+        return 'N/A'
 
 def hex_to_decimal_ECEFZ(ECEFZ_hex):
-    # Convert hex to decimal for sint32
-    decimal_value = int(ECEFZ_hex, 16)
+    if ECEFZ_hex:
+        # Convert hex to decimal for sint32
+        decimal_value = int(ECEFZ_hex, 16)
 
-    # If the value is negative, apply two's complement to get the correct signed value
-    if decimal_value & (1 << 31):
-        decimal_value -= 1 << 32
+        # If the value is negative, apply two's complement to get the correct signed value
+        if decimal_value & (1 << 31):
+            decimal_value -= 1 << 32
 
-    return decimal_value
+        return decimal_value
+    else:
+        return 'N/A'
 
 def hex_to_decimal_ECEFVX(ECEFVX_hex):
-    # Convert hex to decimal for sint32
-    decimal_value = int(ECEFVX_hex, 16)
+    if ECEFVX_hex:
+        # Convert hex to decimal for sint32
+        decimal_value = int(ECEFVX_hex, 16)
 
-    # If the value is negative, apply two's complement to get the correct signed value
-    if decimal_value & (1 << 31):
-        decimal_value -= 1 << 32
+        # If the value is negative, apply two's complement to get the correct signed value
+        if decimal_value & (1 << 31):
+            decimal_value -= 1 << 32
 
-    return decimal_value
+        return decimal_value
+    else:
+        return 'N/A'
 
 def hex_to_decimal_ECEFVY(ECEFVY_hex):
-    # Convert hex to decimal for sint32
-    decimal_value = int(ECEFVY_hex, 16)
+    if ECEFVY_hex:
+        # Convert hex to decimal for sint32
+        decimal_value = int(ECEFVY_hex, 16)
 
-    # If the value is negative, apply two's complement to get the correct signed value
-    if decimal_value & (1 << 31):
-        decimal_value -= 1 << 32
+        # If the value is negative, apply two's complement to get the correct signed value
+        if decimal_value & (1 << 31):
+            decimal_value -= 1 << 32
 
-    return decimal_value
+        return decimal_value
+    else:
+        return 'N/A'
 
 def hex_to_decimal_ECEFVZ(ECEFVZ_hex):
-    # Convert hex to decimal for sint32
-    decimal_value = int(ECEFVZ_hex, 16)
+    if ECEFVZ_hex:
+        # Convert hex to decimal for sint32
+        decimal_value = int(ECEFVZ_hex, 16)
 
-    # If the value is negative, apply two's complement to get the correct signed value
-    if decimal_value & (1 << 31):
-        decimal_value -= 1 << 32
+        # If the value is negative, apply two's complement to get the correct signed value
+        if decimal_value & (1 << 31):
+            decimal_value -= 1 << 32
 
-    return decimal_value
+        return decimal_value
+    else:
+        return 'N/A'
 
 
+
+
+
+def create_directory(directory):
+    if not os.path.exists(directory):
+        os.makedirs(directory)
 
 def translate_and_save(input_file, output_file, save_original):
-    # Assuming 'translation' is a dictionary with mapping of words
-
     with open(input_file, 'r', encoding='utf-8') as infile, open(output_file, 'w', encoding='utf-8') as outfile:
         for line in infile:
             # Use the translate_line function to translate each line
@@ -269,9 +336,20 @@ def translate_and_save(input_file, output_file, save_original):
             else:
                 outfile.write(f"{json.dumps(translated_line)}\n")
 
-# Decide if you want to save the origianl line or not
+def process_files(input_directory, output_directory, save_original):
+    # Ensure the output directory exists
+    create_directory(output_directory)
+
+    for filename in os.listdir(input_directory):
+        input_file_path = os.path.join(input_directory, filename)
+        output_file_path = os.path.join(output_directory, f"processed_parsed_{filename}")
+
+        translate_and_save(input_file_path, output_file_path, save_original)
+
+# Replace 'input_directory' and 'output_directory' with your input and output directories
+input_directory = 'input_data'
+output_directory = 'output_data'
 save_original = False
 
+process_files(input_directory, output_directory, save_original)
 
-# Replace 'input.txt' and 'output.txt' with your input and output file names
-translate_and_save('input.txt', 'output.txt', save_original)
