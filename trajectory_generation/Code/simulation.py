@@ -158,7 +158,9 @@ dependent_variables_to_save = [
     propagation_setup.dependent_variable.longitude("Delfi-PQ", "Earth"),
     propagation_setup.dependent_variable.latitude("Delfi-PQ", "Earth"),
     propagation_setup.dependent_variable.altitude("Delfi-PQ", "Earth"),
-
+    propagation_setup.dependent_variable.central_body_fixed_cartesian_position("Delfi-PQ","Earth"),
+    propagation_setup.dependent_variable.body_fixed_groundspeed_velocity("Delfi-PQ","Earth"),
+    propagation_setup.dependent_variable.keplerian_state("Delfi-PQ", "Earth")
 ]
 
 
@@ -194,7 +196,10 @@ states = result2array(states)
 states[:, 0] -= simulation_start_epoch  # make time start at 0 sec as required
 dep_vars = dynamics_simulator.dependent_variable_history
 dep_vars = result2array(dep_vars)
+dep_vars[:,1] = np.rad2deg(dep_vars[:,1]) # convert to degrees
+dep_vars[:,2] = np.rad2deg(dep_vars[:,2])  # convert to degrees
 dep_vars[:, 0] -= simulation_start_epoch  # make time start at 0 sec as required
+keplerian = dep_vars[:,10:]
 
 
 # Save states as a text file: time,x,y,z,Vx,Vy,Vz
@@ -204,8 +209,69 @@ file_path_states = os.path.join(file_path, "states.txt")
 states_df.to_csv(file_path_states, sep=',', index=False,header=False,encoding='ascii',float_format='%.16f')
 
 # Save dependent variables as a text file: time,longitude,latitude,altitude
-dep_vars_df = pd.DataFrame(dep_vars, columns=['time', 'longitude', 'latitude', 'altitude'])
+dep_vars_df = pd.DataFrame(dep_vars)
 file_path_dep_vars = os.path.join(file_path, "dep_vars.txt")
 dep_vars_df.to_csv(file_path_dep_vars, sep=',', index=False,header=False,encoding='ascii',float_format='%.16f')
 
+# Save Keplerian elements
+keplerian_df = pd.DataFrame(keplerian)
+file_path_keplerian = os.path.join(file_path, "keplerian.txt")
+keplerian_df.to_csv(file_path_keplerian, sep=',', index=False,header=False,encoding='ascii',float_format='%.16f')
+
+
+
+
+# x, y, z coordinates in ECEF
+file_path_ECEF = os.path.join(file_path, "xyz_ECEF.txt")
+data_slice = dep_vars[:, [0, 4, 5, 6]]
+df = pd.DataFrame(data_slice)
+df.to_csv(file_path_ECEF, sep=',', index=False,header=False,encoding='ascii',float_format='%.16f')
+
+# lat, lon, alt (already ECEF)
+file_path_lla = os.path.join(file_path, "lat_lon_alt.txt")
+data_slice = dep_vars[:, [0, 2, 1, 3]]
+df = pd.DataFrame(data_slice)
+df.to_csv(file_path_lla, sep=',', index=False,header=False,encoding='ascii',float_format='%.16f')
+
+
+# save RSW, TNW
+xyz = states[:, 1:4]
+VxVyVz = states[:, 4:7]
+
+RSW_list = []
+TNW_list = []
+
+for i in range(np.shape(xyz)[0]):
+
+    rotation_rsw_to_inertial = frame_conversion.rsw_to_inertial_rotation_matrix(states[i, 1:])
+
+    pos = np.matmul(np.linalg.inv(rotation_rsw_to_inertial), xyz[i, :])
+    vel = np.matmul(np.linalg.inv(rotation_rsw_to_inertial), VxVyVz[i, :])
+    RSW = np.concatenate((pos, vel))
+
+    RSW_list.append(RSW)
+
+    rotation_tnw_to_inertial = frame_conversion.tnw_to_inertial_rotation_matrix(states[i, 1:])
+
+    rotation_inertial_to_tnw = frame_conversion.inertial_to_tnw_rotation_matrix(states[i, 1:])
+    pos = np.matmul(rotation_inertial_to_tnw, xyz[i, :])
+    vel = np.matmul(rotation_inertial_to_tnw, VxVyVz[i, :])
+
+
+    # pos = np.matmul(np.linalg.inv(rotation_tnw_to_inertial), xyz[i, :])
+    # vel = np.matmul(np.linalg.inv(rotation_tnw_to_inertial), VxVyVz[i, :])
+    TNW = np.concatenate((pos, vel))
+
+    TNW_list.append(TNW)
+
+RSW = np.array(RSW_list)
+TNW = np.array(TNW_list)
+
+df = pd.DataFrame(RSW)
+file_path_RSW = os.path.join(file_path, "RSW.txt")
+df.to_csv(file_path_RSW, sep=',', index=False,header=False,encoding='ascii',float_format='%.16f')
+
+df = pd.DataFrame(TNW)
+file_path_TNW = os.path.join(file_path, "TNW.txt")
+df.to_csv(file_path_TNW, sep=',', index=False,header=False,encoding='ascii',float_format='%.16f')
 

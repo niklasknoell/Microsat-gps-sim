@@ -34,41 +34,15 @@ else:
 dpi = 300
 
 states = np.genfromtxt(os.path.join(file_path,"states.txt").replace("\\.", "."), delimiter=',')
-print(states)
-
-xyz = states[:,1:4]
-VxVyVz = states[:,4:7]
-
-
-RSW_list = []
-
-for i in range(np.shape(xyz)[0]):
-
-    rotation_rsw_to_inertial = frame_conversion.rsw_to_inertial_rotation_matrix(states[i,1:])
-
-    pos = np.matmul(np.linalg.inv(rotation_rsw_to_inertial),xyz[i,:])
-    vel = np.matmul(np.linalg.inv(rotation_rsw_to_inertial),VxVyVz[i,:])
-    RSW = np.concatenate((pos,vel))
-
-    RSW_list.append(RSW)
-
-RSW = np.array(RSW_list)
 
 
 
 dep_vars = np.genfromtxt(os.path.join(file_path,"dep_vars.txt").replace("\\.", "."), delimiter=',')
-print(dep_vars)
 time = dep_vars[:,0]
 longitude = dep_vars[:,1]
 latitude = dep_vars[:,2]
 altitude = dep_vars[:,3]
-print(min(longitude))
-print(max(longitude))
-
-
-# convert to degrees
-longitude = np.rad2deg(longitude)
-latitude = np.rad2deg(latitude)
+RSW = np.genfromtxt(os.path.join(file_path,"RSW.txt").replace("\\.", "."), delimiter=',')
 
 
 fig, ax = plt.subplots()
@@ -123,6 +97,44 @@ ax.grid()
 ax.legend()
 
 output_path = os.path.join(figures_path,"RSW_velocity.pdf").replace("\\.", ".")
+fig.savefig(output_path, bbox_inches='tight')
+
+
+
+fig, ax = plt.subplots()
+ax.set_title("RSW velocity over time of Delfi-PQ")
+ax.scatter(time, RSW[:,3], s=1,label="R velocity")
+ax.scatter(time, RSW[:,4], s=1,label="S velocity")
+ax.scatter(time, RSW[:,5], s=1,label="W velocity")
+ax.set_xlabel('time [s]')
+ax.set_ylabel('RSW velocity components [m/s]')
+ax.grid()
+ax.legend()
+
+output_path = os.path.join(figures_path,"RSW_velocity.pdf").replace("\\.", ".")
+fig.savefig(output_path, bbox_inches='tight')
+
+
+#-----------------------------------Trajectory plots-----------------------------------#
+fig = plt.figure(figsize=(10, 10))
+ax = fig.add_subplot(111, projection='3d')
+
+# u = np.linspace(0, 2 * np.pi, 100)
+# v = np.linspace(0, np.pi, 100)
+# x = 6378 * 10 ** 3 * np.outer(np.cos(u), np.sin(v))
+# y = 6378 * 10 ** 3 * np.outer(np.sin(u), np.sin(v))
+# z = 6378 * 10 ** 3 * np.outer(np.ones(np.size(u)), np.cos(v))
+# ax.plot_wireframe(x, y, z, rstride=4, cstride=4, color='b', alpha=0.4, label='Earth')
+
+ax.plot(dep_vars [:,4]/1000,dep_vars [:,5]/1000,dep_vars [:,6]/1000,label='Truth')
+ax.tick_params(axis='both', which='both', labelsize=16)
+ax.set_xlabel('$x_{ECEF}$ [km]', fontsize=16)
+ax.set_ylabel('$y_{ECEF}$ [km]', fontsize=16)
+ax.set_zlabel('$z_{ECEF}$ [km]', fontsize=16)
+ax.legend()
+
+
+output_path = os.path.join(figures_path,"trajectory_plot.pdf").replace("\\.", ".")
 fig.savefig(output_path, bbox_inches='tight')
 
 
