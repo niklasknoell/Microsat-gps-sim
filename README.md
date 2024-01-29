@@ -80,6 +80,9 @@ $ python NMEA_store.py
 
 Now the simulation will run in an infinite loop, with the transmission restarting once it is done. Thus, once the generated signal has been completely transmitted both programs need to be manually stopped (Ctrl+C), leaving a log file with a timestamp of all NMEA messages the receiver has generated. 
 
+## Commanding the GNSS 
+
+
 
 
 ## Run the sdr to gnss receiver and record output in NMEA format
@@ -88,17 +91,16 @@ Now the simulation will run in an infinite loop, with the transmission restartin
 
 
 ## Parse NMEA format
+
 Having the saved file with the output, it was necessary to translate it into useful data. For the first step, it is used the NMEA parser (found in parsing_NMEA.py) to translate the data into decimal values for each parameter with its label and unit. Then following the first step the data is again translated (present in ...........py) into the desired units and outputted into a specific order to execute the analysis. The separation of the action was done so to avoid the possibility of error and for easier error detection by evaluating the interim outputs.
 
 ## Run the sdr to gnss receiver and record output in binary format
 
-................
 
 
 ## Parse binary format
 
-
-................
+Having the output files from the Binary it is saved as hex per line. Therefore, it is required to translate from hex to decimal and separate per component (which is explained in https://www.skytraq.com.tw/homesite/AN0037.pdf) which is executed in binary_parsing.py. After such action is taken another translation is done where the units of the data points are standardized and outputs only the desired components of the data points useful for the analysis. As specified in the NMEA parsing all the different actions are taken separately for easier error detection by the evaluation of the interim outputs.
 
 
 ## Write analysis program to compare trajectory input and gnss receiver output, i.e. quantify error of the GNSS receiver with respect to the benchmark trajectory
