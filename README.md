@@ -88,9 +88,7 @@ Now the simulation will run in an infinite loop, with the transmission restartin
 
 
 ## Parse NMEA format
-
-................
-
+Having the saved file with the output, it was necessary to translate it into useful data. For the first step, it is used the NMEA parser (found in parsing_NMEA.py) to translate the data into decimal values for each parameter with its label and unit. Then following the first step the data is again translated (present in ...........py) into the desired units and outputted into a specific order to execute the analysis. The separation of the action was done so to avoid the possibility of error and for easier error detection by evaluating the interim outputs.
 
 ## Run the sdr to gnss receiver and record output in binary format
 
