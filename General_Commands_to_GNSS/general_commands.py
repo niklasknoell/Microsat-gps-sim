@@ -155,9 +155,14 @@ def message_serial_port_config(serial_port, serial_port_speed):
     hex_message = "0xA0A1000405000100050D0A" # Unfinished Hex Message
     send_receive_hex_message(serial_port, hex_message)
 
-def message_output_type(serial_port, output_choice):
+def message_output_type_BINARY(serial_port, output_choice):
 
     hex_message = "A0A100030902000B0D0A" # Hex message with correct CS for Binary output
     send_receive_hex_message(serial_port, hex_message)
 
-message_output_type("COM4", "None")
+def message_output_type_NMEA(serial_port, output_choice):
+
+    hex_message = "A0A10003090100080D0A" # Hex message with correct CS for Binary output
+    send_receive_hex_message(serial_port, hex_message)
+
+message_output_type_BINARY("COM4", "None")
