@@ -10,6 +10,7 @@ Task Distribution of the assignment for the course Microsat Engineering (AE4S10)
 - parse NMEA format (Maurits)
 - run the sdr to gnss receiver and record output in binary format (Maurits)
 - parse binary format (Maurits)
+- facilitation from parsed data to usable units and desired structure of data, both Binary and NMEA (Mattias)
 - write analysis program to compare trajectory input and gnss receiver output, i.e. quantify error (Bas)
 - sensitivity analysis to min. elevation angle, ionospheric correction, clock correction, ....., others (Mattias) 
 
