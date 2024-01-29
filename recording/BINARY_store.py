@@ -14,14 +14,14 @@ logFile.parent.mkdir(parents=True, exist_ok=True)
 file = logFile.open("+ab", buffering=64)
 timeout = 80
 
-def saving_method1():
+def recorder():
     while True:
         line = port.readline()
         hex_line = line.hex()
         file.write(hex_line.encode('utf-8') + b'\n')
 
 
-def saving_method():
+def updated_recorder():
     try:
         while True:
             start_message = port.read(4)
@@ -39,5 +39,5 @@ def saving_method():
         file.close()
 
 
-saving_method1()
+updated_recorder()
 
