@@ -133,7 +133,7 @@ def translate_line(line):
     translation["ECEF-VZ"] = ECEFVZ_decimal
     hex_line["ECEFVZ_hex"]= ECEFVZ_hex
 
-    print(hex_line)
+    #print(hex_line)
 
     return translation
 
