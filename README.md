@@ -82,7 +82,7 @@ Now the simulation will run in an infinite loop, with the transmission restartin
 
 ## Commanding the GNSS 
 
-
+To acquire the Binary output of the GNSS sending the corresponding command is necessary to achieve the desired output. Therefore using the document given the command was coded in general_commands.py (function message_output_type()) based on the example given. Adapting the ChechSum is also necessary to ensure correct commanding. After the command is sent an answer is expected that informs with either ACK or NACK based if the command was received and executed or received and not executed, respectively. To receive the answer function receive_variable_response() is used to ensure that the full message is received.
 
 
 ## Run the sdr to gnss receiver and record output in NMEA format
