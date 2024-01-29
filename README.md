@@ -6,12 +6,14 @@ Task Distribution of the assignment for the course Microsat Engineering (AE4S10)
 - Create trajectory in csv based on TLE (Bas)
 - gps-sdr-sim (Niklas)
 - recompile gps-sdr-sim for longer runtimes (done locally, need to check on the machine in the lab) (Niklas)
+- commanding and communicating with GNSS (Maurits)
 - run the sdr to gnss receiver and record output in NMEA format (Maurits)
 - parse NMEA format (Maurits)
-- run the sdr to gnss receiver and record output in binary format (Maurits,Mattias?)
-- parse binary format (Maurits,Mattias?)
+- run the sdr to gnss receiver and record output in binary format (Maurits)
+- parse binary format (Maurits)
+- facilitation from parsed data to usable units and desired structure of data, both Binary and NMEA (Mattias)
 - write analysis program to compare trajectory input and gnss receiver output, i.e. quantify error (Bas)
-- sensitivity analysis to min. elevation angle, ionospheric correction, clock correction, ....., others (Mattias?)
+- sensitivity analysis to min. elevation angle, ionospheric correction, clock correction, ....., others (Mattias) 
 
 
 ## Create trajectory in csv based on TLE
@@ -80,6 +82,9 @@ $ python NMEA_store.py
 
 Now the simulation will run in an infinite loop, with the transmission restarting once it is done. Thus, once the generated signal has been completely transmitted both programs need to be manually stopped (Ctrl+C), leaving a log file with a timestamp of all NMEA messages the receiver has generated. 
 
+## Commanding the GNSS 
+
+To acquire the Binary output of the GNSS sending the corresponding command is necessary to achieve the desired output. Therefore using the document given the command was coded in general_commands.py (function message_output_type()) based on the example given. Adapting the ChechSum is also necessary to ensure correct commanding. After the command is sent an answer is expected that informs with either ACK or NACK based if the command was received and executed or received and not executed, respectively. To receive the answer function receive_variable_response() is used to ensure that the full message is received.
 
 
 ## Run the sdr to gnss receiver and record output in NMEA format
@@ -89,18 +94,15 @@ Now the simulation will run in an infinite loop, with the transmission restartin
 
 ## Parse NMEA format
 
-................
-
+Having the saved file with the output, it was necessary to translate it into useful data. For the first step, it is used the NMEA parser (found in parsing_NMEA.py) to translate the data into decimal values for each parameter with its label and unit. Then following the first step the data is again translated (present in ...........py) into the desired units and outputted into a specific order to execute the analysis. The separation of the action was done so to avoid the possibility of error and for easier error detection by evaluating the interim outputs.
 
 ## Run the sdr to gnss receiver and record output in binary format
 
-................
 
 
 ## Parse binary format
 
-
-................
+Having the output files from the Binary it is saved as hex per line. Therefore, it is required to translate from hex to decimal and separate per component (which is explained in https://www.skytraq.com.tw/homesite/AN0037.pdf) which is executed in binary_parsing.py. After such action is taken another translation is done where the units of the data points are standardized and outputs only the desired components of the data points useful for the analysis. As specified in the NMEA parsing all the different actions are taken separately for easier error detection by the evaluation of the interim outputs.
 
 
 ## Write analysis program to compare trajectory input and gnss receiver output, i.e. quantify error of the GNSS receiver with respect to the benchmark trajectory
@@ -136,8 +138,7 @@ not the actual error plots!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 As can be observed from the figures, the order of magnitude of the error of the position components is ... m. For the velocity components, the order of magnitude of the error is ... m/s. 
 
-While the error in the state components gives a rough idea of the order of magnitude of the error, a metric for the overall error would be even more useful, as the error in the x, y and z components depends largely on the inclination of the orbit. The root mean squared error (RMSE) gives a good indication of the overall error, which can be also compared with other orbits with different inclination. The RMSE can be calculated with:
-
+While the error in the state components gives a rough idea of the order of magnitude of the error, a metric for the overall error would be even more useful, as the error in the x, y and z components depends largely on the inclination of the orbit. The root mean squared error (RMSE) gives a good indication of the overall error, which can be also be readily compared with other orbits with different inclination. 
 
 The RMSE calculated up to any time in the propagation is shown in:
 
@@ -149,10 +150,7 @@ The RMSE calculated up to any time in the propagation is shown in:
 </table>
 
 
-
-
-
-At the final propagation time, after two full orbits, the RMSE is ... m for the position and ... m/s for the velocity. 
+At the final propagation time, after two full orbits, the RMSE is ... m for the position and ... m/s for the velocity. This is ......
 
 
 ............................
@@ -204,7 +202,9 @@ It has also been investigated which settings can be changed to get the error dow
 -
 -
 
-It was found that ...... enable to get a lower error. Incorporating .... this gives the following error plots, which after comparison with the previous error plots indeed shows that the error can be reduced. 
+These variables are motivated by literature.  ADD paper!!!
+
+It was found that ...... indeed enable to get a lower error. Incorporating .... this gives the following error plots, which after comparison with the previous error plots indeed shows that the error can be reduced. 
 
 
 
