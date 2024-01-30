@@ -1,6 +1,5 @@
 # Load standard modules
 import numpy as np
-
 import matplotlib
 from matplotlib import pyplot as plt
 
@@ -32,7 +31,6 @@ else:
 
 #---------------------------Plotting---------------------------#
 
-
 lat_lon_alt_GPS = np.genfromtxt(os.path.join(file_path,"NMEA.txt").replace("\\.", "."), delimiter=',')
 # lat_lon_alt_GPS[:,0] += 1
 
@@ -41,11 +39,9 @@ end_simulation = 10000
 index = np.where(lat_lon_alt_GPS[:, 0] >= end_simulation)[0][0]
 lat_lon_alt_GPS = lat_lon_alt_GPS[:index+1, :]
 
-
 lat_GPS = lat_lon_alt_GPS[:,1]
 lon_GPS = lat_lon_alt_GPS[:,2]
 alt_GPS = lat_lon_alt_GPS[:,3]
-
 
 lat_lon_alt = np.genfromtxt(os.path.join(file_path,"lat_lon_alt.txt").replace("\\.", "."), delimiter=',')
 index = np.where(lat_lon_alt[:, 0] >= initial_time)[0][0]
@@ -57,7 +53,6 @@ lat_lon_alt = lat_lon_alt[:index+1, :]
 lat = lat_lon_alt[:,1]
 lon = lat_lon_alt[:,2]
 alt = lat_lon_alt[:,3]
-
 
 
 fig = plt.figure(figsize=(9, 5))
@@ -92,7 +87,6 @@ plt.legend()
 # Save file
 output_path = os.path.join(figures_path,"altitude over time Delfi-PQ.pdf").replace("\\.", ".")
 fig.savefig(output_path, bbox_inches='tight')
-
 
 
 

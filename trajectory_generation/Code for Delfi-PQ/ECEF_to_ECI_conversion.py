@@ -1,7 +1,5 @@
 # Load standard modules
 import numpy as np
-
-import matplotlib
 from matplotlib import pyplot as plt
 
 # Load tudatpy modules
@@ -13,8 +11,6 @@ from tudatpy.kernel.astro.time_conversion import DateTime
 from tudatpy.numerical_simulation import environment
 from tudatpy import constants
 
-
-import copy
 import pandas as pd
 import os
 import sys
@@ -48,7 +44,6 @@ initial_time = states_GPS[0,0]
 end_simulation = 2000
 index = np.where(states_GPS[:, 0] >= end_simulation)[0][0]
 states_GPS = states_GPS[:index+1, :]
-print(np.shape(states_GPS))
 
 # retrieve benchmark states already in ECI
 states = np.genfromtxt(os.path.join(file_path,"states.txt").replace("\\.", "."), delimiter=',')
@@ -57,8 +52,6 @@ states = states[index:,:]
 states = states[::10]
 index = np.where(states[:, 0] >= end_simulation)[0][0]
 states = states[:index, :]
-print(np.shape(states))
-
 
 
 # Load spice kernels
@@ -96,9 +89,7 @@ body_settings = environment_setup.get_default_body_settings(
 # Create system of selected celestial bodies
 bodies = environment_setup.create_system_of_bodies(body_settings)
 
-
 earth_rotation_model = bodies.get("Earth").rotation_model
-
 
 
 states_GPS_ECI = []
@@ -118,15 +109,13 @@ for t in range(np.shape(states_GPS)[0]):
     states_GPS_ECI.append(inertial_state)
 
 states_GPS_ECI = np.array(states_GPS_ECI)
-# print(states_GPS_ECI)
+
 
 # Save the ECI for other conversions
 df = pd.DataFrame(states_GPS_ECI, columns=['time', 'x', 'y', 'z', 'Vx', 'Vy', 'Vz'])
 pd.set_option('colheader_justify', 'center')
 file_path_states = os.path.join(file_path, "states_ECI_GPS.txt")
 df.to_csv(file_path_states, sep=',', index=False,header=False,encoding='ascii',float_format='%.16f')
-
-
 
 
 #-----------------plotting in this file just for verification-----------------#
@@ -141,7 +130,6 @@ ax.scatter(states[:,0], states[:,1], s=5,label="Benchmark")
 ax.scatter(states_GPS_ECI[:,0], states_GPS_ECI[:,1], s=5,label="GNSS")
 # # ax.scatter(states_GPS[:,0], states_GPS_ECI[:,2], s=5,label="GNSS")
 # # ax.scatter(states_GPS[:,0], states_GPS_ECI[:,3], s=5,label="GNSS")
-#
 
 #------------------------------necessary interpolation------------------------------#
 x1, y1 = states[:, 0], states[:, 1]
@@ -152,16 +140,6 @@ y2_interp = interp_func(x1)
 
 
 plt.plot(x1,y2_interp -y1)
-# plt.plot(x1,y1)
-# plt.plot(x1,y2_interp)
-
-#
-# f_interp = interp1d(x2, y2)
-#
-# plt.plot(x2,f_interp)
-
-
-# plt.plot( states[:,0],states_GPS_ECI[:,1]-states[:,1])
 
 
 ax.set_xlabel('time [s]',fontsize=16)
