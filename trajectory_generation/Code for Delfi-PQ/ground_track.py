@@ -81,22 +81,40 @@ alt = lat_lon_alt[:,3]
 # plt.show()
 
 
-plt.figure(figsize=(9, 5))
+fig = plt.figure(figsize=(9, 5))
 plt.title("Ground track of Delfi-PQ")
-plt.scatter(lat_lon_alt[:,0], alt, s=1,label="Benchmark")
-plt.scatter(lat_lon_alt_GPS[:,0], alt_GPS, s=5,label="GNSS")
-# plt.scatter(lat_lon_alt[:,0],alt_GPS-alt)
-# plt.scatter(lon, lat, s=1,label="Benchmark")
-# plt.scatter(lon_GPS, lat_GPS, s=5,label="GNSS")
-# plt.scatter(lon, lat, s=1,label="Benchmark")
-# plt.scatter(lon_GPS, lat_GPS, s=1,label="GNSS")
+plt.scatter(lon, lat, s=30,label="Benchmark",marker="+")
+plt.scatter(lon_GPS, lat_GPS, s=5,label="GNSS")
 plt.xlabel('Longitude [deg]')
 plt.ylabel('Latitude [deg]')
-# plt.xticks(np.arange(-180, 181, step=45))
-# plt.xlim(-180, 180)
-# plt.yticks(np.arange(-90, 91, step=45))
+plt.xticks(np.arange(-180, 181, step=45))
+plt.xlim(-180, 180)
+plt.yticks(np.arange(-90, 91, step=45))
 plt.grid()
 plt.tight_layout()
 plt.legend()
+
+# Save file
+output_path = os.path.join(figures_path,"ground track Delfi-PQ.pdf").replace("\\.", ".")
+fig.savefig(output_path, bbox_inches='tight')
+
+
+fig = plt.figure(figsize=(9, 5))
+plt.title("Altitude over time of Delfi-PQ")
+plt.scatter(lat_lon_alt[:,0], alt/1000, s=1,label="Benchmark")
+plt.scatter(lat_lon_alt_GPS[:,0], alt_GPS/1000, s=5,label="GNSS")
+# plt.scatter(lat_lon_alt[:,0],alt_GPS-alt)
+plt.xlabel('time [s]')
+plt.ylabel('altitude [km]')
+plt.grid()
+plt.tight_layout()
+plt.legend()
+
+# Save file
+output_path = os.path.join(figures_path,"altitude over time Delfi-PQ.pdf").replace("\\.", ".")
+fig.savefig(output_path, bbox_inches='tight')
+
+
+
 
 plt.show()
