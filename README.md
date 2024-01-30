@@ -118,7 +118,21 @@ Having the saved file with the output, it was necessary to translate it into use
 Having the output files from the Binary it is saved as hex per line. Therefore, it is required to translate from hex to decimal and separate per component (which is explained in https://www.skytraq.com.tw/homesite/AN0037.pdf) which is executed in binary_parsing.py. After such action is taken another translation is done where the units of the data points are standardized and outputs only the desired components of the data points useful for the analysis. As specified in the NMEA parsing all the different actions are taken separately for easier error detection by the evaluation of the interim outputs.
 
 ## Facilitation from parsed data to usable units and desired structure of data, both Binary and NMEA
+The parsed data is not in the desired format yet and needs to be transformed in order to be useful. Only ten variables were if interest for the error analysis; time, longitude, latitude, altitude, x-position, y-position, z-position, x-speed, y-speed and z-speed. The following actions were performed for the data:
 
+For the NMEA:
+- First the time of first lock is estabilished
+- Then the time is converted form UTC to seconds and 18 leap seconds are added to account for conversion of gps datetime
+- All data before first lock is deleted (as there is no useful data)
+- A .txt file is created with 4 columns; time, longitude, latitude, altitude
+- Afterwards a post processing code removes duplicate and ensures that every entry in the four columns is complete
+
+For the Binary:
+- As converting the output of the binary data into a .txt file sometimes erronously creates a new line, the raw binary output is preprocessed to ensure there are no mistakes and every line is a complete message
+- Afterwards the time of first lock is estabilished
+- Then the time is converted form UTC to seconds
+- All data before first lock is deleted (as there is no useful data)
+- A .txt file is created with 7 columns; time, x, y, z, vx, vy, vz
 
 ## Write analysis program to compare trajectory input and gnss receiver output, i.e. quantify error of the GNSS receiver with respect to the benchmark trajectory
 
