@@ -152,13 +152,6 @@ y2_interp = interp_func(x1)
 
 
 plt.plot(x1,y2_interp -y1)
-# plt.plot(x1,y1)
-# plt.plot(x1,y2_interp)
-
-#
-# f_interp = interp1d(x2, y2)
-#
-# plt.plot(x2,f_interp)
 
 
 # plt.plot( states[:,0],states_GPS_ECI[:,1]-states[:,1])
