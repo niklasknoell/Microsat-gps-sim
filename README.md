@@ -1,5 +1,5 @@
 # Microsat-gps-sim
-Microsat engineering GNSS simulator
+Microsat Engineering GNSS simulator
 
 
 Task Distribution of the assignment for the course Microsat Engineering (AE4S10):
@@ -13,7 +13,8 @@ Task Distribution of the assignment for the course Microsat Engineering (AE4S10)
 - parse binary format (Maurits)
 - facilitation from parsed data to usable units and desired structure of data, both Binary and NMEA (Mattias)
 - write analysis program to compare trajectory input and gnss receiver output, i.e. quantify error (Bas)
-- sensitivity analysis to min. elevation angle, ionospheric correction, clock correction, ....., others (Mattias) 
+- sensitivity analysis to min. elevation angle, ionospheric correction, clock correction, ....., others (Mattias)
+- rerun error plots for the sensitivity analysis (Bas)
 
 
 ## Create trajectory in csv based on TLE
@@ -115,6 +116,8 @@ Having the saved file with the output, it was necessary to translate it into use
 ## Parse binary format
 
 Having the output files from the Binary it is saved as hex per line. Therefore, it is required to translate from hex to decimal and separate per component (which is explained in https://www.skytraq.com.tw/homesite/AN0037.pdf) which is executed in binary_parsing.py. After such action is taken another translation is done where the units of the data points are standardized and outputs only the desired components of the data points useful for the analysis. As specified in the NMEA parsing all the different actions are taken separately for easier error detection by the evaluation of the interim outputs.
+
+## Facilitation from parsed data to usable units and desired structure of data, both Binary and NMEA
 
 
 ## Write analysis program to compare trajectory input and gnss receiver output, i.e. quantify error of the GNSS receiver with respect to the benchmark trajectory
