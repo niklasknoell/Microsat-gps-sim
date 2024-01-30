@@ -80,7 +80,7 @@ fig.savefig(output_path, bbox_inches='tight')
 
 fig = plt.figure(figsize=(9, 5))
 plt.title("Altitude over time of Delfi-PQ")
-plt.scatter(lat_lon_alt[:,0], alt/1000, s=1,label="Benchmark")
+plt.scatter(lat_lon_alt[:,0], alt/1000, s=30,label="Benchmark",marker="+")
 plt.scatter(lat_lon_alt_GPS[:,0], alt_GPS/1000, s=5,label="GNSS")
 # plt.scatter(lat_lon_alt[:,0],alt_GPS-alt)
 plt.xlabel('time [s]')
