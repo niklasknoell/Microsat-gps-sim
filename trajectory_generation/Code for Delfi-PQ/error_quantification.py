@@ -45,6 +45,8 @@ initial_time = states_GPS[0,0]
 end_simulation = 3200
 index = np.where(states_GPS[:, 0] >= end_simulation)[0][0]
 states_GPS = states_GPS[:index+1, :]
+# states_GPS[:,0] += 19
+print(np.shape(states_GPS))
 
 # retrieve benchmark states in ECI
 states = np.genfromtxt(os.path.join(file_path,"states.txt").replace("\\.", "."), delimiter=',')
@@ -53,7 +55,7 @@ states = states[index:,:]
 states = states[::10]
 index = np.where(states[:, 0] >= end_simulation)[0][0]
 states = states[:index+1, :]
-
+print(np.shape(states))
 
 
 
@@ -94,6 +96,7 @@ output_path = os.path.join(figures_path,"states_velocity_error.pdf").replace("\\
 fig.savefig(output_path, bbox_inches='tight')
 
 
+plt.show()
 #---------------------RMSE error---------------------#
 
 RMSE = np.genfromtxt(os.path.join(file_path,"RMSE_position.txt").replace("\\.", "."), delimiter=',')
