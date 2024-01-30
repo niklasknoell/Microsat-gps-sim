@@ -43,8 +43,8 @@ def full_parsed_nmea_directory(input_directory, output_directory):
                         # Create a dictionary to store information, labels, and units
                         nmea_info = {
                             'Timestamp': f"Timestamp: {getattr(parsed_data, 'timestamp', '')}",
-                            'Latitude': f"Latitude: {getattr(parsed_data, 'lat', '')} {getattr(parsed_data, 'lat_dir', '')}",
-                            'Longitude': f"Longitude: {getattr(parsed_data, 'lon', '')} {getattr(parsed_data, 'lon_dir', '')}",
+                            'Latitude': f"Latitude: {getattr(parsed_data, 'latitude', '')} {getattr(parsed_data, 'lat_dir', '')}",
+                            'Longitude': f"Longitude: {getattr(parsed_data, 'longitude', '')} {getattr(parsed_data, 'lon_dir', '')}",
                             'Altitude': f"Altitude: {getattr(parsed_data, 'altitude', '')} Meters",
                             'Speed_Over_Ground': f"Speed Over Ground: {getattr(parsed_data, 'speed_over_ground', '')} Knots",
                             'Date': f"Date: {getattr(parsed_data, 'date', '')}",
@@ -100,11 +100,15 @@ def process_nmea_directory(input_directory, output_directory):
                         getattr(parsed_data, 'lon_dir', '')
                     )
 
+                    # Determine the direction for latitude and longitude
+                    lat_direction = getattr(parsed_data, 'lat_dir', '')
+                    lon_direction = getattr(parsed_data, 'lon_dir', '')
+
                     # Extract all available information and append to the output file
                     components = {
                         'Timestamp': getattr(parsed_data, 'timestamp', ''),
-                        'Latitude': f"{lat_degrees:.6f} degrees" if lat_degrees is not None else "Latitude: N/A",
-                        'Longitude': f"{lon_degrees:.6f} degrees" if lon_degrees is not None else "Longitude: N/A",
+                        'Latitude': f"{lat_degrees:.6f} deg {lat_direction}" if lat_degrees is not None else "Latitude: N/A",
+                        'Longitude': f"{lon_degrees:.6f} deg {lon_direction}" if lon_degrees is not None else "Longitude: N/A",
                         'Altitude': f"{getattr(parsed_data, 'altitude', '')} Meters",
                         'Speed_Over_Ground': f"{getattr(parsed_data, 'speed_over_ground', '')} Knots",
                         'Date': getattr(parsed_data, 'date', ''),
@@ -114,6 +118,7 @@ def process_nmea_directory(input_directory, output_directory):
                     # Create an output line with labels
                     output_line = ', '.join(f"{label}: {value}" for label, value in components.items()) + '\n'
                     outfile.write(output_line)
+
 
 
 # This Function Removes Lines Without Lat and Long
