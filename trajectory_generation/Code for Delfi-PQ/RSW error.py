@@ -33,9 +33,6 @@ else:
 
 #---------------------------Calculate RSW error---------------------------#
 
-# states = np.genfromtxt(os.path.join(file_path,"states.txt").replace("\\.", "."), delimiter=',')
-# states_GPS = np.genfromtxt(os.path.join(file_path,"states_GPS.txt").replace("\\.", "."), delimiter=',')
-
 # retrieve GPS states in ECI
 states_GPS = np.genfromtxt(os.path.join(file_path,"states_ECI_GPS.txt").replace("\\.", "."), delimiter=',')
 initial_time = states_GPS[0,0]
@@ -50,9 +47,6 @@ states = states[index:,:]
 states = states[::10]
 index = np.where(states[:, 0] >= end_simulation)[0][0]
 states = states[:index, :]
-
-
-
 
 
 xyz = states[:, 1:4]
@@ -100,8 +94,8 @@ VxVyVz_GPS = np.column_stack((Vx, Vy, Vz))
 
 
 #------------------------------transformation------------------------------#
-RSW_error = []
 
+RSW_error = []
 
 for i in range(np.shape(xyz)[0]):
 
@@ -120,7 +114,6 @@ for i in range(np.shape(xyz)[0]):
 
 
 RSW_error= np.array(RSW_error)
-print(RSW_error)
 
 
 RSW_error_df = pd.DataFrame(RSW_error)

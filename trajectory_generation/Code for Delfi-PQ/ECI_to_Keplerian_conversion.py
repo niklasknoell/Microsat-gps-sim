@@ -1,6 +1,5 @@
 # Load standard modules
 import numpy as np
-
 import matplotlib
 from matplotlib import pyplot as plt
 
@@ -14,7 +13,6 @@ from tudatpy.numerical_simulation import environment
 from tudatpy import constants
 
 
-import copy
 import pandas as pd
 import os
 import sys
@@ -61,7 +59,6 @@ body_settings = environment_setup.get_default_body_settings(
 bodies = environment_setup.create_system_of_bodies(body_settings)
 
 gravitational_parameter = bodies.get("Earth").gravity_field_model.gravitational_parameter
-print(gravitational_parameter)
 
 
 # retrieve GPS states in ECEF, which are to be converted to ECI
@@ -86,15 +83,12 @@ for t in range(np.shape(states_GPS)[0]):
 
 
 keplerian_GPS = np.array(keplerian_GPS)
-print(keplerian_GPS)
 
 # Save the ECI for other conversions
 df = pd.DataFrame(keplerian_GPS)
 pd.set_option('colheader_justify', 'center')
 file_path_states = os.path.join(file_path, "keplerian_GPS.txt")
 df.to_csv(file_path_states, sep=',', index=False,header=False,encoding='ascii',float_format='%.16f')
-
-
 
 #-----------------plotting in this file just for verification-----------------#
 

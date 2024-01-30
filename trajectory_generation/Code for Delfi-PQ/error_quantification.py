@@ -1,8 +1,6 @@
 # Load standard modules
 import sys
-
 import numpy as np
-
 import matplotlib
 from matplotlib import pyplot as plt
 
@@ -32,15 +30,7 @@ else:
     os.makedirs(figures_path)
 
 
-
-#---------------------------Plotting---------------------------#
-
-
-
 #---------------------State error---------------------#
-
-# states = np.genfromtxt(os.path.join(file_path,"states.txt").replace("\\.", "."), delimiter=',')
-# states_GPS = np.genfromtxt(os.path.join(file_path,"states_GPS.txt").replace("\\.", "."), delimiter=',')
 
 # retrieve GPS states in ECI
 states_GPS = np.genfromtxt(os.path.join(file_path,"states_ECI_GPS.txt").replace("\\.", "."), delimiter=',')
@@ -59,8 +49,6 @@ states = states[::10]
 index = np.where(states[:, 0] >= end_simulation)[0][0]
 states = states[:index, :]
 print(np.shape(states))
-
-
 
 
 
@@ -97,9 +85,8 @@ fig.savefig(output_path, bbox_inches='tight')
 
 
 
-
 fig, ax = plt.subplots()
-# ax.set_title("position components error over time")
+# ax.set_title("velocity components error over time")
 
 x1, y1 = states[:, 0], states[:, 4]
 x2, y2 = states_GPS[:, 0], states_GPS[:, 4]
@@ -129,8 +116,6 @@ ax.legend(fontsize=20)
 output_path = os.path.join(figures_path,"states_velocity_error.pdf").replace("\\.", ".")
 fig.savefig(output_path, bbox_inches='tight')
 
-
-
 #---------------------RMSE error---------------------#
 
 RMSE = np.genfromtxt(os.path.join(file_path,"RMSE_position.txt").replace("\\.", "."), delimiter=',')
@@ -147,11 +132,10 @@ output_path = os.path.join(figures_path,"RMSE_position.pdf").replace("\\.", ".")
 fig.savefig(output_path, bbox_inches='tight')
 
 
-
 RMSE = np.genfromtxt(os.path.join(file_path,"RMSE_velocity.txt").replace("\\.", "."), delimiter=',')
 
 fig, ax = plt.subplots()
-# ax.set_title("position components error over time")
+# ax.set_title("velocity components error over time")
 ax.scatter(states[:,0], RMSE, s=1)
 ax.set_xlabel('time [s]',fontsize=16)
 ax.set_ylabel('RMSE [m/s]',fontsize=16)
@@ -161,13 +145,9 @@ ax.tick_params(axis='both', which='major', labelsize=16)
 output_path = os.path.join(figures_path,"RMSE_velocity.pdf").replace("\\.", ".")
 fig.savefig(output_path, bbox_inches='tight')
 
-
 #---------------------RSW error---------------------#
 
 RSW_error = np.genfromtxt(os.path.join(file_path,"RSW_error.txt").replace("\\.", "."), delimiter=',')
-
-print(np.shape(RSW_error))
-print(np.shape(states[:,0]))
 
 fig, ax = plt.subplots()
 # ax.set_title("position components error over time")
@@ -181,7 +161,6 @@ ax.set_xlabel('time [s]',fontsize=16)
 ax.set_ylabel('Error in R, S, W direction [m]',fontsize=16)
 ax.grid()
 ax.legend(fontsize=20)
-
 
 output_path = os.path.join(figures_path,"RSW_position_error.pdf").replace("\\.", ".")
 fig.savefig(output_path, bbox_inches='tight')
@@ -199,7 +178,6 @@ ax.set_xlabel('time [s]',fontsize=16)
 ax.set_ylabel('Error in R, S, W direction [m/s]',fontsize=16)
 ax.grid()
 ax.legend(fontsize=20)
-
 
 output_path = os.path.join(figures_path,"RSW_velocity_error.pdf").replace("\\.", ".")
 fig.savefig(output_path, bbox_inches='tight')

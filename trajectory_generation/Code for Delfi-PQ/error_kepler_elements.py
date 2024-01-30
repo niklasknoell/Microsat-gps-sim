@@ -1,12 +1,12 @@
 import os
-
 import matplotlib
 from matplotlib import pyplot as plt
 import numpy as np
+from scipy.interpolate import interp1d
+
+# Load tudatpy modules
 from tudatpy.kernel.astro import two_body_dynamics
 from tudatpy import constants
-
-from scipy.interpolate import interp1d
 
 
 #-----------------------Directories-----------------------#
@@ -60,9 +60,6 @@ index = np.where(keplerian[:, 0] >= end_simulation)[0][0]
 keplerian = keplerian[:index, :]
 time = keplerian[:,0]
 
-# print(np.shape(keplerian))
-# print(np.shape(keplerian_GPS))
-
 
 fig, ((ax1, ax2), (ax3, ax4), (ax5, ax6)) = plt.subplots(3, 2, figsize=(9, 12))
 fig.suptitle('Evolution of error in Kepler elements')
@@ -73,7 +70,7 @@ x2, y2 = keplerian_GPS[:,0], keplerian_GPS[:,1]
 interp_func = interp1d(x2,y2)
 y2_interp = interp_func(x1)
 
-ax1.plot(x1, y2_interp -y1 / 1e3)
+ax1.scatter(x1, (y2_interp -y1) / 1e3)
 ax1.set_ylabel('Semi-major axis [km]')
 
 # Eccentricity
@@ -82,7 +79,7 @@ x2, y2 = keplerian_GPS[:,0], keplerian_GPS[:,2]
 interp_func = interp1d(x2,y2)
 y2_interp = interp_func(x1)
 
-ax2.plot(time, y2_interp -y1)
+ax2.scatter(time, y2_interp -y1)
 ax2.set_ylabel('Eccentricity [-]')
 
 # Inclination
@@ -94,7 +91,7 @@ x2, y2 = keplerian_GPS[:,0], keplerian_GPS[:,3]
 interp_func = interp1d(x2,y2)
 y2_interp = interp_func(x1)
 
-ax3.plot(time, y2_interp -y1)
+ax3.scatter(time, y2_interp -y1)
 ax3.set_ylabel('Inclination [deg]')
 
 # Argument of Periapsis
@@ -109,7 +106,7 @@ y2_interp = interp_func(x1)
 # omega_diff[np.where(omega_diff>180)] = omega_diff[np.where(omega_diff>180)] - 360
 # omega_diff[np.where(omega_diff<-180)] = omega_diff[np.where(omega_diff<-180)] + 360
 
-ax4.plot(time, y2_interp -y1)
+ax4.scatter(time, y2_interp -y1)
 ax4.set_ylabel('Argument of Periapsis [deg]')
 
 # Right Ascension of the Ascending Node
@@ -121,7 +118,7 @@ x2, y2 = keplerian_GPS[:,0], keplerian_GPS[:,5]
 interp_func = interp1d(x2,y2)
 y2_interp = interp_func(x1)
 
-ax5.plot(time, y2_interp -y1)
+ax5.scatter(time, y2_interp -y1)
 ax5.set_ylabel('RAAN [deg]')
 
 # True Anomaly
@@ -133,7 +130,7 @@ x2, y2 = keplerian_GPS[:,0], keplerian_GPS[:,6]
 interp_func = interp1d(x2,y2)
 y2_interp = interp_func(x1)
 
-ax6.plot(time, y2_interp -y1)
+ax6.scatter(time, y2_interp -y1)
 ax6.set_ylabel('True Anomaly [deg]')
 
 # ax6.scatter(time,np.rad2deg(keplerian_GPS[:,6]))
@@ -150,7 +147,6 @@ plt.tight_layout()
 
 output_path = os.path.join(figures_path,"keplerian_error.pdf").replace("\\.", ".")
 fig.savefig(output_path, bbox_inches='tight')
-
 
 
 plt.show()

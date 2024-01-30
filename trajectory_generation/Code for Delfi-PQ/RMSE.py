@@ -1,14 +1,7 @@
 # Load standard modules
 import numpy as np
-
 import matplotlib
 from matplotlib import pyplot as plt
-
-
-# Now you can import tudatpy
-
-
-
 import pandas as pd
 import os
 from scipy.interpolate import interp1d
@@ -34,9 +27,6 @@ else:
     os.makedirs(figures_path)
 
 # ------------------------------Calculate RMSE------------------------------#
-
-# states = np.genfromtxt(os.path.join(file_path, "states.txt").replace("\\.", "."), delimiter=',')
-# states_GPS = np.genfromtxt(os.path.join(file_path, "states_GPS.txt").replace("\\.", "."), delimiter=',')
 
 # retrieve GPS states in ECI
 states_GPS = np.genfromtxt(os.path.join(file_path,"states_ECI_GPS.txt").replace("\\.", "."), delimiter=',')
@@ -75,7 +65,6 @@ y2_interp = interp_func(x1)
 delta_z = y2_interp -y1
 
 
-
 RMSE_list = []
 
 for t in range(len(delta_x)):
@@ -86,9 +75,6 @@ for t in range(len(delta_x)):
     RMSE_list.append(RMSE)
 
 RMSE = np.array(RMSE_list)
-print(RMSE)
-print(np.shape(RMSE))
-print(np.shape(states))
 
 df = pd.DataFrame(RMSE)
 file_path_RMSE = os.path.join(file_path, "RMSE_position.txt")
@@ -115,7 +101,6 @@ y2_interp = interp_func(x1)
 delta_z = y2_interp -y1
 
 
-
 RMSE_list = []
 
 for t in range(len(delta_x)):
@@ -126,9 +111,6 @@ for t in range(len(delta_x)):
     RMSE_list.append(RMSE)
 
 RMSE = np.array(RMSE_list)
-print(RMSE)
-print(np.shape(RMSE))
-print(np.shape(states))
 
 df = pd.DataFrame(RMSE)
 file_path_RMSE = os.path.join(file_path, "RMSE_velocity.txt")
