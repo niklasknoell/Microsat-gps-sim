@@ -1,5 +1,5 @@
 # Microsat-gps-sim
-Microsat engineering GNSS simulator
+Microsat Engineering GNSS simulator
 
 
 Task Distribution of the assignment for the course Microsat Engineering (AE4S10):
@@ -13,7 +13,8 @@ Task Distribution of the assignment for the course Microsat Engineering (AE4S10)
 - parse binary format (Maurits)
 - facilitation from parsed data to usable units and desired structure of data, both Binary and NMEA (Mattias)
 - write analysis program to compare trajectory input and gnss receiver output, i.e. quantify error (Bas)
-- sensitivity analysis to min. elevation angle, ionospheric correction, clock correction, ....., others (Mattias) 
+- sensitivity analysis to min. elevation angle, ionospheric correction, clock correction, ....., others (Mattias)
+- rerun error plots for the sensitivity analysis (Bas)
 
 
 ## Create trajectory in csv based on TLE
@@ -21,7 +22,7 @@ Task Distribution of the assignment for the course Microsat Engineering (AE4S10)
 A trajectory of a satellite can be made with a variety of tools, such as SGP4 or TU Delft's astrodynamics toolbox, called [Tudat](https://docs.tudat.space/en/latest/).
 The latter has been chosen for this assignment. One way to propagate a trajectory from initial conditions is via a two line element (TLE) set. These can be obtained for instance from [Celestrak](https://celestrak.org/satcat/search.php) or [Space-track.org](https://www.space-track.org/#catalog). For this assignment the DELFI-PQ has been chosen with NORAD-ID 51074. Either one can be specified to the mentioned webpages to obtain the latest TLE. 
 
-The chosen TLE can be fed to Tudat. Based on included perturbations and other settings, Tudat can propagate the trajectory for a desired time. An example of this is shown in the [trajectory_generation folder](https://github.com/niklasknoell/Microsat-gps-sim/blob/Bas/trajectory_generation/Code/simulation.py). 
+The chosen TLE can be fed to Tudat. Based on included perturbations and other settings, Tudat can propagate the trajectory for a desired time. An example of this is shown in the [trajectory_generation folder](https://github.com/niklasknoell/Microsat-gps-sim/blob/Bas/trajectory_generation/Code%20for%20Delfi-PQ/simulation.py). 
 As the trajectory from Tudat is to be used as a benchmark, considered as the truth, the model should be accurate enough to quantify the order of magnitude of the error of the GNSS receiver with respect to this benchmark. To this end, the following perturbations are included in the simulation:
 
 - Earth spherical harmonic gravity to degree and order five (5,5)
@@ -49,11 +50,18 @@ The propagation results of Tudat are stored in the state history, containing the
 
 no additional computations have to be performed to transform the inertial position and velocity to these states. 
 
-The ground track of Delfi-PQ is shown below:
+The ground track of Delfi-PQ and the altitude profile are shown below:
 
-![image](https://github.com/niklasknoell/Microsat-gps-sim/assets/74927648/a6093c9f-8da0-43bc-9c8b-f769eb2b6d74)
+<table>
+  <tr>
+    <td><img src="https://github.com/niklasknoell/Microsat-gps-sim/assets/74927648/a6093c9f-8da0-43bc-9c8b-f769eb2b6d74" alt="Image 1"></td>
+    <td><img src="https://github.com/niklasknoell/Microsat-gps-sim/assets/74927648/a8ced585-90d5-40e1-bea2-64feaa87dfae" alt="Image 2"></td>
+  </tr>
+</table>
+
 
 As can be seen, the benchmark and GNSS values are overlapping, which is one of the verification checks which have been performed.
+
 ## gps-sdr-sim 
 
 
@@ -108,6 +116,8 @@ Having the saved file with the output, it was necessary to translate it into use
 ## Parse binary format
 
 Having the output files from the Binary it is saved as hex per line. Therefore, it is required to translate from hex to decimal and separate per component (which is explained in https://www.skytraq.com.tw/homesite/AN0037.pdf) which is executed in binary_parsing.py. After such action is taken another translation is done where the units of the data points are standardized and outputs only the desired components of the data points useful for the analysis. As specified in the NMEA parsing all the different actions are taken separately for easier error detection by the evaluation of the interim outputs.
+
+## Facilitation from parsed data to usable units and desired structure of data, both Binary and NMEA
 
 
 ## Write analysis program to compare trajectory input and gnss receiver output, i.e. quantify error of the GNSS receiver with respect to the benchmark trajectory
