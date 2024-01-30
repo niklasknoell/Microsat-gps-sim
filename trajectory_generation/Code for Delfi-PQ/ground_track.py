@@ -33,11 +33,6 @@ else:
 #---------------------------Plotting---------------------------#
 
 
-
-#---------------------State error---------------------#
-
-
-
 lat_lon_alt_GPS = np.genfromtxt(os.path.join(file_path,"NMEA.txt").replace("\\.", "."), delimiter=',')
 # lat_lon_alt_GPS[:,0] += 1
 
@@ -63,22 +58,6 @@ lat = lat_lon_alt[:,1]
 lon = lat_lon_alt[:,2]
 alt = lat_lon_alt[:,3]
 
-
-
-#
-# fig, ax = plt.subplots()
-#
-# ax.scatter(lat_lon_alt[:,2], lat_lon_alt[:,1], s=5)
-# # ax.plot(lat_lon_alt[:,2], lat_lon_alt[:,1],label='$\Delta$z')
-# ax.set_xlabel('time [s]',fontsize=16)
-# ax.set_ylabel('position component error [m]',fontsize=16)
-# ax.grid()
-# ax.tick_params(axis='both', which='major', labelsize=16)
-# ax.legend(fontsize=20)
-#
-#
-#
-# plt.show()
 
 
 fig = plt.figure(figsize=(9, 5))
