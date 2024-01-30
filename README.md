@@ -49,6 +49,11 @@ The propagation results of Tudat are stored in the state history, containing the
 
 no additional computations have to be performed to transform the inertial position and velocity to these states. 
 
+The ground track of Delfi-PQ is shown below:
+
+![image](https://github.com/niklasknoell/Microsat-gps-sim/assets/74927648/a6093c9f-8da0-43bc-9c8b-f769eb2b6d74)
+
+As can be seen, the benchmark and GNSS values are overlapping, which is one of the verification checks which have been performed.
 ## gps-sdr-sim 
 
 
