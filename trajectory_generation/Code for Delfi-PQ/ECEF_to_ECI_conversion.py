@@ -18,6 +18,8 @@ import copy
 import pandas as pd
 import os
 import sys
+from scipy.interpolate import interp1d
+
 
 #-----------------------Directories-----------------------#
 
@@ -40,13 +42,13 @@ else:
 #--------------------------------ECEF to ECI conversion--------------------------------#
 
 # retrieve GPS states in ECEF, which are to be converted to ECI
-states_GPS = np.genfromtxt(os.path.join(file_path,"binary.txt").replace("\\.", "."), delimiter=',')
+states_GPS = np.genfromtxt(os.path.join(file_path,"binary_noiono.txt").replace("\\.", "."), delimiter=',')
 # states_GPS[:,0] -= 4
 initial_time = states_GPS[0,0]
 end_simulation = 2000
 index = np.where(states_GPS[:, 0] >= end_simulation)[0][0]
 states_GPS = states_GPS[:index+1, :]
-
+print(np.shape(states_GPS))
 
 # retrieve benchmark states already in ECI
 states = np.genfromtxt(os.path.join(file_path,"states.txt").replace("\\.", "."), delimiter=',')
@@ -54,7 +56,8 @@ index = np.where(states[:, 0] >= initial_time)[0][0]
 states = states[index:,:]
 states = states[::10]
 index = np.where(states[:, 0] >= end_simulation)[0][0]
-states = states[:index+1, :]
+states = states[:index, :]
+print(np.shape(states))
 
 
 
@@ -136,8 +139,27 @@ ax.scatter(states[:,0], states[:,1], s=5,label="Benchmark")
 
 
 ax.scatter(states_GPS_ECI[:,0], states_GPS_ECI[:,1], s=5,label="GNSS")
-# ax.scatter(states_GPS[:,0], states_GPS_ECI[:,2], s=5,label="GNSS")
-# ax.scatter(states_GPS[:,0], states_GPS_ECI[:,3], s=5,label="GNSS")
+# # ax.scatter(states_GPS[:,0], states_GPS_ECI[:,2], s=5,label="GNSS")
+# # ax.scatter(states_GPS[:,0], states_GPS_ECI[:,3], s=5,label="GNSS")
+#
+
+#------------------------------necessary interpolation------------------------------#
+x1, y1 = states[:, 0], states[:, 1]
+x2, y2 = states_GPS_ECI[:, 0], states_GPS_ECI[:, 1]
+
+interp_func = interp1d(x2,y2)
+y2_interp = interp_func(x1)
+
+
+plt.plot(x1,y2_interp -y1)
+# plt.plot(x1,y1)
+# plt.plot(x1,y2_interp)
+
+#
+# f_interp = interp1d(x2, y2)
+#
+# plt.plot(x2,f_interp)
+
 
 # plt.plot( states[:,0],states_GPS_ECI[:,1]-states[:,1])
 
