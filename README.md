@@ -214,14 +214,7 @@ These factors are:
 - insufficient dynamic model lacking for instance Coriolis and centrifugal acceleration
 - antenna location
 
-The sensitivity analysis has been carried out in the [sensitivity analysis folder](https://github.com/niklasknoell/Microsat-gps-sim/tree/Bas/trajectory_generation/sensitivity%20analysis). To enable automation, a user only has to choose a [name of the sensitivity simulation](https://github.com/niklasknoell/Microsat-gps-sim/blob/Bas/trajectory_generation/sensitivity%20analysis/choose_simulation.py) of interest and run the other files in the [sensitivity analysis folder](https://github.com/niklasknoell/Microsat-gps-sim/tree/Bas/trajectory_generation/sensitivity%20analysis) in the following order:
-
-- ECEF_to_ECI_conversion.py
-- ECI_to_Keplerian_conversion.py
-- error_kepler_elements.py
-- RMSE.py
-- RSW error.py
-- error_quantification.py
+The sensitivity analysis has been carried out in the [sensitivity analysis folder](https://github.com/niklasknoell/Microsat-gps-sim/tree/Bas/trajectory_generation/sensitivity%20analysis). To enable automation, a user only has to choose a [name of the sensitivity simulation](https://github.com/niklasknoell/Microsat-gps-sim/blob/Bas/trajectory_generation/sensitivity%20analysis/choose_simulation.py) of interest and run the [run simulation file](https://github.com/niklasknoell/Microsat-gps-sim/blob/Bas/trajectory_generation/sensitivity%20analysis/run_simulation.py), which will run all code in the right order. 
 
 
 The ionospheric refraction has been tested by .....
