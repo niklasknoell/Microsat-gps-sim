@@ -101,6 +101,7 @@ def message_config_power_mode(serial_port_instance): #page20
             hex_message = "A0A1 0003 0C0102 09 0D0A"  # Implemented Hex Message
         send_receive_hex_message(serial_port_instance.serial_port, hex_message)
 
+
 def message_update_rate_GNSS(): #page22
     rate_option = input(print("Unfinished")) # Not Understanding the Documentation
 
