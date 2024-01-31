@@ -97,7 +97,7 @@ Now the simulation will run in an infinite loop, with the transmission restartin
 
 ## Commanding the GNSS 
 
-To acquire the Binary output of the GNSS sending the corresponding command is necessary to achieve the desired output. Therefore using the document given the command was coded in general_commands.py (function message_output_type()) based on the example given. Adapting the ChechSum is also necessary to ensure correct commanding. After the command is sent an answer is expected that informs with either ACK or NACK based if the command was received and executed or received and not executed, respectively. To receive the answer function receive_variable_response() is used to ensure that the full message is received.
+For this assignment commanding the GNSS was required to achieve the desired results, those being: change of output (between NMEA and Binary) and elevation (query and changing). In addition, a variable-size answer code was made to ensure that the exact size of the answer to any command is received (determined by receiving the payload size hex, which is the only section of the message of variable size, allowing to determine the full size of the answer) without missing anything or "reading" more than needed. The commands are present in the "general_commands.py" and the query for the command choice is present.
 
 
 ## Run the sdr to gnss receiver and record output in NMEA format
