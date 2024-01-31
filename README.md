@@ -14,7 +14,7 @@ Task Distribution of the assignment for the course Microsat Engineering (AE4S10)
 - facilitation from parsed data to usable units and desired structure of data, both Binary and NMEA (Mattias)
 - write analysis program to compare trajectory input and gnss receiver output, i.e. quantify error (Bas)
 - sensitivity analysis (Bas)
-- rerun error plots for the sensitivity analysis (Bas)
+
 
 
 ## Create trajectory in csv based on TLE
@@ -42,13 +42,11 @@ The drag and radiation reference area have been calculated based on the satellit
 
 Since the frequency of the gps-sdr-sim software is 10 Hz, a fixed step size of 0.1 s has been used in the Tudat simulation. Contrary to the GNSS receiver, the propagation time of Tudat is not limited by the actual duration of the propagation. In fact, trajectories of days or months are generated within seconds or at most a few minutes, when using the modest step size of 0.1 s and an rk4 integrator. 
 
-The propagation results of Tudat are stored in the state history, containing the inertial position and velocity components. Moreover, any dependent variables of interest can be stored. The latter is one of the main reasons why Tudat has been chosen. By saving the following dependent variables in csv format:
+The propagation results of Tudat are stored in the state history, containing the inertial position and velocity components. Moreover, any dependent variables of interest can be stored. The latter is one of the main reasons why Tudat has been chosen. The following dependent variables are stored:
 
-- longitude, latitude, altitude
+- longitude, latitude, altitude in the earth centered earth fixed (ECEF) frame
 - position and velocity components in the earth centered earth fixed (ECEF) frame
 - Keplerian states
-
-no additional computations have to be performed to transform the inertial position and velocity to these states. 
 
 The ground track of Delfi-PQ and the altitude profile are shown below:
 
