@@ -35,7 +35,7 @@ else:
 # retrieve GPS states in ECI
 states_GPS = np.genfromtxt(os.path.join(file_path,"states_ECI_GPS.txt").replace("\\.", "."), delimiter=',')
 initial_time = states_GPS[0,0]
-end_simulation = 2000
+end_simulation = 10000
 index = np.where(states_GPS[:, 0] >= end_simulation)[0][0]
 states_GPS = states_GPS[:index+1, :]
 # states_GPS[:,0] += 19
@@ -115,6 +115,8 @@ ax.legend(fontsize=20)
 
 output_path = os.path.join(figures_path,"states_velocity_error.pdf").replace("\\.", ".")
 fig.savefig(output_path, bbox_inches='tight')
+
+
 
 #---------------------RMSE error---------------------#
 
