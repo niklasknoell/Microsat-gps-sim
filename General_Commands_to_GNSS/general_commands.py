@@ -164,6 +164,16 @@ def message_output_type_NMEA(serial_port):
     hex_message = "A0A10003090100080D0A" # Hex message with correct CS for Binary output
     send_receive_hex_message(serial_port, hex_message)
 
+def messaqe_query_elevation_angle(serial_port)
+
+    hex_message = "A0A100012F2F0D0A"
+    send_receive_hex_message(serial_port, hex_message)
+
+def message_configure_elevation(serial_port):
+
+    hex_message = "A0A100052B02000000020D0A"
+    send_receive_hex_message(serial_port, hex_message)
+
 
 ans = input(print("Please choose the ouput type, NMEA or BINARY:"))
 if ans.upper() == "BINARY":
