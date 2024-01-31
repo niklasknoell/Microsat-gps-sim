@@ -132,7 +132,7 @@ To retrieve the data from the simulation with the BINARY output a few actions mu
 $ python general_commands.py
 ```
 - Step 1.1:
-- - Answer: NMEA
+- - Answer: BINARY
 - Step 2:
 ```
 $ python BINARY_store.py
