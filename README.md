@@ -161,7 +161,7 @@ The state error in the ECI frame can then be calculated by taking the difference
 
 
 
-As can be observed from the figures, the order of magnitude of the error of the position components is ... m. For the velocity components, the order of magnitude of the error is ... m/s. 
+As can be observed from the figures, the order of magnitude of the error of the position components is ... m. For the velocity components, the order of magnitude of the error is ... m/s. Moreover, while the GNSS simulation has been allowed to be longer than 300 sec, a jump in the position components is induced after every 300 seconds. This is to be disregarded and has not a physical reason. 
 
 While the error in the state components gives a rough idea of the order of magnitude of the error, a metric for the overall error would be even more useful, as the error in the x, y and z components depends largely on the inclination of the orbit. The root mean squared error (RMSE) gives a good indication of the overall error, which can be also be readily compared with other orbits with different inclination. 
 
@@ -189,8 +189,11 @@ The radial, along track and cross track error in the RSW frame is shown in the f
   </tr>
 </table>
 
-For the position components in the RSW frame, it is observed that the order of magnitude of the radial error is ... m. For the along track direction, the order of magnitude of the error is ...m. Finally, the cross-track direction has the smallest error. Its order of magnitude is ...m. 
+For the position components in the RSW frame, it is observed that the error of the along track direction is about ... Besides, it has the largest error of all components. Moreover, from this plot it can be observed that the periodic jump in error after every 300 sec, is dominant in the along track component.
+The radial error is ... and is about ... m.
+Finally, the error in the cross-track direction is ... and is about ...m
 
+ 
 For the velocity components in the RSW frame, it is observed that the order of magnitude of the radial error is ... m/s. For the along track direction, the order of magnitude of the error is ...m/s. Finally, the cross-track direction has the smallest error. Its order of magnitude is ...m/s. 
 
 
