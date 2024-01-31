@@ -106,11 +106,13 @@ To retrieve the data from the simulation with the NMEA output a few actions must
 
 - Step 1:
 ```
-$ python general_commands.py 
+$ python general_commands.py
 ```
+- Step 1.1:
+- - Answer: NMEA
 - Step 2:
 ```
-$ python BINARY_store.py
+$ python NMEA_store.py
 ```
 - Step 3:
 ```
