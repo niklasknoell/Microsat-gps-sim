@@ -41,7 +41,7 @@ else:
 states_GPS = np.genfromtxt(os.path.join(file_path,"binary_noiono_0deg.txt").replace("\\.", "."), delimiter=',')
 # states_GPS[:,0] -= 4
 initial_time = states_GPS[0,0]
-end_simulation = 10000
+end_simulation = 2400
 index = np.where(states_GPS[:, 0] >= end_simulation)[0][0]
 states_GPS = states_GPS[:index+1, :]
 
@@ -132,8 +132,8 @@ ax.scatter(states_GPS_ECI[:,0], states_GPS_ECI[:,1], s=5,label="GNSS")
 # # ax.scatter(states_GPS[:,0], states_GPS_ECI[:,3], s=5,label="GNSS")
 
 #------------------------------necessary interpolation------------------------------#
-x1, y1 = states[:, 0], states[:, 1]
-x2, y2 = states_GPS_ECI[:, 0], states_GPS_ECI[:, 1]
+x1, y1 = states[:, 0], states[:, 2]
+x2, y2 = states_GPS_ECI[:, 0], states_GPS_ECI[:, 2]
 
 interp_func = interp1d(x2,y2)
 y2_interp = interp_func(x1)
@@ -149,4 +149,4 @@ ax.tick_params(axis='both', which='major', labelsize=16)
 ax.legend(fontsize=20)
 
 
-plt.show()
+# plt.show()

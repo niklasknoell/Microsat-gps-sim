@@ -168,9 +168,10 @@ Based on the benchmark trajectory and the GNSS receiver output, the GNSS receive
 - state error in the ECI frame
 - radial (R), along track (S), cross track (W) error in the RSW frame
 - error in the Keplerian elements
-- RMS error
+- RMS error of the position and velocity
 
-These errors are commonly analyzed in astrodynamics. Before analyzing them, the theoretical accuracy of the [S1216F8-GI3 GPS receiver](https://www.skytraq.com.tw/datasheet/S1216V8_v0.9.pdf) is reported to be:
+These errors are commonly analyzed in astrodynamics. All errors are programmatically obtained by running the [run simulation file](https://github.com/niklasknoell/Microsat-gps-sim/blob/Bas/trajectory_generation/Code%20for%20Delfi-PQ/run_simulation.py). 
+Before analyzing them, the theoretical accuracy of the [S1216F8-GI3 GPS receiver](https://www.skytraq.com.tw/datasheet/S1216V8_v0.9.pdf) is reported to be:
 
 - position accuracy: 2.5 m CEP (Circular Error Probability)
 - velocity accuracy: 0.1 m/s
@@ -242,6 +243,9 @@ These factors are:
 - ionospheric refraction, as influenced by the min. elevation angle. 
 - insufficient dynamic model lacking for instance Coriolis and centrifugal acceleration
 - antenna location
+
+The sensitivity analysis has been carried out in the [sensitivity analysis folder](https://github.com/niklasknoell/Microsat-gps-sim/tree/Bas/trajectory_generation/sensitivity%20analysis). To enable automation, a user only has to choose a [name of the sensitivity simulation](https://github.com/niklasknoell/Microsat-gps-sim/blob/Bas/trajectory_generation/sensitivity%20analysis/choose_simulation.py) of interest and run the [run simulation file](https://github.com/niklasknoell/Microsat-gps-sim/blob/Bas/trajectory_generation/sensitivity%20analysis/run_simulation.py), which will run all code in the right order. 
+
 
 The ionospheric refraction has been tested by .....
 
