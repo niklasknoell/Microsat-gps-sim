@@ -164,7 +164,7 @@ def message_output_type_NMEA(serial_port):
     hex_message = "A0A10003090100080D0A" # Hex message with correct CS for Binary output
     send_receive_hex_message(serial_port, hex_message)
 
-def messaqe_query_elevation_angle(serial_port)
+def messaqe_query_elevation_angle(serial_port):
 
     hex_message = "A0A100012F2F0D0A"
     send_receive_hex_message(serial_port, hex_message)
@@ -175,11 +175,17 @@ def message_configure_elevation(serial_port):
     send_receive_hex_message(serial_port, hex_message)
 
 
-ans = input(print("Please choose the ouput type, NMEA or BINARY:"))
+ans = input(print("Please choose the ouput type, NMEA, BINARY, QUERYELEV, CONFELEV:"))
 if ans.upper() == "BINARY":
     message_output_type_BINARY("COM4")
+    print("BINARY")
 if ans.upper() == "NMEA":
     message_output_type_NMEA("COM4")
-else:
-    print("Choice not Available")
+    print("NMEA")
+if ans.upper() == "QUERYELEV":
+    messaqe_query_elevation_angle("COM4")
+    print("QUERYELEV")
+if ans.upper() == "CONFELEV":
+    message_configure_elevation("COM4")
+    print("CONFELEV")
 
