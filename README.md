@@ -13,7 +13,7 @@ Task Distribution of the assignment for the course Microsat Engineering (AE4S10)
 - parse binary format (Maurits)
 - facilitation from parsed data to usable units and desired structure of data, both Binary and NMEA (Mattias)
 - write analysis program to compare trajectory input and gnss receiver output, i.e. quantify error (Bas)
-- sensitivity analysis to min. elevation angle, ionospheric correction, clock correction, ....., others (Mattias)
+- sensitivity analysis (Bas)
 - rerun error plots for the sensitivity analysis (Bas)
 
 
@@ -149,10 +149,9 @@ These errors are commonly analyzed in astrodynamics. Before analyzing them, the 
 - velocity accuracy: 0.1 m/s
 - time accuracy: 10 ns
 
-The state error in the ECI frame has been directly calculated by taking the difference in ECI state components between the benchmark trajectory and the GNSS receiver. The state error in the ECI frame is shown in the following figure:
+To calculate the state error in the ECI frame, the ECEF states of the GNSS output are converted to ECI states through the [body fixed to inertial transformation](https://py.api.tudat.space/en/latest/environment.html#tudatpy.numerical_simulation.environment.RotationalEphemeris.body_fixed_to_inertial_rotation).
+The state error in the ECI frame can then be calculated by taking the difference in ECI state components between the benchmark trajectory and the GNSS receiver. The state error in the ECI frame is shown in the following figure:
 
-
-not the actual error plots!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 <table>
   <tr>
@@ -160,8 +159,6 @@ not the actual error plots!!!!!!!!!!!!!!!!!!!!!!!!!!
     <td><img src="https://github.com/niklasknoell/Microsat-gps-sim/assets/74927648/02380160-b588-4305-b391-607fa1c1890c" alt="Image 2"></td>
   </tr>
 </table>
-
-
 
 
 
@@ -182,15 +179,9 @@ The RMSE calculated up to any time in the propagation is shown in:
 At the final propagation time, after two full orbits, the RMSE is ... m for the position and ... m/s for the velocity. This is ......
 
 
-............................
-
-
 To charachterize the radial, along track, cross track error in the RSW frame, further clarification is required. Depending on the orientation and location of the satellite with respect to the earth, the RSW coordinate system which is attached to the satellite differs. Consequently, to calculate the radial, along track and cross track error, one satellite has to be taken as the reference. As the benchmark trajectory is considered to be the truth, the RSW frame to quantify the error is fixed to the satellite of the benchmark trajectory. The radial, along track and cross track components of the benchmark trajectory can be calculated by converting its inertial components to RSW components. This can be done by multipliying the [inertial to RSW transformation matrix](https://py.api.tudat.space/en/stable/frame_conversion.html#tudatpy.astro.frame_conversion.inertial_to_rsw_rotation_matrix) with the inertial position. The inertial to RSW transformation matrix also requires the inertial position itself to compute the orientation of the frame. The radial, along track and cross track components of the GNSS receiver with respect to this frame can be calculated by multiplying the same inertial to RSW transformation matrix, still with the inertial benchmark trajectory as input, with the inertial components of the GNSS receiver. 
 
 The radial, along track and cross track error in the RSW frame is shown in the following figure:
-
-
-not the actual error plots!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 <table>
   <tr>
@@ -204,36 +195,42 @@ For the position components in the RSW frame, it is observed that the order of m
 For the velocity components in the RSW frame, it is observed that the order of magnitude of the radial error is ... m/s. For the along track direction, the order of magnitude of the error is ...m/s. Finally, the cross-track direction has the smallest error. Its order of magnitude is ...m/s. 
 
 
-
-
-............................
-
-
-
 The error in the Keplerian elements is shown in the following figure:
 
-
-not the actual error plots!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 ![image](https://github.com/niklasknoell/Microsat-gps-sim/assets/74927648/a6ba62e2-dc6c-41dd-8ecf-01c913ad1e08)
 
 
-The following observations are made from the evolution of the error of the six Keplerian elements. 
-
-............................
+The following observations are made from the evolution of the error of the six Keplerian elements:
 
 
-## Sensitivity analysis to min. elevation angle, ionospheric correction, clock correction, ....., others
 
-It has also been investigated which settings can be changed to get the error down further. The following variables have been played with:
 
--
--
--
 
-These variables are motivated by literature.  ADD paper!!!
+## Sensitivity analysis
+
+It has also been investigated which settings can be changed to get the error down further. These were motivated by factors which have been analyzed in the [paper](https://www.sciencedirect.com/science/article/pii/S0273117723008050).
+These factors are: 
+
+- ionospheric refraction, as influenced by the min. elevation angle. 
+- insufficient dynamic model lacking for instance Coriolis and centrifugal acceleration
+- antenna location
+
+The ionospheric refraction has been tested by .....
+
 
 It was found that ...... indeed enable to get a lower error. Incorporating .... this gives the following error plots, which after comparison with the previous error plots indeed shows that the error can be reduced. 
+
+
+The second factor of the paper, a possibly insufficient dynamic model, could not be tested as the dynamic model of the GNSS could not be altered. 
+Moreover, the influence of the antenna location could not be tested, because while the receiver is orbiting on a virtual trajectory, it is not attached to an actual satellite, and is not obstructed by its satellite body. 
+
+
+  
+  
+
+
+
 
 
 
