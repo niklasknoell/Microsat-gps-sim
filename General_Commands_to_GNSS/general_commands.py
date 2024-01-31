@@ -175,6 +175,10 @@ def message_configure_elevation(serial_port):
     hex_message = "A0A100052B02000000020D0A"
     send_receive_hex_message(serial_port, hex_message)
 
+def message_configure_elevation_zero(serial_port):
+
+    hex_message = "A0A100052B02000000020D0A"
+    send_receive_hex_message(serial_port, hex_message)
 
 ans = input(print("Please choose the ouput type, NMEA, BINARY, QUERYELEV, CONFELEV:"))
 if ans.upper() == "BINARY":
