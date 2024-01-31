@@ -58,26 +58,29 @@ alt = lat_lon_alt[:,3]
 
 #------------------------------necessary interpolation------------------------------#
 
-# x1, y1 = lat_lon_alt[:,0], lat
-# x2, y2 = lat_lon_alt_GPS[:,0], lat_GPS
-# interp_func = interp1d(x2,y2)
-# y2_interp_lat = interp_func(x1)
-#
-# x1, y1 = lat_lon_alt[:,0], lon
-# x2, y2 = lat_lon_alt_GPS[:,0], lon_GPS
-# interp_func = interp1d(x2,y2)
-# y2_interp_lon = interp_func(x1)
+x1_lat, y1_lat = lat_lon_alt[:,0], lat
+x2_lat, y2_lat = lat_lon_alt_GPS[:,0], lat_GPS
+interp_func = interp1d(x2_lat,y2_lat)
+y2_interp_lat = interp_func(x1_lat)
+
+x1_lon, y1_lon = lat_lon_alt[:,0], lon
+x2_lon, y2_lon = lat_lon_alt_GPS[:,0], lon_GPS
+interp_func = interp1d(x2_lon,y2_lon)
+y2_interp_lon = interp_func(x1_lon)
 
 
 fig = plt.figure(figsize=(9, 5))
 plt.title("Ground track of Delfi-PQ")
-plt.scatter(lon, lat, s=30,label="Benchmark",marker="+")
-plt.scatter(lon_GPS, lat_GPS, s=5,label="GNSS")
+plt.scatter(lat_lon_alt[:,0],y2_interp_lat - y1_lat,label="lat")
+plt.scatter(lat_lon_alt[:,0],y2_interp_lon - y1_lon,label="lon")
+
+# plt.scatter(lon, lat, s=30,label="Benchmark",marker="+")
+# plt.scatter(lon_GPS, lat_GPS, s=5,label="GNSS")
 plt.xlabel('Longitude [deg]')
 plt.ylabel('Latitude [deg]')
-plt.xticks(np.arange(-180, 181, step=45))
-plt.xlim(-180, 180)
-plt.yticks(np.arange(-90, 91, step=45))
+# plt.xticks(np.arange(-180, 181, step=45))
+# plt.xlim(-180, 180)
+# plt.yticks(np.arange(-90, 91, step=45))
 plt.grid()
 plt.tight_layout()
 plt.legend()
