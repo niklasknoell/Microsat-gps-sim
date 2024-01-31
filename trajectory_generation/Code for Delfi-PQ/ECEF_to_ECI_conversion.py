@@ -149,4 +149,4 @@ ax.tick_params(axis='both', which='major', labelsize=16)
 ax.legend(fontsize=20)
 
 
-plt.show()
+# plt.show()
