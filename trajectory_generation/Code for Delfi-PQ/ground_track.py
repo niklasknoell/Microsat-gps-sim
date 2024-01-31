@@ -8,6 +8,7 @@ from tudatpy.kernel.astro import frame_conversion
 
 import pandas as pd
 import os
+from scipy.interpolate import interp1d
 
 #-----------------------Directories-----------------------#
 
@@ -48,11 +49,24 @@ index = np.where(lat_lon_alt[:, 0] >= initial_time)[0][0]
 lat_lon_alt = lat_lon_alt[index:,:]
 lat_lon_alt = lat_lon_alt[::10]
 index = np.where(lat_lon_alt[:, 0] >= end_simulation)[0][0]
-lat_lon_alt = lat_lon_alt[:index+1, :]
+lat_lon_alt = lat_lon_alt[:index, :]
 
 lat = lat_lon_alt[:,1]
 lon = lat_lon_alt[:,2]
 alt = lat_lon_alt[:,3]
+
+
+#------------------------------necessary interpolation------------------------------#
+
+# x1, y1 = lat_lon_alt[:,0], lat
+# x2, y2 = lat_lon_alt_GPS[:,0], lat_GPS
+# interp_func = interp1d(x2,y2)
+# y2_interp_lat = interp_func(x1)
+#
+# x1, y1 = lat_lon_alt[:,0], lon
+# x2, y2 = lat_lon_alt_GPS[:,0], lon_GPS
+# interp_func = interp1d(x2,y2)
+# y2_interp_lon = interp_func(x1)
 
 
 fig = plt.figure(figsize=(9, 5))
@@ -73,10 +87,18 @@ output_path = os.path.join(figures_path,"ground track Delfi-PQ.pdf").replace("\\
 fig.savefig(output_path, bbox_inches='tight')
 
 
+#------------------------------necessary interpolation------------------------------#
+
+x1, y1 = lat_lon_alt[:,0], alt
+x2, y2 = lat_lon_alt_GPS[:,0], alt_GPS
+interp_func = interp1d(x2,y2)
+y2_interp = interp_func(x1)
+
 fig = plt.figure(figsize=(9, 5))
 plt.title("Altitude over time of Delfi-PQ")
 plt.scatter(lat_lon_alt[:,0], alt/1000, s=30,label="Benchmark",marker="+")
 plt.scatter(lat_lon_alt_GPS[:,0], alt_GPS/1000, s=5,label="GNSS")
+# plt.scatter(lat_lon_alt[:,0],y2_interp -y1)
 # plt.scatter(lat_lon_alt[:,0],alt_GPS-alt)
 plt.xlabel('time [s]')
 plt.ylabel('altitude [km]')
