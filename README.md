@@ -102,7 +102,13 @@ To acquire the Binary output of the GNSS sending the corresponding command is ne
 
 ## Run the sdr to gnss receiver and record output in NMEA format
 
-................
+To retrieve the data from the simulation with the NMEA output a few actions must be taken. First the GNSS needs to be commanded to output in NMEA (where the code will ask which command is desired to be sent), secondly the NMEA output recorder is engaged and finally the RF signals are fed into the SDR. Then the desired time needs to be waited while the simulation is run
+Step 1:
+$ python general_commands.py 
+Step 2:
+$ python BINARY_store.py
+Step 3:
+$ python gps-sdr-sim-uhd.py -t <output file previously generated> -s 2600000 -x 30 
 
 
 ## Parse NMEA format
