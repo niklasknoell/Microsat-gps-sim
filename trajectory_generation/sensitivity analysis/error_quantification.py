@@ -40,8 +40,6 @@ initial_time = states_GPS[0,0]
 end_simulation = 2400
 index = np.where(states_GPS[:, 0] >= end_simulation)[0][0]
 states_GPS = states_GPS[:index+1, :]
-# states_GPS[:,0] += 19
-print(np.shape(states_GPS))
 
 # retrieve benchmark states in ECI
 states = np.genfromtxt(os.path.join(file_path,"states.txt").replace("\\.", "."), delimiter=',')
@@ -50,7 +48,6 @@ states = states[index:,:]
 states = states[::10]
 index = np.where(states[:, 0] >= end_simulation)[0][0]
 states = states[:index, :]
-print(np.shape(states))
 
 
 
@@ -191,7 +188,6 @@ ax.set_xlabel('time [s]',fontsize=16)
 ax.set_ylabel('Error in R, S, W direction [m/s]',fontsize=16)
 ax.grid()
 ax.legend(fontsize=20)
-ax.set_ylim([-0.2, 0.2])
 
 output_path = os.path.join(figures_path,sim_name + "RSW_velocity_error.pdf").replace("\\.", ".")
 fig.savefig(output_path, bbox_inches='tight')
