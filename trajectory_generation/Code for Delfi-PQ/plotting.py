@@ -1,6 +1,7 @@
+#-------------------------------------This file has been initially used to plot the trajectory-------------------------------------#
+
 # Load standard modules
 import numpy as np
-
 import matplotlib
 from matplotlib import pyplot as plt
 
@@ -34,9 +35,6 @@ else:
 dpi = 300
 
 states = np.genfromtxt(os.path.join(file_path,"states.txt").replace("\\.", "."), delimiter=',')
-
-
-
 dep_vars = np.genfromtxt(os.path.join(file_path,"dep_vars.txt").replace("\\.", "."), delimiter=',')
 time = dep_vars[:,0]
 longitude = dep_vars[:,1]
@@ -116,15 +114,9 @@ fig.savefig(output_path, bbox_inches='tight')
 
 
 #-----------------------------------Trajectory plots-----------------------------------#
+
 fig = plt.figure(figsize=(10, 10))
 ax = fig.add_subplot(111, projection='3d')
-
-# u = np.linspace(0, 2 * np.pi, 100)
-# v = np.linspace(0, np.pi, 100)
-# x = 6378 * 10 ** 3 * np.outer(np.cos(u), np.sin(v))
-# y = 6378 * 10 ** 3 * np.outer(np.sin(u), np.sin(v))
-# z = 6378 * 10 ** 3 * np.outer(np.ones(np.size(u)), np.cos(v))
-# ax.plot_wireframe(x, y, z, rstride=4, cstride=4, color='b', alpha=0.4, label='Earth')
 
 ax.plot(dep_vars [:,4]/1000,dep_vars [:,5]/1000,dep_vars [:,6]/1000,label='Truth')
 ax.tick_params(axis='both', which='both', labelsize=16)
