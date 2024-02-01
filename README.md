@@ -286,7 +286,7 @@ These factors are motivated by the course Satellite Orbit Determination (AE4872)
 - Generate a .txt as returned by the binary parser and put it in the [file folder](https://github.com/niklasknoell/Microsat-gps-sim/tree/Bas/trajectory_generation/sensitivity%20analysis/Files)
 - Give a desired name in the [choose simulation file](https://github.com/niklasknoell/Microsat-gps-sim/blob/Bas/trajectory_generation/sensitivity%20analysis/choose_simulation.py)
 - Run the [run simulation file](https://github.com/niklasknoell/Microsat-gps-sim/blob/Bas/trajectory_generation/sensitivity%20analysis/run_simulation.py) file
-- The generated results can then be viewed in the [figures folder](https://github.com/niklasknoell/Microsat-gps-sim/tree/Bas/trajectory_generation/sensitivity%20analysis/Figures)
+- The generated results can then be viewed in the [figures folder](https://github.com/niklasknoell/Microsat-gps-sim/tree/Bas/trajectory_generation/sensitivity%20analysis/Figures) and compared with the baseline error
 
   
   
