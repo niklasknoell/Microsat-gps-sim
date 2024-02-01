@@ -172,7 +172,7 @@ def messaqe_query_elevation_angle(serial_port):
 
 def message_configure_elevation15(serial_port):
 
-    hex_message = "A0A100052B02000000020D0A"
+    hex_message = "A0A100052B020F0000260D0A"
     send_receive_hex_message(serial_port, hex_message)
 
 def message_configure_elevation_zero(serial_port):
