@@ -64,14 +64,14 @@ def receive_variable_response(ser):
 
     return total_message
 
-def checksum(payload_hex):
-
-
-
-
-
-
-    return CS
+# def checksum(payload_hex):
+#
+#
+#
+#
+#
+#
+#     return CS
 
 
 def message_config_power_mode(serial_port_instance): #page20
@@ -170,17 +170,17 @@ def messaqe_query_elevation_angle(serial_port):
     hex_message = "A0A100012F2F0D0A"
     send_receive_hex_message(serial_port, hex_message)
 
-def message_configure_elevation(serial_port):
+def message_configure_elevation15(serial_port):
 
     hex_message = "A0A100052B02000000020D0A"
     send_receive_hex_message(serial_port, hex_message)
 
 def message_configure_elevation_zero(serial_port):
 
-    hex_message = "A0A100052B02000000020D0A"
+    hex_message = "A0A100052B02000000290D0A"
     send_receive_hex_message(serial_port, hex_message)
 
-ans = input(print("Please choose the ouput type, NMEA, BINARY, QUERYELEV, CONFELEV:"))
+ans = input(print("Please choose the ouput type, NMEA, BINARY, QUERYELEV, CONFELEV15, CONFELEVZERO:"))
 if ans.upper() == "BINARY":
     message_output_type_BINARY("COM4")
     print("BINARY")
@@ -190,7 +190,10 @@ if ans.upper() == "NMEA":
 if ans.upper() == "QUERYELEV":
     messaqe_query_elevation_angle("COM4")
     print("QUERYELEV")
-if ans.upper() == "CONFELEV":
-    message_configure_elevation("COM4")
-    print("CONFELEV")
+if ans.upper() == "CONFELEV15":
+    message_configure_elevation15("COM4")
+    print("CONFELEV15")
+if ans.upper() == "CONFELEVZERO":
+    message_configure_elevation_zero("COM4")
+    print("CONFELEVZERO")
 
