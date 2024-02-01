@@ -64,91 +64,11 @@ def receive_variable_response(ser):
 
     return total_message
 
-# def checksum(payload_hex):
-#
-#
-#
-#
-#
-#
-#     return CS
-
-
-def message_config_power_mode(serial_port_instance): #page20
-    mode_option = input(print("""Please make a choice in Mode:
-    00 = Normal (diasble)
-    01 = Power Save (enable)"""))
-
-    attribute_option = input(print("""Please make a choice in Attributes:
-    00 = Update to SRAM
-    01 = Update to both SRAM & FLASH
-    02 = Temporarily enabled"""))
-
-    if mode_option == "00":
-        if attribute_option == "00":
-            hex_message = "A0A1 0003 0C0000 09 0D0A"  # Implemented Hex Message
-        if attribute_option == "01":
-            hex_message = "A0A1 0003 0C0001 09 0D0A"  # Implemented Hex Message
-        if attribute_option == "02":
-            hex_message = "A0A1 0003 0C0002 09 0D0A"  # Implemented Hex Message
-        send_receive_hex_message(serial_port_instance.serial_port, hex_message)
-    if mode_option == "01":
-        if attribute_option == "00":
-            hex_message = "A0A1 0003 0C0100 09 0D0A"  # Implemented Hex Message
-        if attribute_option == "01":
-            hex_message = "A0A1 0003 0C0101 09 0D0A"  # Implemented Hex Message
-        if attribute_option == "02":
-            hex_message = "A0A1 0003 0C0102 09 0D0A"  # Implemented Hex Message
-        send_receive_hex_message(serial_port_instance.serial_port, hex_message)
-
-
-def message_update_rate_GNSS(): #page22
-    rate_option = input(print("Unfinished")) # Not Understanding the Documentation
-
 
 def message_ask_position_update_rate(serial_port_instance): #page23
     hex_message = "A0A10003090000090D0A"  # Example Hex message
     send_receive_hex_message(serial_port_instance.serial_port, hex_message)
 
-# def message_output_type(serial_port_instance, output_choice): # Output Selection
-#     # Structure: <0xA0,0xA1><PL><09><message body><CS><0x0D,0x0A>
-#     # Example: A0 A1 00 03 09 00 00 09 0D 0A
-#     # Field 1 - Message ID
-#     # Field 2 - Type: 00-No Output; 01-NMEA Message; 02-Binary Message
-#     # Field 3 - Attributes: 0-Update to SRAM; 1-Update to Both SRAM & FlASH
-#
-#     output_option = input(print("""Please make a choice in Mode:
-#         NMEA
-#         BINARY"""))
-#
-#     attribute_option = input(print("""Please make a choice in Attributes:
-#         00 = Update to SRAM
-#         01 = Update to both SRAM & FLASH
-#         02 = Temporarily enabled"""))
-#
-#     if output_option.upper() == "NMEA":
-#         if attribute_option == "00":
-#             hex_message = "A0A1 0003 0C0000 09 0D0A"  # Implemented Hex Message
-#         if attribute_option == "01":
-#             hex_message = "A0A1 0003 0C0001 09 0D0A"  # Implemented Hex Message
-#         if attribute_option == "02":
-#             hex_message = "A0A1 0003 0C0002 09 0D0A"  # Implemented Hex Message
-#         send_receive_hex_message(serial_port_instance.get_serial_port(), hex_message)
-#     if output_option.upper() == "BINARY":
-#         if attribute_option == "00":
-#             hex_message = "A0A1 0003 0C0100 09 0D0A"  # Implemented Hex Message
-#         if attribute_option == "01":
-#             hex_message = "A0A1 0003 0C0101 09 0D0A"  # Implemented Hex Message
-#         if attribute_option == "02":
-#             hex_message = "A0A1 0003 0C0102 09 0D0A"  # Implemented Hex Message
-#         send_receive_hex_message(serial_port_instance.get_serial_port(), hex_message)
-#     else:
-#         print("Invalid output type")
-
-# def message_serial_port_config(serial_port_instance, serial_port, serial_port_speed):
-#
-#     hex_message = "0xA0A1000405000100050D0A" # Unfinished Hex Message
-#     send_receive_hex_message(serial_port_instance.get_serial_port(), hex_message)
 
 def message_serial_port_config(serial_port, serial_port_speed):
 
