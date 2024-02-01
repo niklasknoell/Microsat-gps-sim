@@ -9,6 +9,7 @@ scripts = [
     "error_kepler_elements.py",
     "RMSE.py",
     "RSW error.py",
+    "position & velocity error.py",
     "error_quantification.py"
 ]
 

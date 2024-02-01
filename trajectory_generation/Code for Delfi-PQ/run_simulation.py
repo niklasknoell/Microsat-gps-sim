@@ -9,6 +9,7 @@ scripts = [
     "error_kepler_elements.py",
     "RMSE.py",
     "RSW error.py",
+    "position & velocity error.py",
     "error_quantification.py"
 ]
 
@@ -16,3 +17,4 @@ scripts = [
 for script in scripts:
     subprocess.run(["python", script], check=True)
     # time.sleep(5)  # Pause for 5 seconds before proceeding to the next script
+

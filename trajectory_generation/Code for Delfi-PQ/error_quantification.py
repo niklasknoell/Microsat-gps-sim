@@ -35,10 +35,9 @@ else:
 # retrieve GPS states in ECI
 states_GPS = np.genfromtxt(os.path.join(file_path,"states_ECI_GPS.txt").replace("\\.", "."), delimiter=',')
 initial_time = states_GPS[0,0]
-end_simulation = 2400
+end_simulation = 10000
 index = np.where(states_GPS[:, 0] >= end_simulation)[0][0]
 states_GPS = states_GPS[:index+1, :]
-# states_GPS[:,0] += 19
 print(np.shape(states_GPS))
 
 # retrieve benchmark states in ECI
@@ -84,7 +83,6 @@ output_path = os.path.join(figures_path,"states_position_error.pdf").replace("\\
 fig.savefig(output_path, bbox_inches='tight')
 
 
-
 fig, ax = plt.subplots()
 # ax.set_title("velocity components error over time")
 
@@ -118,31 +116,37 @@ fig.savefig(output_path, bbox_inches='tight')
 
 
 
-#---------------------RMSE error---------------------#
+#---------------------RMSE and 3D position and velocity error---------------------#
 
 RMSE = np.genfromtxt(os.path.join(file_path,"RMSE_position.txt").replace("\\.", "."), delimiter=',')
+pos_error = np.genfromtxt(os.path.join(file_path,"position_error.txt").replace("\\.", "."), delimiter=',')
 
 fig, ax = plt.subplots()
 # ax.set_title("position components error over time")
-ax.scatter(states[:,0], RMSE, s=1)
+ax.scatter(states[:,0], RMSE, s=1,label="RMSE of position")
+ax.scatter(states[:,0], pos_error, s=1,label="position error")
 ax.set_xlabel('time [s]',fontsize=16)
-ax.set_ylabel('RMSE [m]',fontsize=16)
+ax.set_ylabel('error [m]',fontsize=16)
 ax.grid()
 ax.tick_params(axis='both', which='major', labelsize=16)
+ax.legend(fontsize=20)
 
 output_path = os.path.join(figures_path,"RMSE_position.pdf").replace("\\.", ".")
 fig.savefig(output_path, bbox_inches='tight')
 
 
 RMSE = np.genfromtxt(os.path.join(file_path,"RMSE_velocity.txt").replace("\\.", "."), delimiter=',')
+vel_error = np.genfromtxt(os.path.join(file_path,"velocity_error.txt").replace("\\.", "."), delimiter=',')
 
 fig, ax = plt.subplots()
 # ax.set_title("velocity components error over time")
-ax.scatter(states[:,0], RMSE, s=1)
+ax.scatter(states[:,0], RMSE, s=1,label="RMSE of velocity")
+ax.scatter(states[:,0], vel_error, s=1,label="velocity error")
 ax.set_xlabel('time [s]',fontsize=16)
-ax.set_ylabel('RMSE [m/s]',fontsize=16)
+ax.set_ylabel('error [m/s]',fontsize=16)
 ax.grid()
 ax.tick_params(axis='both', which='major', labelsize=16)
+ax.legend(fontsize=20)
 
 output_path = os.path.join(figures_path,"RMSE_velocity.pdf").replace("\\.", ".")
 fig.savefig(output_path, bbox_inches='tight')

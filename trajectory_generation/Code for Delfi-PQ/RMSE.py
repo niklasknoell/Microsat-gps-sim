@@ -31,7 +31,7 @@ else:
 # retrieve GPS states in ECI
 states_GPS = np.genfromtxt(os.path.join(file_path,"states_ECI_GPS.txt").replace("\\.", "."), delimiter=',')
 initial_time = states_GPS[0,0]
-end_simulation = 2400
+end_simulation = 10000
 index = np.where(states_GPS[:, 0] >= end_simulation)[0][0]
 states_GPS = states_GPS[:index+1, :]
 
@@ -68,8 +68,6 @@ delta_z = y2_interp -y1
 RMSE_list = []
 
 for t in range(len(delta_x)):
-    # print(np.sqrt(np.mean(delta_x[:t]**2 + delta_y[:t]**2 + delta_z[:t]**2)))
-    # print()
 
     RMSE = np.sqrt(np.mean(delta_x[0:t + 1] ** 2 + delta_y[0:t + 1] ** 2 + delta_z[0:t + 1] ** 2))
     RMSE_list.append(RMSE)
@@ -79,6 +77,7 @@ RMSE = np.array(RMSE_list)
 df = pd.DataFrame(RMSE)
 file_path_RMSE = os.path.join(file_path, "RMSE_position.txt")
 df.to_csv(file_path_RMSE, sep=',', index=False, header=False, encoding='ascii', float_format='%.16f')
+
 
 # -----velocity-----#
 
@@ -104,8 +103,6 @@ delta_z = y2_interp -y1
 RMSE_list = []
 
 for t in range(len(delta_x)):
-    # print(np.sqrt(np.mean(delta_x[:t]**2 + delta_y[:t]**2 + delta_z[:t]**2)))
-    # print()
 
     RMSE = np.sqrt(np.mean(delta_x[0:t + 1] ** 2 + delta_y[0:t + 1] ** 2 + delta_z[0:t + 1] ** 2))
     RMSE_list.append(RMSE)
@@ -115,3 +112,4 @@ RMSE = np.array(RMSE_list)
 df = pd.DataFrame(RMSE)
 file_path_RMSE = os.path.join(file_path, "RMSE_velocity.txt")
 df.to_csv(file_path_RMSE, sep=',', index=False, header=False, encoding='ascii', float_format='%.16f')
+

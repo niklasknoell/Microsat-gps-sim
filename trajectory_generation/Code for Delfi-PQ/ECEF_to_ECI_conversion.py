@@ -41,9 +41,10 @@ else:
 states_GPS = np.genfromtxt(os.path.join(file_path,"binary_noiono_0deg.txt").replace("\\.", "."), delimiter=',')
 # states_GPS[:,0] -= 4
 initial_time = states_GPS[0,0]
-end_simulation = 2400
+end_simulation = 10000
 index = np.where(states_GPS[:, 0] >= end_simulation)[0][0]
 states_GPS = states_GPS[:index+1, :]
+print(np.shape(states_GPS))
 
 # retrieve benchmark states already in ECI
 states = np.genfromtxt(os.path.join(file_path,"states.txt").replace("\\.", "."), delimiter=',')
@@ -52,6 +53,7 @@ states = states[index:,:]
 states = states[::10]
 index = np.where(states[:, 0] >= end_simulation)[0][0]
 states = states[:index, :]
+print(np.shape(states))
 
 
 # Load spice kernels
@@ -97,15 +99,18 @@ states_GPS_ECI = []
 for t in range(np.shape(states_GPS)[0]):
 
     sim_time = states_GPS[t,0]
-    R = environment.RotationalEphemeris.body_fixed_to_inertial_rotation(earth_rotation_model,
-                                                                        simulation_start_epoch + sim_time)
-    inertial_state_xyz = np.matmul(R, states_GPS[t, 1:4])
-    inertial_state_VxVyVz = np.matmul(R, states_GPS[t, 4:])
-    inertial_state = np.concatenate([inertial_state_xyz, inertial_state_VxVyVz])
+
+    # R = environment.RotationalEphemeris.body_fixed_to_inertial_rotation(earth_rotation_model,
+    #                                                                     simulation_start_epoch + sim_time)
+    # inertial_state_xyz = np.matmul(R, states_GPS[t, 1:4])
+    # inertial_state_VxVyVz = np.matmul(R, states_GPS[t, 4:])
+    # inertial_state = np.concatenate([inertial_state_xyz, inertial_state_VxVyVz])
+    # inertial_state = np.concatenate([sim_time.reshape(1), inertial_state])
+
+    inertial_state = environment.transform_to_inertial_orientation(
+        states_GPS[t,1:], simulation_start_epoch + sim_time, earth_rotation_model)
     inertial_state = np.concatenate([sim_time.reshape(1), inertial_state])
 
-    # inertial_state = environment.transform_to_inertial_orientation(
-    #     states_GPS[t,1:], simulation_start_epoch + sim_time, earth_rotation_model)
     states_GPS_ECI.append(inertial_state)
 
 states_GPS_ECI = np.array(states_GPS_ECI)
@@ -132,8 +137,8 @@ ax.scatter(states_GPS_ECI[:,0], states_GPS_ECI[:,1], s=5,label="GNSS")
 # # ax.scatter(states_GPS[:,0], states_GPS_ECI[:,3], s=5,label="GNSS")
 
 #------------------------------necessary interpolation------------------------------#
-x1, y1 = states[:, 0], states[:, 2]
-x2, y2 = states_GPS_ECI[:, 0], states_GPS_ECI[:, 2]
+x1, y1 = states[:, 0], states[:, 4]
+x2, y2 = states_GPS_ECI[:, 0], states_GPS_ECI[:, 4]
 
 interp_func = interp1d(x2,y2)
 y2_interp = interp_func(x1)
