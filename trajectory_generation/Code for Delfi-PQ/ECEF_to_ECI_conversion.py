@@ -1,7 +1,5 @@
 # Load standard modules
 import numpy as np
-
-import matplotlib
 from matplotlib import pyplot as plt
 
 # Load tudatpy modules
@@ -13,11 +11,11 @@ from tudatpy.kernel.astro.time_conversion import DateTime
 from tudatpy.numerical_simulation import environment
 from tudatpy import constants
 
-
-import copy
 import pandas as pd
 import os
 import sys
+from scipy.interpolate import interp1d
+
 
 #-----------------------Directories-----------------------#
 
@@ -40,12 +38,12 @@ else:
 #--------------------------------ECEF to ECI conversion--------------------------------#
 
 # retrieve GPS states in ECEF, which are to be converted to ECI
-states_GPS = np.genfromtxt(os.path.join(file_path,"output_data.txt").replace("\\.", "."), delimiter=',')
+states_GPS = np.genfromtxt(os.path.join(file_path,"binary_noiono_0deg.txt").replace("\\.", "."), delimiter=',')
+# states_GPS[:,0] -= 4
 initial_time = states_GPS[0,0]
-end_simulation = 3200
+end_simulation = 2400
 index = np.where(states_GPS[:, 0] >= end_simulation)[0][0]
 states_GPS = states_GPS[:index+1, :]
-
 
 # retrieve benchmark states already in ECI
 states = np.genfromtxt(os.path.join(file_path,"states.txt").replace("\\.", "."), delimiter=',')
@@ -53,8 +51,7 @@ index = np.where(states[:, 0] >= initial_time)[0][0]
 states = states[index:,:]
 states = states[::10]
 index = np.where(states[:, 0] >= end_simulation)[0][0]
-states = states[:index+1, :]
-
+states = states[:index, :]
 
 
 # Load spice kernels
@@ -92,29 +89,8 @@ body_settings = environment_setup.get_default_body_settings(
 # Create system of selected celestial bodies
 bodies = environment_setup.create_system_of_bodies(body_settings)
 
-
 earth_rotation_model = bodies.get("Earth").rotation_model
-# print(earth_rotation_model)
-#
-# # Define time at which to determine rotation quantities
-# current_time = simulation_start_epoch
-#
-# # Transform state to inertial frame, using Earth rotation model
-# inertial_state = environment.transform_to_inertial_orientation(
-#     states_GPS[0,:], current_time, earth_rotation_model )
-#
-#
-# print(states_GPS[0,:])
-# print(inertial_state)
-# # frame_conversion.body_fixed_to_inertial_rotation_matrix(0,0,0)
-# # print(estimation_setup.parameter.rotation_pole_position("Earth").)
-#
-# print(environment.RotationalEphemeris.body_fixed_to_inertial_rotation(earth_rotation_model,simulation_start_epoch))
-#
-# print(np.shape(states_GPS))
-# print(np.shape(states_GPS)[0])
 
-print(environment.RotationalEphemeris.body_fixed_to_inertial_rotation(earth_rotation_model,simulation_start_epoch))
 
 states_GPS_ECI = []
 
@@ -133,7 +109,7 @@ for t in range(np.shape(states_GPS)[0]):
     states_GPS_ECI.append(inertial_state)
 
 states_GPS_ECI = np.array(states_GPS_ECI)
-# print(states_GPS_ECI)
+
 
 # Save the ECI for other conversions
 df = pd.DataFrame(states_GPS_ECI, columns=['time', 'x', 'y', 'z', 'Vx', 'Vy', 'Vz'])
@@ -142,22 +118,35 @@ file_path_states = os.path.join(file_path, "states_ECI_GPS.txt")
 df.to_csv(file_path_states, sep=',', index=False,header=False,encoding='ascii',float_format='%.16f')
 
 
-
-
 #-----------------plotting in this file just for verification-----------------#
 fig, ax = plt.subplots()
 # ax.set_title("position components error over time")
+
 ax.scatter(states[:,0], states[:,1], s=5,label="Benchmark")
 # ax.scatter(states[:,0], states[:,2], s=5,label="Benchmark")
 # ax.scatter(states[:,0], states[:,3], s=5,label="Benchmark")
-ax.scatter(states_GPS[:,0], states_GPS_ECI[:,1], s=5,label="GNSS")
-plt.plot( states[:,0],states_GPS_ECI[:,1]-states[:,1])
-# ax.scatter(states_GPS[:,0], states_GPS_ECI[:,2], s=5,label="GNSS")
-# ax.scatter(states_GPS[:,0], states_GPS_ECI[:,3], s=5,label="GNSS")
+
+
+ax.scatter(states_GPS_ECI[:,0], states_GPS_ECI[:,1], s=5,label="GNSS")
+# # ax.scatter(states_GPS[:,0], states_GPS_ECI[:,2], s=5,label="GNSS")
+# # ax.scatter(states_GPS[:,0], states_GPS_ECI[:,3], s=5,label="GNSS")
+
+#------------------------------necessary interpolation------------------------------#
+x1, y1 = states[:, 0], states[:, 2]
+x2, y2 = states_GPS_ECI[:, 0], states_GPS_ECI[:, 2]
+
+interp_func = interp1d(x2,y2)
+y2_interp = interp_func(x1)
+
+
+plt.plot(x1,y2_interp -y1)
+
+
 ax.set_xlabel('time [s]',fontsize=16)
 ax.set_ylabel('position component error [m]',fontsize=16)
 ax.grid()
 ax.tick_params(axis='both', which='major', labelsize=16)
 ax.legend(fontsize=20)
 
-plt.show()
+
+# plt.show()
