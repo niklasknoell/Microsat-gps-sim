@@ -45,7 +45,7 @@ def send_receive_hex_message(serial_port, hex_message):
         ser.write(byte_message)
 
         # Read the response from the serial port
-        response = receive_variable_response()  # Adjust the number of bytes to read based on your use case
+        response = receive_variable_response(ser)  # Adjust the number of bytes to read based on your use case
 
         # Close the serial port
         ser.close()
