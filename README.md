@@ -169,6 +169,7 @@ Based on the benchmark trajectory and the GNSS receiver output, the GNSS receive
 - radial (R), along track (S), cross track (W) error in the RSW frame
 - error in the Keplerian elements
 - RMS error of the position and velocity
+- 3D error of position and velocity
 
 These errors are commonly analyzed in astrodynamics. All errors are programmatically obtained by running the [run simulation file](https://github.com/niklasknoell/Microsat-gps-sim/blob/Bas/trajectory_generation/Code%20for%20Delfi-PQ/run_simulation.py). 
 Before analyzing them, the theoretical accuracy of the [S1216F8-GI3 GPS receiver](https://www.skytraq.com.tw/datasheet/S1216V8_v0.9.pdf) is reported to be:
@@ -192,9 +193,12 @@ The state error in the ECI frame can then be calculated by taking the difference
 
 As can be observed from the figures, the order of magnitude of the error of the position components is ... m. For the velocity components, the order of magnitude of the error is ... m/s. Moreover, while the GNSS simulation has been allowed to be longer than 300 sec, a jump in the position components is induced after every 300 seconds. This is to be disregarded and has not a physical reason. 
 
-While the error in the state components gives a rough idea of the order of magnitude of the error, a metric for the overall error would be even more useful, as the error in the x, y and z components depends largely on the inclination of the orbit. The root mean squared error (RMSE) gives a good indication of the overall error, which can be also be readily compared with other orbits with different inclination. 
+While the error in the state components gives a rough idea of the order of magnitude of the error, a metric for the overall error would be even more useful, as the error in the x, y and z components depends largely on the inclination of the orbit. 
 
-The RMSE calculated up to any time in the propagation is shown in:
+
+The root mean squared error (RMSE) gives a good indication of the overall error, which can be also be readily compared with other orbits with different inclination. Moreover, the 3D error of position and velocity can be directly compared against the theoretical accuracy.
+
+The RMSE and 3D error, calculated up to any time in the propagation, is shown in:
 
 <table>
   <tr>
@@ -204,8 +208,7 @@ The RMSE calculated up to any time in the propagation is shown in:
 </table>
 
 
-At the final propagation time, after two full orbits, the RMSE is ... m for the position and ... m/s for the velocity. This is ......
-
+At the final propagation time, after two full orbits, the RMSE is ... m for the position and ... m/s for the velocity. The 3D position error is ... This is signficantly higher than the theoretical 2.5 m CEP. However, no corrections have been made yet to the settings used for the GNSS simulation. It is expected that the position error can be reduced further by incorporating corrections in the equation for the pseudo-range. The 3D velocity error is approximately 0.1 m/s, which is in line with the theoretical accuracy. 
 
 To charachterize the radial, along track, cross track error in the RSW frame, further clarification is required. Depending on the orientation and location of the satellite with respect to the earth, the RSW coordinate system which is attached to the satellite differs. Consequently, to calculate the radial, along track and cross track error, one satellite has to be taken as the reference. As the benchmark trajectory is considered to be the truth, the RSW frame to quantify the error is fixed to the satellite of the benchmark trajectory. The radial, along track and cross track components of the benchmark trajectory can be calculated by converting its inertial components to RSW components. This can be done by multipliying the [inertial to RSW transformation matrix](https://py.api.tudat.space/en/stable/frame_conversion.html#tudatpy.astro.frame_conversion.inertial_to_rsw_rotation_matrix) with the inertial position. The inertial to RSW transformation matrix also requires the inertial position itself to compute the orientation of the frame. The radial, along track and cross track components of the GNSS receiver with respect to this frame can be calculated by multiplying the same inertial to RSW transformation matrix, still with the inertial benchmark trajectory as input, with the inertial components of the GNSS receiver. 
 
