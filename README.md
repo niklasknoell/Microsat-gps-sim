@@ -261,31 +261,16 @@ The ionospheric refraction has been tested on two aspects:
 - the minimum required elevation angle
 - whether or not the RF ionospheric corrections are applied on the generated file
 
-Four simulations have been tested. Two have been tested without the RF ionospheric correctios for an elevation angle of 8° and 15°. The 0° has already been tested above, which is the default elevation angle.
+Three additional simulations have been tested. One has been tested without the RF ionospheric correction for an elevation angle of 15°. The 0° has already been tested above, which is the default elevation angle.
 The other two simulations have been tested with the RF ionospheric corrections for an elevation angle of 0° and 15°. 
 
 For the simulations without the RF ionospheric corrections, the following figure was obtained:
 
-<table>
-  <tr>
-    <td>
-      <figure>
-        <img src="https://github.com/niklasknoell/Microsat-gps-sim/assets/74927648/7d4179eb-5636-42d7-b905-8e6ddd45879c" alt="Image 1">
-        <figcaption>elevation angle of 8°</figcaption>
-      </figure>
-    </td>
-    <td>
-      <figure>
-        <img src="https://github.com/niklasknoell/Microsat-gps-sim/assets/74927648/fe3693cd-074e-4fe9-b10d-bfbd09a01e5f" alt="Image 2">
-        <figcaption>elevation angle of 15°</figcaption>
-      </figure>
-    </td>
-  </tr>
-</table>
+![image](https://github.com/niklasknoell/Microsat-gps-sim/assets/74927648/fe3693cd-074e-4fe9-b10d-bfbd09a01e5f)
 
 
-By comparing the elevation angle of 15° with the elevation angle of 0° in the previous section, the position error is a couple of meter worse.
-For the elevation angle of 8°, the ....
+By comparing the elevation angle of 15° with the elevation angle of 0° in the previous section, the position error is a couple of meter worse. However, a longer simulation would allow for stronger evidence. It might be that the trade-off between the number of satellites in view vs the quality is better for another angle.
+It should be tested for more elevation angles and for a longer duration to come to a more conclusive recommendation. 
 
 For the simulations with the RF ionospheric corrections, the following figure was obtained:
 
@@ -310,7 +295,7 @@ For the simulations with the RF ionospheric corrections, the following figure wa
 Comparing the above figure with the previous one, it can be seen that the RF ionospheric correction has made the error larger, for both elevation angles. For orbits in LEO, a user is therefore advised to not implement the RF ionospheric correction, but only increase the minimum required elevation angle up to a certain value to obtain a lower error. 
 
 
-The second factor of the paper, a possibly insufficient dynamic model, could not be tested as the dynamic model of the GNSS could not be (easily) altered. Regardless, it has been hypothesized in the previous section that the Coriolis acceleration is neglected in the dynamic model. In order to also hypothesize whether or not the centrifugal acceleration has been neglected in the dynamic model, a GEO satellite (GOES) which has an equatorial orbit has been run. From literature, this should result in a constant offset in the radial component. However, it was found that no lock could be obtained for the GOES satellite. Therefore, it could not be hypothesized whether the centrifugal acceleration has been neglected or not. It is hypothesized that the gps-sdr-sim does not work (well) for orbit determination of GEO orbits which have a higher altitude than GNSS satellites.  
+The second factor of the paper, a possibly insufficient dynamic model, has not been tested as the dynamic model of the GNSS could not be (easily) altered. Regardless, it has been hypothesized in the previous section that the Coriolis acceleration is neglected in the dynamic model. In order to also hypothesize whether or not the centrifugal acceleration has been neglected in the dynamic model, a GEO satellite (GOES) which has an equatorial orbit has been run. From literature, neglecting the centrifugal acceleration should result in a constant offset in the radial component. However, it was found that no lock could be obtained for the GOES satellite. Therefore, it could not be hypothesized whether the centrifugal acceleration has been neglected or not. It is hypothesized that the gps-sdr-sim does not work (well) for orbit determination of GEO orbits which have a higher altitude than GNSS satellites.  
 
 
 Moreover, the influence of the antenna location could not be tested, because while the receiver is orbiting on a virtual trajectory, it is not attached to an actual satellite, and is not obstructed by its satellite body. 
@@ -321,7 +306,7 @@ Apart from the three main errors analyzed in the paper, more errors could be inv
 - relativistic effect caused by the eccentricity of the GNSS orbits
 - light time correction 
 
-These factors are motivated by the course Satellite Orbit Determination (AE4872), given at the Delft University of Technology. In order to analyze any error of interest,a user has to:
+These factors are motivated by the course Satellite Orbit Determination (AE4872), given at the Delft University of Technology. In order to analyze any error of interest, a user has to:
 
 - Modify the settings accordingly such that the error of interest can be analyzed 
 - Generate a .txt as returned by the binary parser and put it in the [file folder](https://github.com/niklasknoell/Microsat-gps-sim/tree/Bas/trajectory_generation/sensitivity%20analysis/Files)
