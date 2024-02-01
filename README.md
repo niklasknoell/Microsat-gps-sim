@@ -265,15 +265,49 @@ Four simulations have been tested. Two have been tested without the RF ionospher
 
 For the simulations without the RF ionospheric corrections, the following figure was obtained:
 
+<table>
+  <tr>
+    <td>
+      <figure>
+        <img src="https://github.com/niklasknoell/Microsat-gps-sim/assets/74927648/822832aa-d3cd-4741-9b72-ea3304af33e5" alt="Image 1">
+        <figcaption>elevation angle of 0°</figcaption>
+      </figure>
+    </td>
+    <td>
+      <figure>
+        <img src="https://github.com/niklasknoell/Microsat-gps-sim/assets/74927648/710a4e39-67c2-402a-a7a9-4010adb46128" alt="Image 2">
+        <figcaption>elevation angle of 15°</figcaption>
+      </figure>
+    </td>
+  </tr>
+</table>
+
 ....
 
 For the simulations with the RF ionospheric corrections, the following figure was obtained:
 
+<table>
+  <tr>
+    <td>
+      <figure>
+        <img src="https://github.com/niklasknoell/Microsat-gps-sim/assets/74927648/822832aa-d3cd-4741-9b72-ea3304af33e5" alt="Image 1">
+        <figcaption>elevation angle of 0°</figcaption>
+      </figure>
+    </td>
+    <td>
+      <figure>
+        <img src="https://github.com/niklasknoell/Microsat-gps-sim/assets/74927648/710a4e39-67c2-402a-a7a9-4010adb46128" alt="Image 2">
+        <figcaption>elevation angle of 15°</figcaption>
+      </figure>
+    </td>
+  </tr>
+</table>
+
+
 Comparing the above figure with the previous one, it can be seen that the RF ionospheric correction has made the error larger, for both elevation angles. For orbits in LEO, a user is therefore advised to not implement the RF ionospheric correction, but only increase the minimum required elevation angle to obtain a lower error. 
 
 
-
-The second factor of the paper, a possibly insufficient dynamic model, could not be tested as the dynamic model of the GNSS could not be (easily) altered. Regardless, it has been hypothesised in the previous section that the Coriolis acceleration is neglected in the dynamic model. In order to also hypothesize whether or not the centrifugal acceleration has been neglected in the dynamic model, a GEO satellite (GOES) which has an equatorial orbit has been run. From literature, this should result in a constant offset in the radial component. However, it was found that no lock could be obtained for the GOES satellite. Therefore, it could not be hypothesized whether the centrifugal acceleration has been neglected or not. It is hypothesized that the gps-sdr-sim does not work (well) for orbit determination of GEO orbits which have a higher altitude than GNSS satellites.  
+The second factor of the paper, a possibly insufficient dynamic model, could not be tested as the dynamic model of the GNSS could not be (easily) altered. Regardless, it has been hypothesized in the previous section that the Coriolis acceleration is neglected in the dynamic model. In order to also hypothesize whether or not the centrifugal acceleration has been neglected in the dynamic model, a GEO satellite (GOES) which has an equatorial orbit has been run. From literature, this should result in a constant offset in the radial component. However, it was found that no lock could be obtained for the GOES satellite. Therefore, it could not be hypothesized whether the centrifugal acceleration has been neglected or not. It is hypothesized that the gps-sdr-sim does not work (well) for orbit determination of GEO orbits which have a higher altitude than GNSS satellites.  
 
 
 Moreover, the influence of the antenna location could not be tested, because while the receiver is orbiting on a virtual trajectory, it is not attached to an actual satellite, and is not obstructed by its satellite body. 
