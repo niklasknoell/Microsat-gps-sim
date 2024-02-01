@@ -16,13 +16,13 @@ current_dir = os.path.dirname(__file__)
 parent_dir = os.path.dirname(current_dir)
 
 # Create folder for files if needed
-file_path = os.path.join(parent_dir, "Files").replace("\\.", ".")
+file_path = os.path.join(parent_dir, "sensitivity analysis","Files").replace("\\.", ".")
 if os.path.exists(file_path):
     pass
 else:
     os.makedirs(file_path)
 
-figures_path = os.path.join(parent_dir, "Figures").replace("\\.", ".")
+figures_path = os.path.join(parent_dir, "sensitivity analysis" , "Figures").replace("\\.", ".")
 if os.path.exists(figures_path):
     pass
 else:
@@ -33,7 +33,7 @@ else:
 # retrieve GPS states in ECI
 states_GPS = np.genfromtxt(os.path.join(file_path,sim_name + "states_ECI_GPS.txt").replace("\\.", "."), delimiter=',')
 initial_time = states_GPS[0,0]
-end_simulation = 10000
+end_simulation = 580
 index = np.where(states_GPS[:, 0] >= end_simulation)[0][0]
 states_GPS = states_GPS[:index+1, :]
 

@@ -99,15 +99,18 @@ states_GPS_ECI = []
 for t in range(np.shape(states_GPS)[0]):
 
     sim_time = states_GPS[t,0]
-    R = environment.RotationalEphemeris.body_fixed_to_inertial_rotation(earth_rotation_model,
-                                                                        simulation_start_epoch + sim_time)
-    inertial_state_xyz = np.matmul(R, states_GPS[t, 1:4])
-    inertial_state_VxVyVz = np.matmul(R, states_GPS[t, 4:])
-    inertial_state = np.concatenate([inertial_state_xyz, inertial_state_VxVyVz])
+
+    # R = environment.RotationalEphemeris.body_fixed_to_inertial_rotation(earth_rotation_model,
+    #                                                                     simulation_start_epoch + sim_time)
+    # inertial_state_xyz = np.matmul(R, states_GPS[t, 1:4])
+    # inertial_state_VxVyVz = np.matmul(R, states_GPS[t, 4:])
+    # inertial_state = np.concatenate([inertial_state_xyz, inertial_state_VxVyVz])
+    # inertial_state = np.concatenate([sim_time.reshape(1), inertial_state])
+
+    inertial_state = environment.transform_to_inertial_orientation(
+        states_GPS[t,1:], simulation_start_epoch + sim_time, earth_rotation_model)
     inertial_state = np.concatenate([sim_time.reshape(1), inertial_state])
 
-    # inertial_state = environment.transform_to_inertial_orientation(
-    #     states_GPS[t,1:], simulation_start_epoch + sim_time, earth_rotation_model)
     states_GPS_ECI.append(inertial_state)
 
 states_GPS_ECI = np.array(states_GPS_ECI)

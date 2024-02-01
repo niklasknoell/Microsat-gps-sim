@@ -38,7 +38,6 @@ initial_time = states_GPS[0,0]
 end_simulation = 10000
 index = np.where(states_GPS[:, 0] >= end_simulation)[0][0]
 states_GPS = states_GPS[:index+1, :]
-# states_GPS[:,0] += 19
 print(np.shape(states_GPS))
 
 # retrieve benchmark states in ECI
@@ -82,7 +81,6 @@ ax.legend(fontsize=20)
 
 output_path = os.path.join(figures_path,"states_position_error.pdf").replace("\\.", ".")
 fig.savefig(output_path, bbox_inches='tight')
-
 
 
 fig, ax = plt.subplots()
