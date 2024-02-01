@@ -58,7 +58,7 @@ The ground track of Delfi-PQ and the altitude profile are shown below:
 </table>
 
 
-As can be seen, the benchmark and GNSS values are overlapping, which is one of the verification checks which have been performed. In the above tow figures, the GNSS curve has been made with the longitude, latitude and altitude returned by the NMEA parser. Only two small periods without GNSS lock can be seen, which is considered relatively good for a period of about 3 hrs. 
+As can be seen, the benchmark and GNSS values are overlapping, which is one of the verification checks which have been performed. In the above two figures, the GNSS curve has been made with the longitude, latitude and altitude returned by the NMEA parser. Only two small periods without GNSS lock can be seen, which is considered relatively good for a period of about 3 hrs. 
 
 ## gps-sdr-sim 
 
