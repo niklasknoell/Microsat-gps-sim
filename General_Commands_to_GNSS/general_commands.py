@@ -100,7 +100,12 @@ def message_configure_elevation_zero(serial_port):
     hex_message = "A0A100052B02000000290D0A"
     send_receive_hex_message(serial_port, hex_message)
 
-ans = input(print("Please choose the ouput type, NMEA, BINARY, QUERYELEV, CONFELEV15, CONFELEVZERO:"))
+def message_configure_elevation_eight(serial_port):
+
+    hex_message = "A0A100052B02080000210D0A"
+    send_receive_hex_message(serial_port, hex_message)
+
+ans = input(print("Please choose the ouput type, NMEA, BINARY, QUERYELEV, CONFELEV15, CONFELEVZERO, CONFELEVEIGHT:"))
 if ans.upper() == "BINARY":
     message_output_type_BINARY("COM4")
     print("BINARY")
@@ -116,4 +121,7 @@ if ans.upper() == "CONFELEV15":
 if ans.upper() == "CONFELEVZERO":
     message_configure_elevation_zero("COM4")
     print("CONFELEVZERO")
+if ans.upper() == "CONFELEVEIGHT":
+    message_configure_elevation_eight("COM4")
+    print("CONFELEVEIGHT")
 
