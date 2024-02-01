@@ -225,7 +225,9 @@ The radial, along track and cross track error in the RSW frame is shown in the f
 </table>
 
 For the position components in the RSW frame, it is observed that the error of the along track (S) direction is about 70 m. Besides, it has the largest error of all components. Moreover, from this plot it can be observed that the periodic jump in error after every 300 sec, is dominant in the along track (S) component.
-The radial (R) error is oscillating about a mean of about 2 m. Finally, the error in the cross-track (W) direction is also oscillating, but with a much larger period. The clear jump in radial error due to close proximity to the total electron content (TEC) maximum has not been observed. Most likely, for the 90 min orbit of Delfi-PQ, the analyzed simulation of 40 min has not passed the (TEC) maximum. It is expected that for longer simulations the spike in radial error will arise due to the guarantee that the (TEC) maximum will be passed. 
+The radial (R) error is oscillating about a mean of about 2 m. Finally, the error in the cross-track (W) direction is also oscillating, but with a much larger period. Is is unknown whether the Coriolis acceleration is incorporated in the dynamic model. However from literature, neglecting this acceleration is known to cause a periodic error (with period equal to the orbital period) in the cross-track (W) direction. Therefore, it is hypothesized that the Coriolis acceleration has indeed been neglected in the dynamic model. 
+
+The clear jump in radial error due to close proximity to the total electron content (TEC) maximum has not been observed. Most likely, for the 90 min orbit of Delfi-PQ, the analyzed simulation of 40 min has not passed the (TEC) maximum. It is expected that for longer simulations the spike in radial error will arise due to the guarantee that somewhere during the orbit, the closest point to the (TEC) maximum will be passed. 
 
 For the velocity components in the RSW frame, it is observed that the radial (R) error is mostly under 0.1 m/s, which is about twice as large as the along-track (S) and cross-track (W) direction. 
 
