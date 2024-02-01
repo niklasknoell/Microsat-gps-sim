@@ -240,7 +240,7 @@ The error in the Keplerian elements is shown in the following figure:
 
 ![image](https://github.com/niklasknoell/Microsat-gps-sim/assets/74927648/096d14be-b749-40fc-9709-1c6c719f3626)
 
-No strong bias in the right ascension of the ascending node and the inclination are observed in the above figure, which would be caused by neglecting the Coriolis acceleration. Again, more simulations with a longer runtime would have to be performed to better assess this.
+No strong bias in the right ascension of the ascending node and the inclination are observed in the above figure, which would be expected when the Coriolis acceleration would indeed be neglected in the dynamic model. Again, more simulations with a longer runtime would have to be performed to better assess this.
 
 
 
