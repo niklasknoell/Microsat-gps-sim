@@ -178,37 +178,40 @@ Before analyzing them, the theoretical accuracy of the [S1216F8-GI3 GPS receiver
 - velocity accuracy: 0.1 m/s
 - time accuracy: 10 ns
 
+
+Furthermore, another important remark should be made, which is that the following figures have been cut off after about 40 min, which is the time until the first loss of lock, for the particular simulation analyzed. This does mean that not the full pattern over an orbit can be observed. Consequently, the peaks in the radial error induced by the ionospheric refraction have not been clearly observed. 
+
 To calculate the state error in the ECI frame, the ECEF states of the GNSS output are converted to ECI states through the [body fixed to inertial transformation](https://py.api.tudat.space/en/latest/environment.html#tudatpy.numerical_simulation.environment.RotationalEphemeris.body_fixed_to_inertial_rotation).
-The state error in the ECI frame can then be calculated by taking the difference in ECI state components between the benchmark trajectory and the GNSS receiver. The state error in the ECI frame is shown in the following figure:
+The state error in the ECI frame can then be calculated by taking the difference in ECI state components between the benchmark trajectory and the GNSS receiver.
 
+The state error in the ECI frame is shown in the following figure:
 
 <table>
   <tr>
-    <td><img src="https://github.com/niklasknoell/Microsat-gps-sim/assets/74927648/e8f3e320-96ee-437f-99db-5e4f69e7fc4e" alt="Image 1"></td>
-    <td><img src="https://github.com/niklasknoell/Microsat-gps-sim/assets/74927648/02380160-b588-4305-b391-607fa1c1890c" alt="Image 2"></td>
+    <td><img src="https://github.com/niklasknoell/Microsat-gps-sim/assets/74927648/04d4058c-1bc5-41e2-bf50-750df5e98538" alt="Image 1"></td>
+    <td><img src="https://github.com/niklasknoell/Microsat-gps-sim/assets/74927648/49e22047-f455-42a6-a3a4-4d3ce864500a" alt="Image 2"></td>
   </tr>
 </table>
 
 
 
-As can be observed from the figures, the order of magnitude of the error of the position components is ... m. For the velocity components, the order of magnitude of the error is ... m/s. Moreover, while the GNSS simulation has been allowed to be longer than 300 sec, a jump in the position components is induced after every 300 seconds. This is to be disregarded and has not a physical reason. 
+As can be observed from the figures, the error of the position components is several tens of meter. For each velocity component, the error is mostly within 0.1 m/s. 
+Moreover, while the GNSS simulation has been allowed to be longer than 300 sec, a jump in the position components is induced after every 300 seconds. This is to be disregarded and has not a physical reason. 
 
-While the error in the state components gives a rough idea of the order of magnitude of the error, a metric for the overall error would be even more useful, as the error in the x, y and z components depends largely on the inclination of the orbit. 
 
+While the error in the state components gives a rough idea of the order of magnitude of the error, a metric for the overall error would be even more useful, as the error in the x, y and z components depends largely on the inclination of the orbit. The root mean squared error (RMSE) gives a good indication of the overall error, which can be also be readily compared with other orbits with different inclination. Moreover, the 3D error of position and velocity can be directly compared against the theoretical accuracy.
 
-The root mean squared error (RMSE) gives a good indication of the overall error, which can be also be readily compared with other orbits with different inclination. Moreover, the 3D error of position and velocity can be directly compared against the theoretical accuracy.
-
-The RMSE and 3D error, calculated up to any time in the propagation, is shown in:
+The RMSE and 3D error, calculated up to any time in the propagation, are shown below:
 
 <table>
   <tr>
-    <td><img src="https://github.com/niklasknoell/Microsat-gps-sim/assets/74927648/7f6e165a-adf7-44de-91a0-1c9b94980426" alt="Image 1"></td>
-    <td><img src="https://github.com/niklasknoell/Microsat-gps-sim/assets/74927648/2fa2d3e8-811b-40a2-8da8-05041d4b157c" alt="Image 2"></td>
+    <td><img src="https://github.com/niklasknoell/Microsat-gps-sim/assets/74927648/f03f5111-6b5f-47cc-8e6f-242038e70101" alt="Image 1"></td>
+    <td><img src="https://github.com/niklasknoell/Microsat-gps-sim/assets/74927648/3916cf1a-83ff-4131-abf9-9617d7740241" alt="Image 2"></td>
   </tr>
 </table>
 
 
-At the final propagation time, after two full orbits, the RMSE is ... m for the position and ... m/s for the velocity. The 3D position error is ... This is signficantly higher than the theoretical 2.5 m CEP. However, no corrections have been made yet to the settings used for the GNSS simulation. It is expected that the position error can be reduced further by incorporating corrections in the equation for the pseudo-range. The 3D velocity error is approximately 0.1 m/s, which is in line with the theoretical accuracy. 
+At the final propagation time, after two full orbits, the RMSE of the postion and the 3D position error is about 70 m. This is signficantly higher than the theoretical 2.5 m CEP. However, no corrections have been made yet to the settings used for the GNSS simulation. It is expected that the position error can be reduced further by incorporating corrections in the equation for the pseudo-range. The 3D velocity error is approximately 0.1 m/s, which is in line with the theoretical accuracy. 
 
 To charachterize the radial, along track, cross track error in the RSW frame, further clarification is required. Depending on the orientation and location of the satellite with respect to the earth, the RSW coordinate system which is attached to the satellite differs. Consequently, to calculate the radial, along track and cross track error, one satellite has to be taken as the reference. As the benchmark trajectory is considered to be the truth, the RSW frame to quantify the error is fixed to the satellite of the benchmark trajectory. The radial, along track and cross track components of the benchmark trajectory can be calculated by converting its inertial components to RSW components. This can be done by multipliying the [inertial to RSW transformation matrix](https://py.api.tudat.space/en/stable/frame_conversion.html#tudatpy.astro.frame_conversion.inertial_to_rsw_rotation_matrix) with the inertial position. The inertial to RSW transformation matrix also requires the inertial position itself to compute the orientation of the frame. The radial, along track and cross track components of the GNSS receiver with respect to this frame can be calculated by multiplying the same inertial to RSW transformation matrix, still with the inertial benchmark trajectory as input, with the inertial components of the GNSS receiver. 
 
@@ -262,6 +265,19 @@ It was found that ...... indeed enable to get a lower error. Incorporating .... 
 The second factor of the paper, a possibly insufficient dynamic model, could not be tested as the dynamic model of the GNSS could not be altered. 
 Moreover, the influence of the antenna location could not be tested, because while the receiver is orbiting on a virtual trajectory, it is not attached to an actual satellite, and is not obstructed by its satellite body. 
 
+Apart from the three main errors analyzed in the paper, more errors could be investigated. Due to the large number of simulations which have been run to attempt to completely fix the loss of lock in the binary parser, these have not been analyzed. However, the following errors are recommended for further investigation based on the implementation in this repository:
+
+- transmitter and receiver clock offset
+- relativistic effect caused by the eccentricity of the GNSS orbits
+- light time correction 
+
+These factors are motivated by the course Satellite Orbit Determination (AE4872), given at the Delft University of Technology. In order to analyze any error of interest,a user has to:
+
+- Modify the settings accordingly such that the error of interest can be analyzed 
+- Generate a .txt as returned by the binary parser and put it in the [file folder](https://github.com/niklasknoell/Microsat-gps-sim/tree/Bas/trajectory_generation/sensitivity%20analysis/Files)
+- Give a desired name in the [choose simulation file](https://github.com/niklasknoell/Microsat-gps-sim/blob/Bas/trajectory_generation/sensitivity%20analysis/choose_simulation.py)
+- Run the [run simulation file](https://github.com/niklasknoell/Microsat-gps-sim/blob/Bas/trajectory_generation/sensitivity%20analysis/run_simulation.py) file
+- The generated results can then be viewed in the [figures folder](https://github.com/niklasknoell/Microsat-gps-sim/tree/Bas/trajectory_generation/sensitivity%20analysis/Figures)
 
   
   
