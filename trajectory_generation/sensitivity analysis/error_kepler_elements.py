@@ -49,7 +49,7 @@ simulation_end_epoch = simulation_start_epoch + 2*orbital_period
 
 keplerian_GPS = np.genfromtxt(os.path.join(file_path,sim_name + "keplerian_GPS.txt").replace("\\.", "."), delimiter=',')
 initial_time = keplerian_GPS[0,0]
-end_simulation = 580
+end_simulation = 2400
 index = np.where(keplerian_GPS[:, 0] >= end_simulation)[0][0]
 keplerian_GPS = keplerian_GPS[:index+1, :]
 
