@@ -224,10 +224,10 @@ The radial, along track and cross track error in the RSW frame is shown in the f
   </tr>
 </table>
 
-For the position components in the RSW frame, it is observed that the error of the along track direction is about 70 m. Besides, it has the largest error of all components. Moreover, from this plot it can be observed that the periodic jump in error after every 300 sec, is dominant in the along track component.
-The radial error is oscillating about a mean of about 2 m. Finally, the error in the cross-track direction is also oscillating, but with a much larger period. 
+For the position components in the RSW frame, it is observed that the error of the along track (S) direction is about 70 m. Besides, it has the largest error of all components. Moreover, from this plot it can be observed that the periodic jump in error after every 300 sec, is dominant in the along track (S) component.
+The radial (R) error is oscillating about a mean of about 2 m. Finally, the error in the cross-track (W) direction is also oscillating, but with a much larger period. 
 
-For the velocity components in the RSW frame, it is observed that the radial error is mostly under 0.1 m/s, which is about twice as large as the along-track and cross-track direction. 
+For the velocity components in the RSW frame, it is observed that the radial (R) error is mostly under 0.1 m/s, which is about twice as large as the along-track (S) and cross-track (W) direction. 
 
 The error in the Keplerian elements is shown in the following figure:
 
