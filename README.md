@@ -227,7 +227,6 @@ The radial, along track and cross track error in the RSW frame is shown in the f
 For the position components in the RSW frame, it is observed that the error of the along track (S) direction is about 70 m. Besides, it has the largest error of all components. Moreover, from this plot it can be observed that the periodic jump in error after every 300 sec, is dominant in the along track (S) component.
 The radial (R) error is oscillating about a mean of about 2 m. Finally, the error in the cross-track (W) direction is also oscillating, but with a much larger period. Is is unknown whether the Coriolis acceleration is incorporated in the dynamic model. However from literature, neglecting this acceleration is known to cause a periodic error (with period equal to the orbital period) in the cross-track (W) direction for a polar orbit, which Delfi-PQ has. Therefore, it is hypothesized that the Coriolis acceleration has indeed been neglected in the dynamic model. 
 
-In order to hypothesize whether the centrifugal acceleration has been neglected in the dynamic model, a GEO satellite (GOES) which has an equatorial orbit has been run. However, it was found that no lock could be obtained. Therefore, it could not be hypothesized whether the centrifugal acceleration has been neglected or not.
 
 
 The clear jump in radial error due to close proximity to the total electron content (TEC) maximum has not been observed. Most likely, for the 90 min orbit of Delfi-PQ, the analyzed simulation of 40 min has not passed the (TEC) maximum. It is expected that for longer simulations the spike in radial error will arise due to the guarantee that somewhere during the orbit, the closest point to the (TEC) maximum will be passed. 
@@ -274,7 +273,10 @@ Comparing the above figure with the previous one, it can be seen that the RF ion
 
 
 
-The second factor of the paper, a possibly insufficient dynamic model, could not be tested as the dynamic model of the GNSS could not be (easily) altered. Moreover, the influence of the antenna location could not be tested, because while the receiver is orbiting on a virtual trajectory, it is not attached to an actual satellite, and is not obstructed by its satellite body. 
+The second factor of the paper, a possibly insufficient dynamic model, could not be tested as the dynamic model of the GNSS could not be (easily) altered. Regardless, it has been hypothesised in the previous section that the Coriolis acceleration is neglected in the dynamic model. In order to also hypothesize whether or not the centrifugal acceleration has been neglected in the dynamic model, a GEO satellite (GOES) which has an equatorial orbit has been run. However, it was found that no lock could be obtained. Therefore, it could not be hypothesized whether the centrifugal acceleration has been neglected or not.
+
+
+Moreover, the influence of the antenna location could not be tested, because while the receiver is orbiting on a virtual trajectory, it is not attached to an actual satellite, and is not obstructed by its satellite body. 
 
 Apart from the three main errors analyzed in the paper, more errors could be investigated. Due to the large number of simulations which have been run to attempt to completely fix the loss of lock in the binary parser, these have not been analyzed. However, the following errors are recommended for further investigation based on the implementation in this repository:
 
