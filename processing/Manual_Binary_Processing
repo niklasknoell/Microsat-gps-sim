@@ -2,7 +2,10 @@ from datetime import datetime, timedelta
 import pytz
 import re
 
+#input file name of binary data to be processed:
 file_path = 'processed_parsed_BINARYLog_2024_01_31_13_58_twoorbits_elev15.log'
+
+#input output file name of processed data:
 output_file_path = 'binary.txt'
 
 with open(file_path, 'r') as file:
