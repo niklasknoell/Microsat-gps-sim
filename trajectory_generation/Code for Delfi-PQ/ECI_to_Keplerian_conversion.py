@@ -64,7 +64,7 @@ gravitational_parameter = bodies.get("Earth").gravity_field_model.gravitational_
 # retrieve GPS states in ECEF, which are to be converted to ECI
 states_GPS = np.genfromtxt(os.path.join(file_path,"states_ECI_GPS.txt").replace("\\.", "."), delimiter=',')
 initial_time = states_GPS[0,0]
-end_simulation = 2400
+end_simulation = 10000
 index = np.where(states_GPS[:, 0] >= end_simulation)[0][0]
 states_GPS = states_GPS[:index+1, :]
 

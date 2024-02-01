@@ -120,31 +120,37 @@ fig.savefig(output_path, bbox_inches='tight')
 
 
 
-#---------------------RMSE error---------------------#
+#---------------------RMSE and 3D position and velocity error---------------------#
 
 RMSE = np.genfromtxt(os.path.join(file_path,sim_name + "RMSE_position.txt").replace("\\.", "."), delimiter=',')
+pos_error = np.genfromtxt(os.path.join(file_path,sim_name + "position_error.txt").replace("\\.", "."), delimiter=',')
 
 fig, ax = plt.subplots()
 # ax.set_title("position components error over time")
-ax.scatter(states[:,0], RMSE, s=1)
+ax.scatter(states[:,0], RMSE, s=1,label="RMSE of position")
+ax.scatter(states[:,0], pos_error, s=1,label="position error")
 ax.set_xlabel('time [s]',fontsize=16)
-ax.set_ylabel('RMSE [m]',fontsize=16)
+ax.set_ylabel('error [m]',fontsize=16)
 ax.grid()
 ax.tick_params(axis='both', which='major', labelsize=16)
+ax.legend(fontsize=20)
 
 output_path = os.path.join(figures_path,sim_name + "RMSE_position.pdf").replace("\\.", ".")
 fig.savefig(output_path, bbox_inches='tight')
 
 
 RMSE = np.genfromtxt(os.path.join(file_path,sim_name + "RMSE_velocity.txt").replace("\\.", "."), delimiter=',')
+vel_error = np.genfromtxt(os.path.join(file_path,sim_name + "velocity_error.txt").replace("\\.", "."), delimiter=',')
 
 fig, ax = plt.subplots()
 # ax.set_title("velocity components error over time")
-ax.scatter(states[:,0], RMSE, s=1)
+ax.scatter(states[:,0], RMSE, s=1,label="RMSE of velocity")
+ax.scatter(states[:,0], vel_error, s=1,label="velocity error")
 ax.set_xlabel('time [s]',fontsize=16)
-ax.set_ylabel('RMSE [m/s]',fontsize=16)
+ax.set_ylabel('error [m/s]',fontsize=16)
 ax.grid()
 ax.tick_params(axis='both', which='major', labelsize=16)
+ax.legend(fontsize=20)
 
 output_path = os.path.join(figures_path,sim_name + "RMSE_velocity.pdf").replace("\\.", ".")
 fig.savefig(output_path, bbox_inches='tight')
