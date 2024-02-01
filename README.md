@@ -12,7 +12,7 @@ Task Distribution of the assignment for the course Microsat Engineering (AE4S10)
 - run the sdr to gnss receiver and record output in binary format (Maurits)
 - parse binary format (Maurits)
 - facilitation from parsed data to usable units and desired structure of data, both binary and NMEA (Mattias)
-- write analysis program to compare trajectory input and gnss receiver output, i.e. quantify error (Bas)
+- write analysis program to compare trajectory input and gnss receiver output, i.e. quantify error of the GNSS receiver (Bas)
 - sensitivity analysis (Bas)
 
 
@@ -23,19 +23,19 @@ A trajectory of a satellite can be made with a variety of tools, such as SGP4 or
 The latter has been chosen for this assignment. One way to propagate a trajectory from initial conditions is via a two line element (TLE) set. These can be obtained for instance from [Celestrak](https://celestrak.org/satcat/search.php) or [Space-track.org](https://www.space-track.org/#catalog). For this assignment the DELFI-PQ has been chosen with NORAD-ID 51074. Either one can be specified to the mentioned webpages to obtain the latest TLE. 
 
 The chosen TLE can be fed to Tudat. Based on included perturbations and other settings, Tudat can propagate the trajectory for a desired time. An example of this is shown in the [trajectory_generation folder](https://github.com/niklasknoell/Microsat-gps-sim/blob/Bas/trajectory_generation/Code%20for%20Delfi-PQ/simulation.py). 
-As the trajectory from Tudat is to be used as a benchmark, considered as the truth, the model should be accurate enough to quantify the order of magnitude of the error of the GNSS receiver with respect to this benchmark. To this end, the following perturbations are included in the simulation:
+As the trajectory from Tudat is to be used as a benchmark, considered as the truth, the model should be accurate enough to quantify the error of the GNSS receiver with respect to this benchmark. To this end, the following perturbations are included in the simulation:
 
-- Earth spherical harmonic gravity to degree and order five (5,5)
-- Aerodynamic drag
-- Sun point mass gravity
-- Sun cannonball radiation pressure
-- Moon point mass gravity
+- earth spherical harmonic gravity to degree and order five (5,5)
+- aerodynamic drag
+- sun point mass gravity
+- sun cannonball radiation pressure
+- moon point mass gravity
 
 The aerodynamic drag and the radiation pressure from the sun require the following inputs:
 
-- drag reference area of 5x5x18 cm
+- drag reference area 
 - drag coefficient
-- radiation reference area of 5x5x18 cm
+- radiation reference area 
 - radiation coefficient
 
 The drag and radiation reference area have been calculated based on the satellite dimensions, which are 5x5x18 cm for Delfi-PQ. The drag and radiation coefficient have both been assumed to be 1.2, which is in line with values used for the slighly larger 3U Delfi-C3 on [Tudat](https://docs.tudat.space/en/latest/_src_getting_started/_src_examples/notebooks/propagation/linear_sensitivity_analysis.html). 
@@ -161,7 +161,7 @@ For the Binary:
 - All data before first lock is deleted (as there is no useful data)
 - A .txt file is created with 7 columns; time, x, y, z, vx, vy, vz
 
-## Write analysis program to compare trajectory input and gnss receiver output, i.e. quantify error of the GNSS receiver with respect to the benchmark trajectory
+## Write analysis program to compare trajectory input and gnss receiver output, i.e. quantify error of the GNSS receiver
 
 Based on the benchmark trajectory and the GNSS receiver output, the GNSS receiver error can be quantified. This can be done in various ways. The following errors have been analyzed:
 
@@ -179,7 +179,7 @@ Before analyzing them, the theoretical accuracy of the [S1216F8-GI3 GPS receiver
 - time accuracy: 10 ns
 
 
-Furthermore, another important remark should be made, which is that the following figures have been cut off after about 40 min, which is the time until the first loss of lock, for the particular simulation analyzed. This does mean that not the full pattern over an orbit can be observed. Consequently, the peaks in the radial error induced by the ionospheric refraction have not been clearly observed. 
+Furthermore, another important remark should be made, which is that the following figures have been cut off after about 40 min, which is the time until the first loss of lock, for the particular simulation analyzed. This does mean that not the full patterns over an orbit can be observed. 
 
 To calculate the state error in the ECI frame, the ECEF states of the GNSS output are converted to ECI states through the [body fixed to inertial transformation](https://py.api.tudat.space/en/latest/environment.html#tudatpy.numerical_simulation.environment.RotationalEphemeris.body_fixed_to_inertial_rotation).
 The state error in the ECI frame can then be calculated by taking the difference in ECI state components between the benchmark trajectory and the GNSS receiver.
@@ -199,7 +199,7 @@ As can be observed from the figures, the error of the position components is sev
 Moreover, while the GNSS simulation has been allowed to be longer than 300 sec, a jump in the position components is induced after every 300 seconds. This is to be disregarded and has not a physical reason. 
 
 
-While the error in the state components gives a rough idea of the order of magnitude of the error, a metric for the overall error would be even more useful, as the error in the x, y and z components depends largely on the inclination of the orbit. The root mean squared error (RMSE) gives a good indication of the overall error, which can be also be readily compared with other orbits with different inclination. Moreover, the 3D error of position and velocity can be directly compared against the theoretical accuracy.
+While the error in the state components give a rough idea of the order of magnitude of the error, a metric for the overall error would be even more useful, as the error in the x, y and z components depends largely on the inclination of the orbit. The root mean squared error (RMSE) gives a good indication of the overall error, which can also be readily compared with other orbits with different inclination. Moreover, the 3D error of position and velocity is chosen for direct comparison against the theoretical accuracy.
 
 The RMSE and 3D error, calculated up to any time in the propagation, are shown below:
 
@@ -211,9 +211,9 @@ The RMSE and 3D error, calculated up to any time in the propagation, are shown b
 </table>
 
 
-At the final propagation time, after two full orbits, the RMSE of the postion and the 3D position error is about 70 m. This is signficantly higher than the theoretical 2.5 m CEP. However, no corrections have been made yet to the settings used for the GNSS simulation. It is expected that the position error can be reduced further by incorporating corrections in the equation for the pseudo-range. The 3D velocity error is approximately 0.1 m/s, which is in line with the theoretical accuracy. 
+The RMSE of the postion and the 3D position error is about 70 m. This is signficantly higher than the theoretical 2.5 m CEP. However, no corrections have been made yet to the settings used for the GNSS simulation. It is expected that the position error can be reduced further by incorporating corrections in the equation for the pseudo-range. The 3D velocity error is approximately 0.1 m/s, which is in line with the theoretical accuracy. 
 
-To charachterize the radial, along track, cross track error in the RSW frame, further clarification is required. Depending on the orientation and location of the satellite with respect to the earth, the RSW coordinate system which is attached to the satellite differs. Consequently, to calculate the radial, along track and cross track error, one satellite has to be taken as the reference. As the benchmark trajectory is considered to be the truth, the RSW frame to quantify the error is fixed to the satellite of the benchmark trajectory. The radial, along track and cross track components of the benchmark trajectory can be calculated by converting its inertial components to RSW components. This can be done by multipliying the [inertial to RSW transformation matrix](https://py.api.tudat.space/en/stable/frame_conversion.html#tudatpy.astro.frame_conversion.inertial_to_rsw_rotation_matrix) with the inertial position. The inertial to RSW transformation matrix also requires the inertial position itself to compute the orientation of the frame. The radial, along track and cross track components of the GNSS receiver with respect to this frame can be calculated by multiplying the same inertial to RSW transformation matrix, still with the inertial benchmark trajectory as input, with the inertial components of the GNSS receiver. 
+To charachterize the radial (R), along track (S), cross track (W) error in the RSW frame, further clarification is required. Depending on the orientation and location of the satellite with respect to the earth, the RSW coordinate system which is attached to the satellite differs. Consequently, to calculate the radial, along track and cross track error, one satellite has to be taken as the reference. As the benchmark trajectory is considered to be the truth, the RSW frame to quantify the error is fixed to the satellite of the benchmark trajectory. The radial, along track and cross track components of the benchmark trajectory can be calculated by converting its inertial components to RSW components. This can be done by multipliying the [inertial to RSW transformation matrix](https://py.api.tudat.space/en/stable/frame_conversion.html#tudatpy.astro.frame_conversion.inertial_to_rsw_rotation_matrix) with the inertial position. The inertial to RSW transformation matrix also requires the inertial position itself to compute the orientation of the frame. The radial, along track and cross track components of the GNSS receiver with respect to this frame can be calculated by multiplying the same inertial to RSW transformation matrix, still with the inertial benchmark trajectory as input, with the inertial components of the GNSS receiver. 
 
 The radial, along track and cross track error in the RSW frame is shown in the following figure:
 
@@ -229,7 +229,7 @@ The radial (R) error is oscillating about a mean of about 2 m. Finally, the erro
 
 
 
-The clear jump in radial error due to close proximity to the total electron content (TEC) maximum has not been observed. Most likely, for the 90 min orbit of Delfi-PQ, the analyzed simulation of 40 min has not passed the (TEC) maximum. It is expected that for longer simulations the spike in radial error will arise due to the guarantee that somewhere during the orbit, the closest point to the (TEC) maximum will be passed. 
+A clear jump in radial error due to close proximity to the total electron content (TEC) maximum has not been observed. Most likely, for the 90 min orbital period of Delfi-PQ, the analyzed simulation of 40 min has not passed the (TEC) maximum. It is expected that for longer simulations the spike in radial error will arise due to the guarantee that somewhere during the orbit, the closest point to the (TEC) maximum will be passed. 
 
 For the velocity components in the RSW frame, it is observed that the radial (R) error is mostly under 0.1 m/s, which is about twice as large as the along-track (S) and cross-track (W) direction. 
 
@@ -270,7 +270,7 @@ For the simulations without the RF ionospheric corrections, the following figure
   <tr>
     <td>
       <figure>
-        <img src="https://github.com/niklasknoell/Microsat-gps-sim/assets/74927648/822832aa-d3cd-4741-9b72-ea3304af33e5" alt="Image 1">
+        <img src="https://github.com/niklasknoell/Microsat-gps-sim/assets/74927648/7d4179eb-5636-42d7-b905-8e6ddd45879c" alt="Image 1">
         <figcaption>elevation angle of 8°</figcaption>
       </figure>
     </td>
@@ -282,6 +282,7 @@ For the simulations without the RF ionospheric corrections, the following figure
     </td>
   </tr>
 </table>
+
 
 By comparing the elevation angle of 15° with the elevation angle of 0° in the previous section, the position error is a couple of meter worse.
 For the elevation angle of 8°, the ....
