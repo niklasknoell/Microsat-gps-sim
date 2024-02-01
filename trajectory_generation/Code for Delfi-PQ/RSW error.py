@@ -9,7 +9,8 @@ from tudatpy.kernel.astro import frame_conversion
 
 import pandas as pd
 import os
-
+from scipy.interpolate import interp1d
+import sys
 
 #-----------------------Directories-----------------------#
 
@@ -32,13 +33,10 @@ else:
 
 #---------------------------Calculate RSW error---------------------------#
 
-# states = np.genfromtxt(os.path.join(file_path,"states.txt").replace("\\.", "."), delimiter=',')
-# states_GPS = np.genfromtxt(os.path.join(file_path,"states_GPS.txt").replace("\\.", "."), delimiter=',')
-
 # retrieve GPS states in ECI
 states_GPS = np.genfromtxt(os.path.join(file_path,"states_ECI_GPS.txt").replace("\\.", "."), delimiter=',')
 initial_time = states_GPS[0,0]
-end_simulation = 3200
+end_simulation = 2400
 index = np.where(states_GPS[:, 0] >= end_simulation)[0][0]
 states_GPS = states_GPS[:index+1, :]
 
@@ -48,8 +46,7 @@ index = np.where(states[:, 0] >= initial_time)[0][0]
 states = states[index:,:]
 states = states[::10]
 index = np.where(states[:, 0] >= end_simulation)[0][0]
-states = states[:index+1, :]
-
+states = states[:index, :]
 
 
 xyz = states[:, 1:4]
@@ -58,9 +55,47 @@ VxVyVz = states[:, 4:7]
 xyz_GPS = states_GPS[:, 1:4]
 VxVyVz_GPS = states_GPS[:, 4:7]
 
+#------------------------------necessary interpolation------------------------------#
+
+x1, y1 = states[:, 0], states[:, 1]
+x2, y2 = states_GPS[:, 0], states_GPS[:, 1]
+interp_func = interp1d(x2,y2)
+x = interp_func(x1)
+
+x1, y1 = states[:, 0], states[:, 2]
+x2, y2 = states_GPS[:, 0], states_GPS[:, 2]
+interp_func = interp1d(x2,y2)
+y = interp_func(x1)
+
+x1, y1 = states[:, 0], states[:, 3]
+x2, y2 = states_GPS[:, 0], states_GPS[:, 3]
+interp_func = interp1d(x2,y2)
+z = interp_func(x1)
+
+xyz_GPS = np.column_stack((x, y, z))
+
+
+x1, y1 = states[:, 0], states[:, 4]
+x2, y2 = states_GPS[:, 0], states_GPS[:, 4]
+interp_func = interp1d(x2,y2)
+Vx = interp_func(x1)
+
+x1, y1 = states[:, 0], states[:, 5]
+x2, y2 = states_GPS[:, 0], states_GPS[:, 5]
+interp_func = interp1d(x2,y2)
+Vy = interp_func(x1)
+
+x1, y1 = states[:, 0], states[:, 6]
+x2, y2 = states_GPS[:, 0], states_GPS[:, 6]
+interp_func = interp1d(x2,y2)
+Vz = interp_func(x1)
+
+VxVyVz_GPS = np.column_stack((Vx, Vy, Vz))
+
+
+#------------------------------transformation------------------------------#
 
 RSW_error = []
-TNW_error = []
 
 for i in range(np.shape(xyz)[0]):
 
@@ -78,21 +113,7 @@ for i in range(np.shape(xyz)[0]):
     RSW_error.append(RSW-RSW_GPS)
 
 
-    # rotation_tnw_to_inertial = frame_conversion.tnw_to_inertial_rotation_matrix(states[i, 1:])
-    #
-    # rotation_inertial_to_tnw = frame_conversion.inertial_to_tnw_rotation_matrix(states[i, 1:])
-    # pos = np.matmul(rotation_inertial_to_tnw, xyz[i, :])
-    # vel = np.matmul(rotation_inertial_to_tnw, VxVyVz[i, :])
-    #
-    #
-    # # pos = np.matmul(np.linalg.inv(rotation_tnw_to_inertial), xyz[i, :])
-    # # vel = np.matmul(np.linalg.inv(rotation_tnw_to_inertial), VxVyVz[i, :])
-    # TNW = np.concatenate((pos, vel))
-    #
-    # TNW_list.append(TNW)
-
 RSW_error= np.array(RSW_error)
-print(RSW_error)
 
 
 RSW_error_df = pd.DataFrame(RSW_error)
@@ -100,5 +121,3 @@ file_path_RSW_error = os.path.join(file_path, "RSW_error.txt")
 RSW_error_df.to_csv(file_path_RSW_error, sep=',', index=False,header=False,encoding='ascii',float_format='%.16f')
 
 
-
-# TNW = np.array(TNW_list)

@@ -1,6 +1,7 @@
+#-----------------------------------This file has been used to generate short benchmark trajectories-----------------------------------#
+
 # Load standard modules
 import numpy as np
-
 import matplotlib
 from matplotlib import pyplot as plt
 
@@ -13,7 +14,6 @@ from tudatpy.kernel.astro import element_conversion
 from tudatpy import constants
 from tudatpy.util import result2array
 from tudatpy.kernel.astro.time_conversion import DateTime
-
 from tudatpy.kernel.astro import frame_conversion
 
 import pandas as pd
@@ -60,7 +60,7 @@ simulation_end_epoch = simulation_start_epoch + 360.0
 
 
 # Define string names for bodies to be created from default.
-bodies_to_create = ["Sun", "Earth", "Moon", "Mars", "Venus"]
+bodies_to_create = ["Sun", "Earth", "Moon"]
 
 # Use "Earth"/"J2000" as global frame origin and orientation.
 global_frame_origin = "Earth"
@@ -123,12 +123,6 @@ accelerations_settings_delfi_PQ = dict(
     Moon=[
         propagation_setup.acceleration.point_mass_gravity()
     ],
-    # Mars=[
-    #     propagation_setup.acceleration.point_mass_gravity()
-    # ],
-    # Venus=[
-    #     propagation_setup.acceleration.point_mass_gravity()
-    # ]
 )
 
 # Create global accelerations settings dictionary.
@@ -168,22 +162,12 @@ termination_condition = propagation_setup.propagator.time_termination(simulation
 
 # Create numerical integrator settings
 fixed_step_size = 0.1
-# integrator_settings = propagation_setup.integrator.runge_kutta_4(fixed_step_size)
+
 
 integrator_settings = propagation_setup.integrator.runge_kutta_fixed_step(
     time_step = fixed_step_size,
     coefficient_set = propagation_setup.integrator.rkf_89,
     order_to_use = propagation_setup.integrator.higher )
-
-
-# control_settings = propagation_setup.integrator.step_size_control_elementwise_scalar_tolerance( 1, 1 )
-# validation_settings = propagation_setup.integrator.step_size_validation( fixed_step_size, fixed_step_size )
-# integrator_settings = propagation_setup.integrator.runge_kutta_variable_step(
-#     initial_time_step = fixed_step_size,
-#     coefficient_set = propagation_setup.integrator.rkf_89,
-#     step_size_control_settings = control_settings,
-#     step_size_validation_settings = validation_settings )
-
 
 # Create propagation settings
 propagator_settings = propagation_setup.propagator.translational(
@@ -207,15 +191,14 @@ dynamics_simulator = numerical_simulation.create_dynamics_simulator(
 states = dynamics_simulator.state_history
 states = result2array(states)
 states[:, 0] -= simulation_start_epoch  # make time start at 0 sec as required
-print(simulation_start_epoch)
-print(states)
+
 dep_vars = dynamics_simulator.dependent_variable_history
 dep_vars = result2array(dep_vars)
 dep_vars[:,1] = np.rad2deg(dep_vars[:,1]) # convert to degrees
 dep_vars[:,2] = np.rad2deg(dep_vars[:,2])  # convert to degrees
 dep_vars[:, 0] -= simulation_start_epoch  # make time start at 0 sec as required
 keplerian = dep_vars[:,10:]
-print(dep_vars)
+
 
 
 # # Save states as a text file: time,x,y,z,Vx,Vy,Vz
@@ -238,10 +221,10 @@ print(dep_vars)
 
 
 # x, y, z coordinates in ECEF
-file_path_ECEF = os.path.join(file_path, "xyz_ECEF_short.txt")
-data_slice = dep_vars[:, [0, 4, 5, 6]]
-df = pd.DataFrame(data_slice)
-df.to_csv(file_path_ECEF, sep=',', index=False,header=False,encoding='ascii',float_format='%.16f')
+# file_path_ECEF = os.path.join(file_path, "xyz_ECEF_short.txt")
+# data_slice = dep_vars[:, [0, 4, 5, 6]]
+# df = pd.DataFrame(data_slice)
+# df.to_csv(file_path_ECEF, sep=',', index=False,header=False,encoding='ascii',float_format='%.16f')
 
 # # lat, lon, alt (already ECEF)
 # file_path_lla = os.path.join(file_path, "lat_lon_alt.txt")
@@ -250,12 +233,11 @@ df.to_csv(file_path_ECEF, sep=',', index=False,header=False,encoding='ascii',flo
 # df.to_csv(file_path_lla, sep=',', index=False,header=False,encoding='ascii',float_format='%.16f')
 
 
-# # save RSW, TNW
+# # save RSW
 # xyz = states[:, 1:4]
 # VxVyVz = states[:, 4:7]
 #
 # RSW_list = []
-# TNW_list = []
 #
 # for i in range(np.shape(xyz)[0]):
 #
@@ -266,28 +248,11 @@ df.to_csv(file_path_ECEF, sep=',', index=False,header=False,encoding='ascii',flo
 #     RSW = np.concatenate((pos, vel))
 #
 #     RSW_list.append(RSW)
-#
-#     rotation_tnw_to_inertial = frame_conversion.tnw_to_inertial_rotation_matrix(states[i, 1:])
-#
-#     rotation_inertial_to_tnw = frame_conversion.inertial_to_tnw_rotation_matrix(states[i, 1:])
-#     pos = np.matmul(rotation_inertial_to_tnw, xyz[i, :])
-#     vel = np.matmul(rotation_inertial_to_tnw, VxVyVz[i, :])
-#
-#
-#     # pos = np.matmul(np.linalg.inv(rotation_tnw_to_inertial), xyz[i, :])
-#     # vel = np.matmul(np.linalg.inv(rotation_tnw_to_inertial), VxVyVz[i, :])
-#     TNW = np.concatenate((pos, vel))
-#
-#     TNW_list.append(TNW)
+
 #
 # RSW = np.array(RSW_list)
-# TNW = np.array(TNW_list)
+
 #
 # df = pd.DataFrame(RSW)
 # file_path_RSW = os.path.join(file_path, "RSW.txt")
 # df.to_csv(file_path_RSW, sep=',', index=False,header=False,encoding='ascii',float_format='%.16f')
-#
-# df = pd.DataFrame(TNW)
-# file_path_TNW = os.path.join(file_path, "TNW.txt")
-# df.to_csv(file_path_TNW, sep=',', index=False,header=False,encoding='ascii',float_format='%.16f')
-#
