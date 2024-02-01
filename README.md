@@ -155,11 +155,13 @@ For the NMEA:
 - Afterwards a post processing code removes duplicate and ensures that every entry in the four columns is complete
 
 For the Binary:
-- As converting the output of the binary data into a .txt file sometimes erronously creates a new line, the raw binary output is preprocessed to ensure there are no mistakes and every line is a complete message
+- As converting the output of the binary data into a .txt file sometimes erronously creates a new line, the raw binary output is preprocessed to ensure there are no mistakes and every line is a complete message (This issue had been FIXED, so the prepocessing is not necessary anymore)
 - Afterwards the time of first lock is estabilished
 - Then the time is converted form UTC to seconds
 - All data before first lock is deleted (as there is no useful data)
 - A .txt file is created with 7 columns; time, x, y, z, vx, vy, vz
+
+There were many bugs when trying to automate the binary processing. As such a manual code is in the processing folder. Here the user only has to input the to be processed file name and specify the output name. The file will be saved in the same folder.
 
 ## Write analysis program to compare trajectory input and gnss receiver output, i.e. quantify error of the GNSS receiver with respect to the benchmark trajectory
 
