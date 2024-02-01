@@ -163,7 +163,7 @@ For the Binary:
 
 There were many bugs when trying to automate the binary processing. As such a manual code is in the processing folder. Here the user only has to input the to be processed file name and specify the output name. The file will be saved in the same folder.
 
-## Write analysis program to compare trajectory input and gnss receiver output, i.e. quantify error of the GNSS receiver
+## Write analysis program to compare trajectory input and GNSS receiver output, i.e. quantify error of the GNSS receiver
 
 Based on the benchmark trajectory and the GNSS receiver output, the GNSS receiver error can be quantified. This can be done in various ways. The following errors have been analyzed:
 
