@@ -5,13 +5,13 @@ Microsat Engineering GNSS simulator
 Task Distribution of the assignment for the course Microsat Engineering (AE4S10):
 - Create trajectory in csv based on TLE (Bas)
 - gps-sdr-sim (Niklas)
-- recompile gps-sdr-sim for longer runtimes (done locally, need to check on the machine in the lab) (Niklas)
+- recompile gps-sdr-sim for longer runtimes (Niklas)
 - commanding and communicating with GNSS (Maurits)
 - run the sdr to gnss receiver and record output in NMEA format (Maurits)
 - parse NMEA format (Maurits)
 - run the sdr to gnss receiver and record output in binary format (Maurits)
 - parse binary format (Maurits)
-- facilitation from parsed data to usable units and desired structure of data, both Binary and NMEA (Mattias)
+- facilitation from parsed data to usable units and desired structure of data, both binary and NMEA (Mattias)
 - write analysis program to compare trajectory input and gnss receiver output, i.e. quantify error (Bas)
 - sensitivity analysis (Bas)
 
@@ -206,7 +206,7 @@ The RMSE and 3D error, calculated up to any time in the propagation, are shown b
 <table>
   <tr>
     <td><img src="https://github.com/niklasknoell/Microsat-gps-sim/assets/74927648/f03f5111-6b5f-47cc-8e6f-242038e70101" alt="Image 1"></td>
-    <td><img src="https://github.com/niklasknoell/Microsat-gps-sim/assets/74927648/3916cf1a-83ff-4131-abf9-9617d7740241" alt="Image 2"></td>
+    <td><img src="https://github.com/niklasknoell/Microsat-gps-sim/assets/74927648/028ec802-db76-4ed5-a051-fdef601c7fc5" alt="Image 2"></td>
   </tr>
 </table>
 
@@ -219,24 +219,24 @@ The radial, along track and cross track error in the RSW frame is shown in the f
 
 <table>
   <tr>
-    <td><img src="https://github.com/niklasknoell/Microsat-gps-sim/assets/74927648/66ffd4c0-d66d-48af-9f1c-74d95c664294" alt="Image 1"></td>
-    <td><img src="https://github.com/niklasknoell/Microsat-gps-sim/assets/74927648/7f252221-aa3b-4846-b8fb-ba4fef4dedb9" alt="Image 2"></td>
+    <td><img src="https://github.com/niklasknoell/Microsat-gps-sim/assets/74927648/07be6622-9f73-4ef4-a139-e8f28e56f17f" alt="Image 1"></td>
+    <td><img src="https://github.com/niklasknoell/Microsat-gps-sim/assets/74927648/25225f44-4f04-4804-841f-3c0848700454" alt="Image 2"></td>
   </tr>
 </table>
 
-For the position components in the RSW frame, it is observed that the error of the along track direction is about ... Besides, it has the largest error of all components. Moreover, from this plot it can be observed that the periodic jump in error after every 300 sec, is dominant in the along track component.
-The radial error is ... and is about ... m.
-Finally, the error in the cross-track direction is ... and is about ...m
+For the position components in the RSW frame, it is observed that the error of the along track (S) direction is about 70 m. Besides, it has the largest error of all components. Moreover, from this plot it can be observed that the periodic jump in error after every 300 sec, is dominant in the along track (S) component.
+The radial (R) error is oscillating about a mean of about 2 m. Finally, the error in the cross-track (W) direction is also oscillating, but with a much larger period. Is is unknown whether the Coriolis acceleration is incorporated in the dynamic model. However from literature, neglecting this acceleration is known to cause a periodic error (with period equal to the orbital period) in the cross-track (W) direction for a polar orbit, which Delfi-PQ has. Therefore, it is hypothesized that the Coriolis acceleration has indeed been neglected in the dynamic model. 
 
- 
-For the velocity components in the RSW frame, it is observed that the order of magnitude of the radial error is ... m/s. For the along track direction, the order of magnitude of the error is ...m/s. Finally, the cross-track direction has the smallest error. Its order of magnitude is ...m/s. 
 
+
+The clear jump in radial error due to close proximity to the total electron content (TEC) maximum has not been observed. Most likely, for the 90 min orbit of Delfi-PQ, the analyzed simulation of 40 min has not passed the (TEC) maximum. It is expected that for longer simulations the spike in radial error will arise due to the guarantee that somewhere during the orbit, the closest point to the (TEC) maximum will be passed. 
+
+For the velocity components in the RSW frame, it is observed that the radial (R) error is mostly under 0.1 m/s, which is about twice as large as the along-track (S) and cross-track (W) direction. 
 
 The error in the Keplerian elements is shown in the following figure:
 
 
-![image](https://github.com/niklasknoell/Microsat-gps-sim/assets/74927648/a6ba62e2-dc6c-41dd-8ecf-01c913ad1e08)
-
+![image](https://github.com/niklasknoell/Microsat-gps-sim/assets/74927648/096d14be-b749-40fc-9709-1c6c719f3626)
 
 The following observations are made from the evolution of the error of the six Keplerian elements:
 
@@ -256,13 +256,26 @@ These factors are:
 The sensitivity analysis has been carried out in the [sensitivity analysis folder](https://github.com/niklasknoell/Microsat-gps-sim/tree/Bas/trajectory_generation/sensitivity%20analysis). To enable automation, a user only has to choose a [name of the sensitivity simulation](https://github.com/niklasknoell/Microsat-gps-sim/blob/Bas/trajectory_generation/sensitivity%20analysis/choose_simulation.py) of interest and run the [run simulation file](https://github.com/niklasknoell/Microsat-gps-sim/blob/Bas/trajectory_generation/sensitivity%20analysis/run_simulation.py), which will run all code in the right order. 
 
 
-The ionospheric refraction has been tested by .....
+The ionospheric refraction has been tested on two aspects:
+
+- the minimum required elevation angle
+- whether or not the RF ionospheric corrections are applied on the generated file
+
+Four simulations have been tested. Two have been tested without the RF ionospheric corrections for an elevation angle of 0° and 15°. The other two have been tested with the RF ionospheric corrections for an elevation angle of 0° and 15°. 
+
+For the simulations without the RF ionospheric corrections, the following figure was obtained:
+
+....
+
+For the simulations with the RF ionospheric corrections, the following figure was obtained:
+
+Comparing the above figure with the previous one, it can be seen that the RF ionospheric correction has made the error larger, for both elevation angles. For orbits in LEO, a user is therefore advised to not implement the RF ionospheric correction, but only increase the minimum required elevation angle to obtain a lower error. 
 
 
-It was found that ...... indeed enable to get a lower error. Incorporating .... this gives the following error plots, which after comparison with the previous error plots indeed shows that the error can be reduced. 
+
+The second factor of the paper, a possibly insufficient dynamic model, could not be tested as the dynamic model of the GNSS could not be (easily) altered. Regardless, it has been hypothesised in the previous section that the Coriolis acceleration is neglected in the dynamic model. In order to also hypothesize whether or not the centrifugal acceleration has been neglected in the dynamic model, a GEO satellite (GOES) which has an equatorial orbit has been run. From literature, this should result in a constant offset in the radial component. However, it was found that no lock could be obtained for the GOES satellite. Therefore, it could not be hypothesized whether the centrifugal acceleration has been neglected or not. It is hypothesized that the gps-sdr-sim does not work (well) for orbit determination of GEO orbits which have a higher altitude than GNSS satellites.  
 
 
-The second factor of the paper, a possibly insufficient dynamic model, could not be tested as the dynamic model of the GNSS could not be altered. 
 Moreover, the influence of the antenna location could not be tested, because while the receiver is orbiting on a virtual trajectory, it is not attached to an actual satellite, and is not obstructed by its satellite body. 
 
 Apart from the three main errors analyzed in the paper, more errors could be investigated. Due to the large number of simulations which have been run to attempt to completely fix the loss of lock in the binary parser, these have not been analyzed. However, the following errors are recommended for further investigation based on the implementation in this repository:
@@ -277,7 +290,7 @@ These factors are motivated by the course Satellite Orbit Determination (AE4872)
 - Generate a .txt as returned by the binary parser and put it in the [file folder](https://github.com/niklasknoell/Microsat-gps-sim/tree/Bas/trajectory_generation/sensitivity%20analysis/Files)
 - Give a desired name in the [choose simulation file](https://github.com/niklasknoell/Microsat-gps-sim/blob/Bas/trajectory_generation/sensitivity%20analysis/choose_simulation.py)
 - Run the [run simulation file](https://github.com/niklasknoell/Microsat-gps-sim/blob/Bas/trajectory_generation/sensitivity%20analysis/run_simulation.py) file
-- The generated results can then be viewed in the [figures folder](https://github.com/niklasknoell/Microsat-gps-sim/tree/Bas/trajectory_generation/sensitivity%20analysis/Figures)
+- The generated results can then be viewed in the [figures folder](https://github.com/niklasknoell/Microsat-gps-sim/tree/Bas/trajectory_generation/sensitivity%20analysis/Figures) and compared with the baseline error
 
   
   
