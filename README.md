@@ -252,10 +252,21 @@ These factors are:
 The sensitivity analysis has been carried out in the [sensitivity analysis folder](https://github.com/niklasknoell/Microsat-gps-sim/tree/Bas/trajectory_generation/sensitivity%20analysis). To enable automation, a user only has to choose a [name of the sensitivity simulation](https://github.com/niklasknoell/Microsat-gps-sim/blob/Bas/trajectory_generation/sensitivity%20analysis/choose_simulation.py) of interest and run the [run simulation file](https://github.com/niklasknoell/Microsat-gps-sim/blob/Bas/trajectory_generation/sensitivity%20analysis/run_simulation.py), which will run all code in the right order. 
 
 
-The ionospheric refraction has been tested by .....
+The ionospheric refraction has been tested on two aspects:
 
+- the minimum required elevation angle
+- whether or not the RF ionospheric corrections are applied on the generated file
 
-It was found that ...... indeed enable to get a lower error. Incorporating .... this gives the following error plots, which after comparison with the previous error plots indeed shows that the error can be reduced. 
+Four simulations have been tested. Two have been tested without the RF ionospheric corrections for an elevation angle of 0° and 15°. The other two have been tested with the RF ionospheric corrections for an elevation angle of 0° and 15°. 
+
+For the simulations without the RF ionospheric corrections, the following figure was obtained:
+
+....
+
+For the simulations with the RF ionospheric corrections, the following figure was obtained:
+
+Comparing the above figure with the previous one, it can be seen that the RF ionospheric correction has made the error larger, for both elevation angles. For orbits in LEO, a user is therefore advised to not implement the RF ionospheric correction, but only increase the minimum required elevation angle to get a low error. 
+
 
 
 The second factor of the paper, a possibly insufficient dynamic model, could not be tested as the dynamic model of the GNSS could not be altered. 
