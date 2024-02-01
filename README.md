@@ -206,7 +206,7 @@ The RMSE and 3D error, calculated up to any time in the propagation, are shown b
 <table>
   <tr>
     <td><img src="https://github.com/niklasknoell/Microsat-gps-sim/assets/74927648/f03f5111-6b5f-47cc-8e6f-242038e70101" alt="Image 1"></td>
-    <td><img src="https://github.com/niklasknoell/Microsat-gps-sim/assets/74927648/3916cf1a-83ff-4131-abf9-9617d7740241" alt="Image 2"></td>
+    <td><img src="https://github.com/niklasknoell/Microsat-gps-sim/assets/74927648/028ec802-db76-4ed5-a051-fdef601c7fc5" alt="Image 2"></td>
   </tr>
 </table>
 
@@ -219,24 +219,20 @@ The radial, along track and cross track error in the RSW frame is shown in the f
 
 <table>
   <tr>
-    <td><img src="https://github.com/niklasknoell/Microsat-gps-sim/assets/74927648/66ffd4c0-d66d-48af-9f1c-74d95c664294" alt="Image 1"></td>
-    <td><img src="https://github.com/niklasknoell/Microsat-gps-sim/assets/74927648/7f252221-aa3b-4846-b8fb-ba4fef4dedb9" alt="Image 2"></td>
+    <td><img src="https://github.com/niklasknoell/Microsat-gps-sim/assets/74927648/07be6622-9f73-4ef4-a139-e8f28e56f17f" alt="Image 1"></td>
+    <td><img src="https://github.com/niklasknoell/Microsat-gps-sim/assets/74927648/25225f44-4f04-4804-841f-3c0848700454" alt="Image 2"></td>
   </tr>
 </table>
 
-For the position components in the RSW frame, it is observed that the error of the along track direction is about ... Besides, it has the largest error of all components. Moreover, from this plot it can be observed that the periodic jump in error after every 300 sec, is dominant in the along track component.
-The radial error is ... and is about ... m.
-Finally, the error in the cross-track direction is ... and is about ...m
+For the position components in the RSW frame, it is observed that the error of the along track direction is about 70 m. Besides, it has the largest error of all components. Moreover, from this plot it can be observed that the periodic jump in error after every 300 sec, is dominant in the along track component.
+The radial error is oscillating about a mean of about 2 m. Finally, the error in the cross-track direction is also oscillating, but with a much larger period. 
 
- 
-For the velocity components in the RSW frame, it is observed that the order of magnitude of the radial error is ... m/s. For the along track direction, the order of magnitude of the error is ...m/s. Finally, the cross-track direction has the smallest error. Its order of magnitude is ...m/s. 
-
+For the velocity components in the RSW frame, it is observed that the radial error is mostly under 0.1 m/s, which is about twice as large as the along-track and cross-track direction. 
 
 The error in the Keplerian elements is shown in the following figure:
 
 
-![image](https://github.com/niklasknoell/Microsat-gps-sim/assets/74927648/a6ba62e2-dc6c-41dd-8ecf-01c913ad1e08)
-
+![image](https://github.com/niklasknoell/Microsat-gps-sim/assets/74927648/096d14be-b749-40fc-9709-1c6c719f3626)
 
 The following observations are made from the evolution of the error of the six Keplerian elements:
 
