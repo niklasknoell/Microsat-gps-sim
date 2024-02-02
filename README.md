@@ -264,9 +264,9 @@ The ionospheric refraction has been tested on two aspects:
 - whether or not the RF ionospheric corrections are applied on the generated file
 
 Three additional simulations have been tested. One has been tested without the RF ionospheric correction for an elevation angle of 15°. The 0° has already been tested above, which is the default elevation angle.
-The other two simulations have been tested with the RF ionospheric corrections for an elevation angle of 0° and 15°. 
+The other two simulations have been tested with the RF ionospheric correction for an elevation angle of 0° and 15°. 
 
-For the simulations without the RF ionospheric corrections, the following figure was obtained:
+For the simulation without the RF ionospheric corrections, the following figure was obtained:
 
 ![image](https://github.com/niklasknoell/Microsat-gps-sim/assets/74927648/fe3693cd-074e-4fe9-b10d-bfbd09a01e5f)
 
