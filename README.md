@@ -274,7 +274,7 @@ For the simulation without the RF ionospheric corrections, at an elevation angle
 By comparing the elevation angle of 15° with the elevation angle of 0° in the previous section, the position error is a couple of meter worse. However, a longer simulation would allow for stronger evidence. It might be that the trade-off between the number of satellites in view vs the quality is better for another angle.
 It should be tested for more elevation angles and for a longer duration to come to a more conclusive recommendation. 
 
-For the simulations with the RF ionospheric corrections, the following figure was obtained:
+For the simulations with the RF ionospheric correction, the following figure was obtained:
 
 <table>
   <tr>
