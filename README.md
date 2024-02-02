@@ -261,12 +261,12 @@ The sensitivity analysis has been carried out in the [sensitivity analysis folde
 The ionospheric refraction has been tested on two aspects:
 
 - the minimum required elevation angle
-- whether or not the RF ionospheric corrections are applied on the generated file
+- whether or not the RF ionospheric delays implemented by gps-sdr-sim are corrected by the GPS receiver.
 
 Three additional simulations have been tested. One has been tested without the RF ionospheric correction for an elevation angle of 15°. The 0° has already been tested above, which is the default elevation angle.
-The other two simulations have been tested with the RF ionospheric correction for an elevation angle of 0° and 15°. 
+The other two simulations have been tested with the RF ionospheric delays activated for an elevation angle of 0° and 15°. 
 
-For the simulation without the RF ionospheric correction, at an elevation angle of 15°, the following figure was obtained:
+For the simulation without the RF ionospheric errors, at an elevation angle of 15°, the following figure was obtained:
 
 ![image](https://github.com/niklasknoell/Microsat-gps-sim/assets/74927648/fe3693cd-074e-4fe9-b10d-bfbd09a01e5f)
 
@@ -274,7 +274,7 @@ For the simulation without the RF ionospheric correction, at an elevation angle 
 By comparing the elevation angle of 15° with the elevation angle of 0° in the previous section, the position error is a couple of meter worse. However, a longer simulation would allow for stronger evidence. It might be that the trade-off between the number of satellites in view vs the quality is better for another angle.
 It should be tested for more elevation angles and for a longer duration to come to a more conclusive recommendation. 
 
-For the simulations with the RF ionospheric correction, the following figure was obtained:
+For the simulations with the RF ionospheric errors, the following figure was obtained:
 
 <table>
   <tr>
@@ -294,7 +294,7 @@ For the simulations with the RF ionospheric correction, the following figure was
 </table>
 
 
-Comparing the above figure with the previous one, it can be seen that the RF ionospheric correction has made the error larger, for both elevation angles, to an unacceptable level. For orbits in LEO, a user is therefore advised to not implement the RF ionospheric correction, but only increase the minimum required elevation angle up to a certain value to obtain a lower error. 
+Comparing the above figure with the previous one, it can be seen that the RF ionospheric delay has made the error larger, for both elevation angles, to an unacceptable level. For orbits in LEO, it is thus concluded that either the gps-sdr-sim implementation of the ionospheric delays are faulty or the GPS receiver's correction of these are incorrect.
 
 
 The second factor of the paper, a possibly insufficient dynamic model, has not been tested as the dynamic model of the GNSS could not be (easily) altered. Regardless, it has been hypothesized in the previous section that the Coriolis acceleration is neglected in the dynamic model. In order to also hypothesize whether or not the centrifugal acceleration has been neglected in the dynamic model, a GEO satellite (GOES) which has an equatorial orbit has been run. From literature, neglecting the centrifugal acceleration should result in a constant offset in the radial component. However, it was found that no lock could be obtained for the GOES satellite. Therefore, it could not be hypothesized whether the centrifugal acceleration has been neglected or not. It is hypothesized that the gps-sdr-sim does not work (well) for orbit determination of GEO orbits which have a higher altitude than GNSS satellites.  
